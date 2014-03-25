@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// Testy testy, give us smooth, give us silky.
+
 namespace Timeregistreringssystem
 {
     class Bruker
