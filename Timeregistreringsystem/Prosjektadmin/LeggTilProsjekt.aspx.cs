@@ -5,14 +5,17 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+/**
+ *Opprette Prosjekt
+ * author Thomas og Thea, Surt Eple
+ */
 namespace Timeregistreringssystem.Prosjektadmin
 {
     public partial class LeggTilProsjekt : System.Web.UI.Page
     {
         //variabler
         private DBConnect connection;
-        private bool insertOK = false;
-        private String navn, oppsummering, nesteFase;
+        private string navn, oppsummering;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -23,14 +26,11 @@ namespace Timeregistreringssystem.Prosjektadmin
         {
             //Sjekke etter tom/null input
             if (!String.IsNullOrEmpty(textBoxNavn.Text) || !String.IsNullOrEmpty(textBoxOppsummering.Text))
-                //|| !String.IsNullOrEmpty(textBoxNesteFase.Text))
             {
                 //Hente input
                 navn = textBoxNavn.Text;
                 oppsummering = textBoxOppsummering.Text;
-              //  nesteFase = textBoxNesteFase.Text;
-                
-                insertOK = connection.insertProject(navn, oppsummering, DropDownListNyttProsjektNesteFase.SelectedValue); //lagre boolsk returverdi
+                connection.insertProject(navn, oppsummering); 
                 Page.Response.Redirect(Page.Request.Url.ToString(), true);
 
                 

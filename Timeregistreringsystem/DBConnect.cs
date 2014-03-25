@@ -86,6 +86,8 @@ namespace Timeregistreringssystem
             }
         }
 
+
+
         //Metode for å hente ut alle brukerene og legge de til en bindinglist
         public BindingList<Bruker> brukerSelect()
         {
@@ -140,69 +142,26 @@ namespace Timeregistreringssystem
             }
         }
 
+        #region Prosjekt
         /**
         * Nytt prosjekt
         * @author Thomas & Thea
        */
-        public bool insertProject(String navn, String oppsummering, String nesteFase)
+        public void insertProject(string navn, string oppsummering)
         {
 
-            bool check = false;
-            int result = 0;
 
             if (this.OpenConnection())
             {
 
                 //Create Command
-                String insertString = String.Format("INSERT INTO Prosjekt(Navn, Oppsummering, Neste_Fase) VALUES ('{0}','{1}','{2}')", navn, oppsummering, nesteFase);
-                MySqlCommand insertCommand = new MySqlCommand(insertString, connection);
-
-                try
-                {
-
-                    insertCommand.Prepare(); //??
-                    result = insertCommand.ExecuteNonQuery();
-                    check = true;
-                }
-                catch (Exception e)
-                {
-
-                    Debug.WriteLine(e.Message);
-                    check = false;
-                }
-                finally
-                {
-                    if (result == 0)
-                    {
-                        insertCommand.Cancel();
-                        check = false;
-
-                    }
-
-                    //close Connection
-                    this.CloseConnection();
-                }
-
-            }
-            return check;
-        }
-        /**
-* Legger til ny fase
-* @author Thea
-*/
-        public void InsertFase(string _navn, string _startDato, string _sluttDato, string _status, string _beskrivelse, int _prosjektID)
-        {
-
-            if (this.OpenConnection())
-            {
-                //Create Command
-                string insertString = String.Format("INSERT INTO Fase (Navn, Dato_Startet, Dato_sluttet, Status, Prosjekt_ID, Beskrivelse)" +
-               " VALUES ('{0}', '{1}', '{2}', '{3}', {4}, '{5}'  )", _navn, _startDato, _sluttDato, _status, _prosjektID, _beskrivelse);
+                String insertString = String.Format("INSERT INTO Prosjekt(Navn, Oppsummering) VALUES ('{0}','{1}')", navn, oppsummering);
                 MySqlCommand insertCommand = new MySqlCommand(insertString, connection);
 
                 try
                 {
                     insertCommand.ExecuteNonQuery();
+
                 }
                 catch (Exception e)
                 {
@@ -213,13 +172,14 @@ namespace Timeregistreringssystem
                     //close Connection
                     this.CloseConnection();
                 }
-            }
 
+            }
         }
+
         /**
-         * Slett prosjekt
-         * @author Thomas & Thea
-        */
+      * Slett prosjekt
+      * @author Thomas & Thea
+     */
         public bool delProject(int id)
         {
             String deleteString = String.Format("DELETE FROM Prosjekt WHERE ID = {0}", id);
@@ -260,52 +220,9 @@ namespace Timeregistreringssystem
         }//Delete project
 
         /**
-      * Slett fase
-      * @author Thomas 
-     */
-        public bool delFase(int id)
-        {
-            String deleteString = String.Format("DELETE FROM Fase WHERE ID = {0}", id);
-            bool check = false;
-            int result = 0;
-
-            MySqlCommand deleteCommand = new MySqlCommand(deleteString, connection);
-
-            if (this.OpenConnection())
-            {
-                try
-                {
-                    deleteCommand.Prepare(); 
-                    result = deleteCommand.ExecuteNonQuery();
-
-                    check = true;
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                    check = false;
-                }
-                finally
-                {
-                    if (result == 0)
-                    {
-                        deleteCommand.Cancel();
-                        check = false;
-
-                    }
-
-                    //close Connection
-                    this.CloseConnection();
-                }
-
-            }
-            return check;
-        }//Delete fase
-
-        /**
-        * Edit prosjekt
-        * @author Thomas & Thea
-        */
+       * Edit prosjekt
+       * @author Thomas & Thea
+       */
         public bool editProject(int id, string nyttNavn, string nyOppsummering, int nyNesteFase)
         {
 
@@ -351,6 +268,132 @@ namespace Timeregistreringssystem
             }
             return check;
         }
+
+        /**
+       * Koble Team til Prosjekt
+       * @author Thomas & Thea
+       */
+        public bool connectTeamToProject(int teamID, int prosjektID)
+        {
+            bool check = false;
+            int result = 0;
+
+            if (this.OpenConnection() == true)
+            {
+
+                //Create Command
+                String connectString = String.Format("INSERT INTO KoblingTeamProsjekt(Team_ID, Prosjekt_ID) VALUES ({0}, {1}); ", teamID, prosjektID);
+
+                MySqlCommand connectCommand = new MySqlCommand(connectString, connection);
+
+                try
+                {
+                    connectCommand.Prepare(); //??
+                    result = connectCommand.ExecuteNonQuery();
+                    check = true;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                    check = false;
+                }
+                finally
+                {
+                    if (result == 0)
+                    {
+                        connectCommand.Cancel();
+                        check = false;
+                    }
+
+                    //close Connection
+                    this.CloseConnection();
+                }
+
+            }
+
+            return check;
+        }
+
+
+        #endregion Prosjekt
+
+        #region Fase
+
+        /**
+        * Legger til ny fase
+        * @author Thea
+        */
+        public void InsertFase(string _navn, string _startDato, string _sluttDato, string _status, string _beskrivelse, int _prosjektID)
+        {
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string insertString = String.Format("INSERT INTO Fase (Navn, Dato_Startet, Dato_sluttet, Status, Prosjekt_ID, Beskrivelse)" +
+               " VALUES ('{0}', '{1}', '{2}', '{3}', {4}, '{5}'  )", _navn, _startDato, _sluttDato, _status, _prosjektID, _beskrivelse);
+                MySqlCommand insertCommand = new MySqlCommand(insertString, connection);
+
+                try
+                {
+                    insertCommand.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+
+        }
+     
+        /**
+      * Slett fase
+      * @author Thomas 
+     */
+        public bool delFase(int id)
+        {
+            String deleteString = String.Format("DELETE FROM Fase WHERE ID = {0}", id);
+            bool check = false;
+            int result = 0;
+
+            MySqlCommand deleteCommand = new MySqlCommand(deleteString, connection);
+
+            if (this.OpenConnection())
+            {
+                try
+                {
+                    deleteCommand.Prepare(); 
+                    result = deleteCommand.ExecuteNonQuery();
+
+                    check = true;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                    check = false;
+                }
+                finally
+                {
+                    if (result == 0)
+                    {
+                        deleteCommand.Cancel();
+                        check = false;
+
+                    }
+
+                    //close Connection
+                    this.CloseConnection();
+                }
+
+            }
+            return check;
+        }//Delete fase
+
+       
         /**
       * Edit fase
       * @author Thomas
@@ -396,9 +439,9 @@ namespace Timeregistreringssystem
 
 
         /**
-  * Edit fase henting av Beskrivelse fra id
-  * @author Thomas 19/3/14   18:05
-  */
+      * Edit fase henting av Beskrivelse fra id
+      * @author Thomas 19/3/14   18:05
+      */
         public string editFaseHentBeskrivelse(int id)
         {
             string beskrivelse ="ingen info";
@@ -434,9 +477,9 @@ namespace Timeregistreringssystem
 
 
         /**
-* Edit fase henting av Navn fra id
-* @author Thomas 19/3/14   18:06
-*/
+    * Edit fase henting av Navn fra id
+    * @author Thomas 19/3/14   18:06
+    */
         public string editFaseHentNavn(int id)
         {
             string navn = "ingen info";
@@ -471,50 +514,7 @@ namespace Timeregistreringssystem
         }  //edit fase hente Navn fra id
 
 
-        /**
-        * Koble Team til Prosjekt
-        * @author Thomas & Thea
-        */
-        public bool connectTeamToProject(int teamID, int prosjektID)
-        {
-            bool check = false;
-            int result = 0;
-
-            if (this.OpenConnection() == true)
-            {
-
-                //Create Command
-                String connectString = String.Format("INSERT INTO KoblingTeamProsjekt(Team_ID, Prosjekt_ID) VALUES ({0}, {1}); ", teamID, prosjektID);
-
-                MySqlCommand connectCommand = new MySqlCommand(connectString, connection);
-
-                try
-                {
-                    connectCommand.Prepare(); //??
-                    result = connectCommand.ExecuteNonQuery();
-                    check = true;
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                    check = false;
-                }
-                finally
-                {
-                    if (result == 0)
-                    {
-                        connectCommand.Cancel();
-                        check = false;
-                    }
-
-                    //close Connection
-                    this.CloseConnection();
-                }
-
-            }
-
-            return check;
-        }
+#endregion Fase
 
         /**
          * Salt-generator
