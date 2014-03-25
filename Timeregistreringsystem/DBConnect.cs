@@ -323,14 +323,14 @@ namespace Timeregistreringssystem
         * Legger til ny fase
         * @author Thea
         */
-        public void InsertFase(string _navn, string _startDato, string _sluttDato, string _status, string _beskrivelse, int _prosjektID)
+        public void InsertFase(string _navn, string _startDato, string _sluttDato, string _beskrivelse, int _prosjektID)
         {
 
             if (this.OpenConnection())
             {
                 //Create Command
-                string insertString = String.Format("INSERT INTO Fase (Navn, Dato_Startet, Dato_sluttet, Status, Prosjekt_ID, Beskrivelse)" +
-               " VALUES ('{0}', '{1}', '{2}', '{3}', {4}, '{5}'  )", _navn, _startDato, _sluttDato, _status, _prosjektID, _beskrivelse);
+                string insertString = String.Format("INSERT INTO Fase (Navn, Dato_Startet, Dato_sluttet,Prosjekt_ID, Beskrivelse)" +
+               " VALUES ('{0}', '{1}', '{2}', {3}, '{4}'  )", _navn, _startDato, _sluttDato,  _prosjektID, _beskrivelse);
                 MySqlCommand insertCommand = new MySqlCommand(insertString, connection);
 
                 try

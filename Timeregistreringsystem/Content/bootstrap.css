@@ -1992,7 +1992,6 @@ select[multiple].input-lg {
 .btn {
   display: inline-block;
   padding: 6px 12px;
-  margin-bottom: 0;
   font-size: 14px;
   font-weight: normal;
   line-height: 1.42857143;
@@ -3002,6 +3001,8 @@ input[type="button"].btn-block {
 }
 .dropdown {
   position: relative;
+    top: 0px;
+    left: 0px;
 }
 .dropdown-toggle:focus {
   outline: 0;

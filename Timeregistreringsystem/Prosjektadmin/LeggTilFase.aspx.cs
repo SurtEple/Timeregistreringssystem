@@ -30,18 +30,16 @@ namespace Timeregistreringssystem.Prosjektadmin
         {
             //Sjekke etter tom/null input
             if (!String.IsNullOrEmpty(faseNavnTextBox.Text) || !String.IsNullOrEmpty(dateStartTextBox.Text)
-                || !String.IsNullOrEmpty(dateStopTextBox.Text) || !String.IsNullOrEmpty(statusDropDownList.SelectedValue)
-                || !String.IsNullOrEmpty(prosjektDropDownList.SelectedValue))
+                || !String.IsNullOrEmpty(dateStopTextBox.Text) || !String.IsNullOrEmpty(prosjektDropDownList.SelectedValue))
             {
                 connection = new DBConnect();
                 string navn = faseNavnTextBox.Text;
                 string startDato = dateStartTextBox.Text;
                 string sluttDato = dateStopTextBox.Text;
-                string status = statusDropDownList.SelectedValue;
                 string beskrivelse = beskrivelseTextBox.Text;
                 int prosjektID = Convert.ToInt16(prosjektDropDownList.SelectedValue);
 
-                connection.InsertFase(navn, startDato, sluttDato, status, beskrivelse, prosjektID);
+                connection.InsertFase(navn, startDato, sluttDato,  beskrivelse, prosjektID);
             }
         }
 
