@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Dette er halvard som tester
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
