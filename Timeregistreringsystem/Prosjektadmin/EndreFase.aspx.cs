@@ -21,12 +21,19 @@ namespace Timeregistreringssystem.Prosjektadmin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            textBoxNewNavn.Enabled = false;
+            textBoxNewBeskrivelse.Enabled = false;
+            btnLagreNewFase.Enabled = false;
+            btnSlettFase.Enabled = false;
+
             //Sjekke etter tom/null input
             if (String.IsNullOrEmpty(DropDownListSlettFase.SelectedValue))
             {
-                textBoxNewBeskrivelse.Text = "---------  Velg en fase fra listen  ---------";
-                textBoxNewNavn.Text = "---------  Velg en fase fra listen  ---------";
+                textBoxNewBeskrivelse.Text = "----  Velg en fase fra listen  -----";
+                textBoxNewNavn.Text = "------  Velg en fase fra listen  ----";
             }
+         
         }
 
         //Hente informasjon fra det prosjektet som er valgt til redigering
@@ -137,13 +144,32 @@ namespace Timeregistreringssystem.Prosjektadmin
             //oppdatere beskrivelse og navn på valgt fase
             try {
                     int id = Convert.ToInt32(DropDownListEditFase.SelectedValue);
-                    textBoxNewNavn.Text = HentRedigerFaseNavn(id);   
-                    textBoxNewBeskrivelse.Text = HentRedigerFaseBeskrivelse(id);                            
+
+                    if (id != 0)
+                    {
+                        textBoxNewNavn.Enabled = true;
+                        textBoxNewBeskrivelse.Enabled = true;
+                        btnLagreNewFase.Enabled = true;
+
+                        textBoxNewNavn.Text = HentRedigerFaseNavn(id);
+                        textBoxNewBeskrivelse.Text = HentRedigerFaseBeskrivelse(id);
+                        
+                    }                          
                 }
             catch (FormatException formatException) { resultLabel0.Text = "Format Exception: " + formatException.Message; }
             catch (OverflowException overFlowException) { resultLabel0.Text = "Overflow Exception: " + overFlowException.Message; }
             catch (Exception ex) { resultLabel0.Text = "Exception: " + ex.Message; } 
       
+        }
+
+        protected void DropDownListSlettFase_SelectedIndexChanged(object sender, EventArgs e)
+        {
+             int id = Convert.ToInt32(DropDownListEditFase.SelectedValue);
+
+             if (id != 0)
+             {
+                 btnSlettFase.Enabled = true;
+             }
         }
     }
 }

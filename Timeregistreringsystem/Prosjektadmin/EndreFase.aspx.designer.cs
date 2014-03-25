@@ -76,24 +76,6 @@ namespace Timeregistreringssystem.Prosjektadmin {
         protected global::System.Web.UI.WebControls.DropDownList DropDownListEditFase;
         
         /// <summary>
-        /// btnLagreNewFase control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLagreNewFase;
-        
-        /// <summary>
-        /// textBoxNewNavn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxNewNavn;
-        
-        /// <summary>
         /// Label1 control.
         /// </summary>
         /// <remarks>
@@ -112,6 +94,15 @@ namespace Timeregistreringssystem.Prosjektadmin {
         protected global::System.Web.UI.WebControls.CheckBox EditFaseCheckIsFaseActive;
         
         /// <summary>
+        /// textBoxNewNavn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox textBoxNewNavn;
+        
+        /// <summary>
         /// textBoxNewBeskrivelse control.
         /// </summary>
         /// <remarks>
@@ -119,6 +110,15 @@ namespace Timeregistreringssystem.Prosjektadmin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox textBoxNewBeskrivelse;
+        
+        /// <summary>
+        /// btnLagreNewFase control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLagreNewFase;
         
         /// <summary>
         /// resultLabel0 control.
