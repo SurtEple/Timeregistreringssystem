@@ -1025,6 +1025,51 @@ namespace Timeregistreringssystem
         }
 
         /**
+        * Kobler en bruker til et team
+        * @author Kristina
+        */
+        public bool KoblingBrukerTeam(int teamId, int brukerId)
+        {
+            bool check = false;
+
+            if (this.OpenConnection() == true)
+            {
+                try
+                {
+                    MySqlCommand command = new MySqlCommand(null, connection);
+
+                    // Create and prepare an SQL statement
+                    command.CommandText =
+                        "INSERT INTO KoblingBrukerTeam (Bruker_ID, Team_ID) " +
+                        "VALUES (@bruker, @team)";
+
+                    MySqlParameter brukerParam = new MySqlParameter("@bruker", MySqlDbType.Int32, 11);
+                    MySqlParameter teamParam = new MySqlParameter("@team", MySqlDbType.Int32, 11);
+
+                    brukerParam.Value = brukerId;
+                    teamParam.Value = teamId;
+
+                    command.Parameters.Add(brukerParam);
+                    command.Parameters.Add(teamParam);
+
+                    command.Prepare();
+                    command.ExecuteNonQuery();
+                    check = true;
+                }
+                catch
+                {
+                    check = false;
+                }
+                finally
+                {
+                    this.CloseConnection();
+                }
+            }
+
+            return check;
+        }
+
+        /**
         * Sletter team med gitt id
         * @author Kristina
         */
