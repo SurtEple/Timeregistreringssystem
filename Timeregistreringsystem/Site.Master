@@ -51,13 +51,16 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Hjem</a></li>
+                        
+                        <!-- Brukeradministrasjon -->
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Brukeradministrasjon <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="~/LeggTilBruker">Legg til bruker</a></li>
-                                <li><a href="#">Endre/Slett bruker</a></li>
+                                <li><a href="/BrukerAdministrasjon/LeggTilBruker">Legg til bruker</a></li>
+                                <li><a href="/BrukerAdministrasjon/EndreBruker">Endre/Slett bruker</a></li>
                             </ul>
                          </li>
+
                         <li><a runat="server" href="~/Contact">Timeregistrering</a></li>
 
                         <!-- Prosjektadmin -->

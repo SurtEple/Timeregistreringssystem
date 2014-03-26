@@ -7,27 +7,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Timeregistreringssystem {
+namespace Timeregistreringssystem.BrukerAdministrasjon {
     
     
     public partial class EndreBruker {
         
         /// <summary>
-        /// form1 control.
+        /// gwEndreBruker control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.GridView gwEndreBruker;
         
         /// <summary>
-        /// lblEndreBruker control.
+        /// EndreBrukerDataSource control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEndreBruker;
+        protected global::System.Web.UI.WebControls.SqlDataSource EndreBrukerDataSource;
     }
 }

@@ -171,6 +171,7 @@
     <Content Include="Account\OpenAuthProviders.ascx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
+    <Content Include="BrukerAdministrasjon\EndreBruker.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker3.css" />
@@ -699,9 +700,8 @@
     <Content Include="Content\glyphicons_social\png\glyphicons_social_48_android.png" />
     <Content Include="Content\glyphicons_social\png\glyphicons_social_49_ios.png" />
     <Content Include="Content\Site.css" />
-    <Content Include="EndreBruker.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="LeggTilBruker.aspx" />
+    <Content Include="BrukerAdministrasjon\LeggTilBruker.aspx" />
     <Content Include="OpprettTeam.aspx" />
     <Content Include="packages.config" />
     <Content Include="Account\Web.config" />
@@ -867,6 +867,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Bruker.cs" />
+    <Compile Include="BrukerAdministrasjon\EndreBruker.aspx.cs">
+      <DependentUpon>EndreBruker.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BrukerAdministrasjon\EndreBruker.aspx.designer.cs">
+      <DependentUpon>EndreBruker.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -882,22 +889,15 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="EndreBruker.aspx.cs">
-      <DependentUpon>EndreBruker.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="EndreBruker.aspx.designer.cs">
-      <DependentUpon>EndreBruker.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Fase.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="LeggTilBruker.aspx.cs">
+    <Compile Include="BrukerAdministrasjon\LeggTilBruker.aspx.cs">
       <DependentUpon>LeggTilBruker.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="LeggTilBruker.aspx.designer.cs">
+    <Compile Include="BrukerAdministrasjon\LeggTilBruker.aspx.designer.cs">
       <DependentUpon>LeggTilBruker.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />

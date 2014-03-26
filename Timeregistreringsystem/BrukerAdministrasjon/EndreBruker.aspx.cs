@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Timeregistreringssystem
+namespace Timeregistreringssystem.BrukerAdministrasjon
 {
     public partial class EndreBruker : System.Web.UI.Page
     {
