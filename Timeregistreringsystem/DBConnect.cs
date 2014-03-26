@@ -1119,5 +1119,36 @@ namespace Timeregistreringssystem
             }
             return check;
         }
+
+        /**
+         * Legge til ny oppgave
+         * author Bjørn
+         */
+        public void InsertOppgave(int _foreldreProsjekt, int _foreldreOppgave, int _estimertTid, string _tittel, string _beskrivelse, string _startDato, string _sluttDato)
+        {
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string insertString = String.Format("INSERT INTO Oppgave (Prosjekt_ID, Foreldreoppgave_ID, EstimertTid, Tittel, Beskrivelse, Dato_begynt, Dato_ferdig)" +
+               " VALUES ({0}, {1}, {2}, '{3}', '{4}', '{5}', '{6}'  )", _foreldreProsjekt, _foreldreOppgave, _estimertTid, _tittel, _beskrivelse, _startDato, _sluttDato);
+                MySqlCommand insertCommand = new MySqlCommand(insertString, connection);
+
+                try
+                {
+                    insertCommand.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+
+        }
     }
 }

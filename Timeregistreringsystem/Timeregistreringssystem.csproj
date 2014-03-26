@@ -702,6 +702,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="BrukerAdministrasjon\LeggTilBruker.aspx" />
+    <Content Include="OppgaveAdmin\LeggTilOppgave.aspx" />
     <Content Include="packages.config" />
     <Content Include="Account\Web.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -909,6 +910,13 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Oppgave.cs" />
+    <Compile Include="OppgaveAdmin\LeggTilOppgave.aspx.cs">
+      <DependentUpon>LeggTilOppgave.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OppgaveAdmin\LeggTilOppgave.aspx.designer.cs">
+      <DependentUpon>LeggTilOppgave.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Prosjekt.cs" />
     <Compile Include="Prosjektadmin\EndreFase.aspx.cs">
