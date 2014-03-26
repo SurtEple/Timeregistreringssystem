@@ -702,6 +702,8 @@
     <Content Include="Content\glyphicons_social\png\glyphicons_social_49_ios.png" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="BrukerAdministrasjon\LeggTilBruker.aspx" />
+    <Content Include="OppgaveAdmin\EndreOppgave.aspx" />
     <Content Include="OppgaveAdmin\LeggTilOppgave.aspx" />
     <Content Include="packages.config" />
     <Content Include="Account\Web.config" />
@@ -911,6 +913,13 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Oppgave.cs" />
+    <Compile Include="OppgaveAdmin\EndreOppgave.aspx.cs">
+      <DependentUpon>EndreOppgave.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OppgaveAdmin\EndreOppgave.aspx.designer.cs">
+      <DependentUpon>EndreOppgave.aspx</DependentUpon>
+    </Compile>
     <Compile Include="OppgaveAdmin\LeggTilOppgave.aspx.cs">
       <DependentUpon>LeggTilOppgave.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -51,7 +51,7 @@ WHERE ID &gt; 0" UpdateCommand="&quot;UPDATE `HLVDKN_DB1`.`Bruker` SET `Stilling
             <tr>
                 <td class="auto-style6">Ny beskrivelse:</td>
                 <td class="auto-style5">
-                    <asp:TextBox ID="textBoxNewBeskrivelse" runat="server" TextMode="MultiLine" Height="94px" Width="292px" CssClass="input-lg" Enabled="False"></asp:TextBox>
+                    <asp:TextBox ID="textBoxNewBeskrivelse" runat="server" TextMode="MultiLine" Height="94px" Width="292px" CssClass="input-lg" Enabled="False" OnTextChanged="textBoxNewBeskrivelse_TextChanged"></asp:TextBox>
                 </td>
             </tr>
         </table>

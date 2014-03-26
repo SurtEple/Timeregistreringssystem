@@ -1122,7 +1122,7 @@ namespace Timeregistreringssystem
 
         /**
          * Legge til ny oppgave
-         * author Bjørn
+         * @author Bjørn
          */
         public void InsertOppgave(int _foreldreProsjekt, int _foreldreOppgave, int _estimertTid, string _tittel, string _beskrivelse, string _startDato, string _sluttDato)
         {
@@ -1150,5 +1150,298 @@ namespace Timeregistreringssystem
             }
 
         }
+
+        /**
+         * Sette oppgave til å være ferdig
+         * @author Bjørn
+         */
+        public void OppgaveFerdig(int id, int _bruktTid, string _sluttDato)
+        {
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string editString = String.Format("UPDATE Oppgave SET Ferdig = 1, Brukt_tid = {0}, Dato_ferdig = '{1}' WHERE ID = {2}",
+                   _bruktTid, _sluttDato, id);
+
+                MySqlCommand editCommand = new MySqlCommand(editString, connection);
+
+
+                try
+                {
+                    editCommand.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+
+        }
+
+         /**
+      * Slett prosjekt
+      * @author Bjørn
+     */
+        public bool slettOppgave(int id)
+        {
+            String deleteString = String.Format("DELETE FROM Oppgave WHERE ID = {0}", id);
+            bool check = false;
+            int result = 0;
+
+            MySqlCommand deleteCommand = new MySqlCommand(deleteString, connection);
+
+            if (this.OpenConnection())
+            {
+                try
+                {
+                    deleteCommand.Prepare(); 
+                    result = deleteCommand.ExecuteNonQuery();
+
+                    check = true;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                    check = false;
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+
+            }
+            return check;
+        }
+
+     /**
+     * Henter beskrivelse av oppgave fra databasen ved hjelp av id
+     * @author Bjørn
+     */
+        public string editOppgaveHentBeskrivelse(int id)
+        {
+            string beskrivelse = "ingen info";
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string queryString = string.Format(
+                    "SELECT Beskrivelse FROM Oppgave WHERE id = '{0}'"
+                    , id);
+
+                MySqlCommand command = new MySqlCommand(queryString, connection);
+                try
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        beskrivelse = dataReader["Beskrivelse"] + "";
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+            return beskrivelse;
+        }
+
+     /**
+    * Henter tittel fra databasen ved hjelp av id
+    * @author Bjørn
+    */
+        public string editOppgaveHentTittel(int id)
+        {
+            string navn = "ingen info";
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string queryString = string.Format(
+                    "SELECT Tittel FROM Oppgave WHERE id = '{0}'"
+                    , id);
+
+                MySqlCommand command = new MySqlCommand(queryString, connection);
+                try
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        navn = dataReader["Tittel"] + "";
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+            return navn;
+        }
+
+        /**
+   * Henter estimert tid fra databasen ved hjelp av id
+   * @author Bjørn
+   */
+        public string editOppgaveHentEstimertTid(int id)
+        {
+            string navn = "ingen info";
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string queryString = string.Format(
+                    "SELECT EstimertTid FROM Oppgave WHERE id = '{0}'"
+                    , id);
+
+                MySqlCommand command = new MySqlCommand(queryString, connection);
+                try
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        navn = dataReader["EstimertTid"] + "";
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+            return navn;
+        }
+
+     /**
+    * Henter brukt tid fra databasen ved hjelp av id
+    * @author Bjørn
+    */
+        public string editOppgaveHentBruktTid(int id)
+        {
+            string navn = "ingen info";
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string queryString = string.Format(
+                    "SELECT Brukt_tid FROM Oppgave WHERE id = '{0}'"
+                    , id);
+
+                MySqlCommand command = new MySqlCommand(queryString, connection);
+                try
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        navn = dataReader["Brukt_tid"] + "";
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+            return navn;
+        }
+
+        /**
+        * Henter sluttdato fra databasen ved hjelp av id
+        * @author Bjørn
+        */
+        public string editOppgaveHentSluttDato(int id)
+        {
+            string navn = "ingen info";
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string queryString = string.Format(
+                    "SELECT Dato_ferdig FROM Oppgave WHERE id = '{0}'"
+                    , id);
+
+                MySqlCommand command = new MySqlCommand(queryString, connection);
+                try
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        navn = dataReader["Dato_ferdig"] + "";
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+            return navn;
+        }
+
+        /**
+     * Oppdater Oppgave
+     * @author Bjørn
+     */
+        public bool OppdaterOppgave(int _id, string _nyTittel, string _nyBeskrivelse, string _nySluttDato, int _nyEstimertTid, int _nyBruktTid )
+        {
+            bool check = false;
+            int result = 0;
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                String editString = String.Format(
+                    "UPDATE Oppgave SET Tittel = '{0}', Beskrivelse = '{1}', Dato_ferdig = '{2}', EstimertTid = {3}, Brukt_tid = {4} WHERE ID = {5}"
+                    , _nyTittel, _nyBeskrivelse, _nySluttDato, _nyEstimertTid, _nyBruktTid, _id);
+
+                MySqlCommand editCommand = new MySqlCommand(editString, connection);
+                try
+                {
+                    editCommand.Prepare();
+                    result = editCommand.ExecuteNonQuery();
+                    check = true;
+                }
+                catch (Exception e)
+                {
+
+                    Debug.WriteLine(e.Message);
+                    check = false;
+                }
+                finally
+                {
+                  
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+            return check;
+        }  //edit fase
     }
 }

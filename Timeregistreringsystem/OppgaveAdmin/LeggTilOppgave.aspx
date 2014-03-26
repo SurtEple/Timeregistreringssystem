@@ -29,17 +29,19 @@
 
     <br />
 
+        <asp:Label ID="lblForeldreOppgave" Text="Velg Hovedoppgaven denne oppgave skal tilhøre" runat="server"></asp:Label>
+        <br />
         <asp:DropDownList ID="ddlForeldreOppgave" runat="server" DataSourceID="SqlDataSourceHovedOppgaveDropDown" DataTextField="Tittel" DataValueField="ID" AppendDataBoundItems="True" Height="26px" Width="323px">
                     </asp:DropDownList>
         <br />
 
-    <asp:Label ID="lblProsjekt" Text="Velg prosjektet denne oppgave tilhører" runat="server"></asp:Label>
+    <asp:Label ID="lblProsjekt" Text="* Velg prosjektet denne oppgave tilhører" runat="server"></asp:Label>
     <br />
-    <asp:DropDownList ID="ddlForeldreProsjekt" runat="server" DataSourceID="SqlDataSourceForeldreProsjekt" DataTextField="Prosjekt" DataValueField="Prosjekt_ID" Height="26px" Width="323px">
+    <asp:DropDownList ID="ddlForeldreProsjekt" runat="server" DataSourceID="SqlDataSourceForeldreProsjekt" DataTextField="Navn" DataValueField="ID" Height="26px" Width="323px">
                     </asp:DropDownList>
 
 
-    <asp:SqlDataSource ID="SqlDataSourceForeldreProsjekt" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Oppgave.Prosjekt_ID, Prosjekt.Navn AS Prosjekt FROM Oppgave INNER JOIN Prosjekt ON Oppgave.Prosjekt_ID = Prosjekt.ID"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="SqlDataSourceForeldreProsjekt" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Navn FROM Prosjekt"></asp:SqlDataSource>
 
 
     <br />
@@ -78,6 +80,9 @@
 
     <br />
     <asp:Button ID="btnLagre" runat="server" CssClass="btn"  Text="Lagre" Width="119px" OnClick="btnLagre_Click" />
+    <br />
+    <asp:Label ID="lblTilbakemelding" Text="" runat="server"></asp:Label>
+
 
         
 

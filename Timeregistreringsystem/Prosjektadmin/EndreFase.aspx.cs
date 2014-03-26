@@ -171,5 +171,10 @@ namespace Timeregistreringssystem.Prosjektadmin
                  btnSlettFase.Enabled = true;
              }
         }
+
+        protected void textBoxNewBeskrivelse_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
