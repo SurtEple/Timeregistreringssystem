@@ -29,10 +29,6 @@ namespace Timeregistreringssystem.TeamAdministrasjon
                 //TODO
             }
 
-            if (Page.IsPostBack)
-            {
-                GridView1.DataBind();
-            }
         }
 
         protected void btnTilbake_Click(object sender, EventArgs e)
@@ -47,14 +43,13 @@ namespace Timeregistreringssystem.TeamAdministrasjon
                 int brukerid = Convert.ToInt32(DropDownList1.SelectedValue);
 
                 DBConnect database = new DBConnect();
-                database.KoblingBrukerTeam(teamId, brukerid);
-
+                bool ok = database.KoblingBrukerTeam(teamId, brukerid);
+                GridView1.DataBind();
             }
             catch (Exception ex)
             {
                 //TODO
             }
-            
         }
     }
 }

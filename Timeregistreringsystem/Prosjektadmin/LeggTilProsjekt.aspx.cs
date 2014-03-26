@@ -29,7 +29,7 @@ namespace Timeregistreringssystem.Prosjektadmin
             if (!String.IsNullOrEmpty(textBoxNavn.Text) || !String.IsNullOrEmpty(textBoxOppsummering.Text))
             {
                 //Hente input
-                lederID = lederDropDownList.Value;
+                //lederID = lederDropDownList.Value;
                 navn = textBoxNavn.Text;
                 oppsummering = textBoxOppsummering.Text;
                 connection.insertProject(navn, oppsummering); 
