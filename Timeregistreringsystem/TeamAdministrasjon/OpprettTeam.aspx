@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OpprettTeam.aspx.cs" Inherits="Timeregistreringssystem.OpprettTeam" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OpprettTeam.aspx.cs" Inherits="Timeregistreringssystem.TeamAdministrasjon.OpprettTeam" %>
 
 <!DOCTYPE html>
 

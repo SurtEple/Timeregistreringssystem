@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Timeregistreringsystem {
+namespace Timeregistreringssystem.TeamAdministrasjon {
     
     
     public partial class Teammedlemmer {

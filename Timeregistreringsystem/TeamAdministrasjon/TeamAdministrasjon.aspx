@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TeamAdministrasjon.aspx.cs" Inherits="Timeregistreringssystem.TeamAdministrasjon" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TeamAdministrasjon.aspx.cs" Inherits="Timeregistreringssystem.TeamAdministrasjon.TeamAdministrasjon" %>
 
 <!DOCTYPE html>
 
