@@ -61,7 +61,7 @@
                             </ul>
                          </li>
 
-                        <li><a runat="server" href="~/Contact">Timeregistrering</a></li>
+                        <li><a runat="server" href="/OppgaveAdmin/LeggTilOppgave">Oppgaveadministrasjon</a></li>
 
                         <!-- Prosjektadmin -->
                          <li class="dropdown">
