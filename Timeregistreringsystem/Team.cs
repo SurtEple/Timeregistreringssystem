@@ -5,7 +5,6 @@ namespace Timeregistreringssystem
 {
     class Team
     {
-        
 
         public Team(int id, int teamlederId, String teamLeder, String beskrivelse)
         {
