@@ -61,6 +61,7 @@
                             </ul>
                          </li>
 
+                        <!-- Legg til oppgave -->
                         <li><a runat="server" href="/OppgaveAdmin/LeggTilOppgave">Oppgaveadministrasjon</a></li>
 
                         <!-- Prosjektadmin -->

@@ -172,6 +172,7 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="BrukerAdministrasjon\EndreBruker.aspx" />
+    <Content Include="BrukerAdministrasjon\LeggTilBruker.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker3.css" />
@@ -701,7 +702,6 @@
     <Content Include="Content\glyphicons_social\png\glyphicons_social_49_ios.png" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="BrukerAdministrasjon\LeggTilBruker.aspx" />
     <Content Include="OppgaveAdmin\LeggTilOppgave.aspx" />
     <Content Include="packages.config" />
     <Content Include="Account\Web.config" />
@@ -883,6 +883,13 @@
     <Compile Include="BrukerAdministrasjon\EndreBruker.aspx.designer.cs">
       <DependentUpon>EndreBruker.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BrukerAdministrasjon\LeggTilBruker.aspx.cs">
+      <DependentUpon>LeggTilBruker.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BrukerAdministrasjon\LeggTilBruker.aspx.designer.cs">
+      <DependentUpon>LeggTilBruker.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -901,13 +908,6 @@
     <Compile Include="Fase.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="BrukerAdministrasjon\LeggTilBruker.aspx.cs">
-      <DependentUpon>LeggTilBruker.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="BrukerAdministrasjon\LeggTilBruker.aspx.designer.cs">
-      <DependentUpon>LeggTilBruker.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Oppgave.cs" />

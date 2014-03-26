@@ -7,28 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Timeregistreringssystem {
+namespace Timeregistreringssystem.BrukerAdministrasjon {
     
     
     public partial class LeggTilBruker {
-        
-        /// <summary>
-        /// form1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
-        /// <summary>
-        /// lblLeggTilBruker control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLeggTilBruker;
         
         /// <summary>
         /// lblBrukernavn control.
@@ -49,6 +31,15 @@ namespace Timeregistreringssystem {
         protected global::System.Web.UI.WebControls.TextBox tbBrukernavn;
         
         /// <summary>
+        /// imgStjerne1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgStjerne1;
+        
+        /// <summary>
         /// lblPassord control.
         /// </summary>
         /// <remarks>
@@ -67,6 +58,24 @@ namespace Timeregistreringssystem {
         protected global::System.Web.UI.WebControls.TextBox tbPassord;
         
         /// <summary>
+        /// imgStjerne2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgStjerne2;
+        
+        /// <summary>
+        /// lblgjentaPassord control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblgjentaPassord;
+        
+        /// <summary>
         /// tbPassord2 control.
         /// </summary>
         /// <remarks>
@@ -74,6 +83,15 @@ namespace Timeregistreringssystem {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbPassord2;
+        
+        /// <summary>
+        /// imgStjerne3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgStjerne3;
         
         /// <summary>
         /// lblFornavn control.
@@ -92,6 +110,15 @@ namespace Timeregistreringssystem {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbFornavn;
+        
+        /// <summary>
+        /// imgStjerne4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgStjerne4;
         
         /// <summary>
         /// lblMellomnavn control.
@@ -130,6 +157,15 @@ namespace Timeregistreringssystem {
         protected global::System.Web.UI.WebControls.TextBox tbEtternavn;
         
         /// <summary>
+        /// imgStjerne5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgStjerne5;
+        
+        /// <summary>
         /// lblEpost control.
         /// </summary>
         /// <remarks>
@@ -146,6 +182,15 @@ namespace Timeregistreringssystem {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbEpost;
+        
+        /// <summary>
+        /// imgStjerne6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgStjerne6;
         
         /// <summary>
         /// lblIm control.
@@ -184,6 +229,15 @@ namespace Timeregistreringssystem {
         protected global::System.Web.UI.WebControls.TextBox tbAdresse;
         
         /// <summary>
+        /// imgStjerne7 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgStjerne7;
+        
+        /// <summary>
         /// lblPostnr control.
         /// </summary>
         /// <remarks>
@@ -200,6 +254,15 @@ namespace Timeregistreringssystem {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbPostnr;
+        
+        /// <summary>
+        /// imgStjerne8 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgStjerne8;
         
         /// <summary>
         /// lblTlfnr control.
@@ -220,6 +283,15 @@ namespace Timeregistreringssystem {
         protected global::System.Web.UI.WebControls.TextBox tbTelefonnr;
         
         /// <summary>
+        /// imgStjerne9 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgStjerne9;
+        
+        /// <summary>
         /// lblBy control.
         /// </summary>
         /// <remarks>
@@ -236,6 +308,42 @@ namespace Timeregistreringssystem {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbBy;
+        
+        /// <summary>
+        /// imgStjerne10 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgStjerne10;
+        
+        /// <summary>
+        /// lblFeilmelding control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFeilmelding;
+        
+        /// <summary>
+        /// imgStjerne0 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgStjerne0;
+        
+        /// <summary>
+        /// lblFeilmelding0 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFeilmelding0;
         
         /// <summary>
         /// btnRegister control.
