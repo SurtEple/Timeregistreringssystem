@@ -702,7 +702,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="BrukerAdministrasjon\LeggTilBruker.aspx" />
-    <Content Include="OpprettTeam.aspx" />
     <Content Include="packages.config" />
     <Content Include="Account\Web.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -805,7 +804,9 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
-    <Content Include="TeamAdministrasjon.aspx" />
+    <Content Include="TeamAdministrasjon\OpprettTeam.aspx" />
+    <Content Include="TeamAdministrasjon\TeamAdministrasjon.aspx" />
+    <Content Include="TeamAdministrasjon\Teammedlemmer.aspx" />
     <Content Include="TeamLeder.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -902,13 +903,6 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Oppgave.cs" />
-    <Compile Include="OpprettTeam.aspx.cs">
-      <DependentUpon>OpprettTeam.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OpprettTeam.aspx.designer.cs">
-      <DependentUpon>OpprettTeam.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Prosjekt.cs" />
     <Compile Include="Prosjektadmin\EndreFase.aspx.cs">
@@ -976,12 +970,26 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Team.cs" />
-    <Compile Include="TeamAdministrasjon.aspx.cs">
+    <Compile Include="TeamAdministrasjon\OpprettTeam.aspx.cs">
+      <DependentUpon>OpprettTeam.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TeamAdministrasjon\OpprettTeam.aspx.designer.cs">
+      <DependentUpon>OpprettTeam.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TeamAdministrasjon\TeamAdministrasjon.aspx.cs">
       <DependentUpon>TeamAdministrasjon.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TeamAdministrasjon.aspx.designer.cs">
+    <Compile Include="TeamAdministrasjon\TeamAdministrasjon.aspx.designer.cs">
       <DependentUpon>TeamAdministrasjon.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TeamAdministrasjon\Teammedlemmer.aspx.cs">
+      <DependentUpon>Teammedlemmer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TeamAdministrasjon\Teammedlemmer.aspx.designer.cs">
+      <DependentUpon>Teammedlemmer.aspx</DependentUpon>
     </Compile>
     <Compile Include="TeamLeder.aspx.cs">
       <DependentUpon>TeamLeder.aspx</DependentUpon>
