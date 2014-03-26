@@ -31,10 +31,36 @@ namespace Timeregistreringssystem
                 {
                     labelTilbakemelding.Text = "";
 
-                    //Her burde nok mysqldatasource1 benyttes og ikke dbconnect
                     DBConnect database = new DBConnect();
                     bool ok = database.InsertTeam(new Team(0, teamlederId, "", teamNavn));
 
+                    if (ok)
+                    {
+                        //Vet ikke TeamId før etter team er satt inn i database
+                        //Henter derfor ut alle team og finner et med matchende
+                        //teamlederid og beskrivelse.
+
+                        List<Team> team = database.selectTeam();
+                        Team nyttTeam = null;
+
+                        foreach (Team t in team)
+                        {
+                            if (t.Beskrivelse.Equals(teamNavn))
+                            {
+                                if (t.TeamLederId == teamlederId)
+                                {
+                                    nyttTeam = t;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (nyttTeam != null)
+                            ok = database.KoblingBrukerTeam(nyttTeam.Id, nyttTeam.TeamLederId);
+                        else
+                            ok = false;
+                    }
+                    
                     if (ok)
                     {
                         Response.Redirect("TeamAdministrasjon.aspx");

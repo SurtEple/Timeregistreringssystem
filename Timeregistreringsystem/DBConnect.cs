@@ -887,7 +887,7 @@ namespace Timeregistreringssystem
                     string teamLeder = dr["Fornavn"] + " " + dr["Mellomnavn"] + " " + dr["Etternavn"];
                     teamLeder = Regex.Replace(teamLeder, @"\s+", " ");
                     string beskrivelse = dr["Beskrivelse"] + "";
-                    list.Add(new Team(id, teamLedId, beskrivelse, teamLeder));
+                    list.Add(new Team(id, teamLedId, teamLeder, beskrivelse));
 
                 }
                 dr.Close();
