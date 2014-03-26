@@ -16,6 +16,7 @@ namespace Timeregistreringssystem.Prosjektadmin
         //variabler
         private DBConnect connection;
         private string navn, oppsummering;
+        private int lederID;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -28,6 +29,7 @@ namespace Timeregistreringssystem.Prosjektadmin
             if (!String.IsNullOrEmpty(textBoxNavn.Text) || !String.IsNullOrEmpty(textBoxOppsummering.Text))
             {
                 //Hente input
+                lederID = lederDropDownList.Value;
                 navn = textBoxNavn.Text;
                 oppsummering = textBoxOppsummering.Text;
                 connection.insertProject(navn, oppsummering); 

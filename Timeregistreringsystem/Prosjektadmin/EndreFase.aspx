@@ -6,8 +6,8 @@
             <Columns>
                 <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
                 <asp:BoundField DataField="Navn" HeaderText="Navn" SortExpression="Navn" />
-                <asp:BoundField DataField="Dato_startet" HeaderText="Dato_startet" SortExpression="Dato_startet" />
-                <asp:BoundField DataField="Dato_sluttet" HeaderText="Dato_sluttet" SortExpression="Dato_sluttet" />
+                <asp:BoundField DataField="StartDato" HeaderText="StartDato" SortExpression="StartDato" />
+                <asp:BoundField DataField="SluttDato" HeaderText="SluttDato" SortExpression="SluttDato" />
                 <asp:CheckBoxField DataField="Aktiv" HeaderText="Aktiv" SortExpression="Aktiv" />
                 <asp:BoundField DataField="Beskrivelse" HeaderText="Beskrivelse" SortExpression="Beskrivelse" />
                 <asp:BoundField DataField="Prosjekt_ID" HeaderText="Prosjekt_ID" SortExpression="Prosjekt_ID" />
@@ -16,7 +16,9 @@
         <h1>Slett Fase</h1>
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" 
                         ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" 
-                        SelectCommand="SELECT * FROM Fase" UpdateCommand="&quot;UPDATE `HLVDKN_DB1`.`Bruker` SET `Stilling_ID` = '4' WHERE `Bruker`.`ID` = &quot; + txtbxID.Text + &quot;;&quot;;"></asp:SqlDataSource>
+                        SelectCommand="SELECT ID, Navn, DATE_FORMAT(Dato_startet , '%d.%m.%Y') AS &quot;StartDato&quot;, DATE_FORMAT(Dato_sluttet , '%d.%m.%Y') AS &quot;SluttDato&quot;,Aktiv, Beskrivelse, Prosjekt_ID FROM Fase
+
+WHERE ID &gt; 0" UpdateCommand="&quot;UPDATE `HLVDKN_DB1`.`Bruker` SET `Stilling_ID` = '4' WHERE `Bruker`.`ID` = &quot; + txtbxID.Text + &quot;;&quot;;"></asp:SqlDataSource>
         <asp:DropDownList ID="DropDownListSlettFase" runat="server" DataSourceID="SqlDataSourceDropDownDelFase" DataTextField="Navn" DataValueField="ID" Width="263px" Font-Size="Medium" CssClass="dropdown" OnSelectedIndexChanged="DropDownListSlettFase_SelectedIndexChanged">
         </asp:DropDownList>
         <asp:SqlDataSource ID="SqlDataSourceDropDownDelFase" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Navn, ID FROM Fase"></asp:SqlDataSource>

@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.Security;
 using Timeregistreringssystem.Models;
 
 namespace Timeregistreringssystem.Account
@@ -29,7 +30,15 @@ namespace Timeregistreringssystem.Account
             {
                 // Validate the user password
                 var manager = new UserManager();
+                string username = UserName.Text;
+                string password = Password.Text;
+                DBConnect connect = new DBConnect();
+                //Koble til database, sjekke verdier for input
+                Membership.ValidateUser(username,password);
+                //connect.CheckInnlogging(username,password);
+
                 ApplicationUser user = manager.Find(UserName.Text, Password.Text);
+
                 if (user != null)
                 {
                     IdentityHelper.SignIn(manager, user, RememberMe.Checked);

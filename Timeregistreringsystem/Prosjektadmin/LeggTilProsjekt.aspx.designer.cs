@@ -49,6 +49,24 @@ namespace Timeregistreringssystem.Prosjektadmin {
         protected global::System.Web.UI.WebControls.TextBox textBoxOppsummering;
         
         /// <summary>
+        /// lederDropDownList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList lederDropDownList;
+        
+        /// <summary>
+        /// Lederdropdown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource Lederdropdown;
+        
+        /// <summary>
         /// SqlDataSourceNyttProsjektNesteFaseDropDown control.
         /// </summary>
         /// <remarks>

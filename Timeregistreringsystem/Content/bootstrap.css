@@ -1820,7 +1820,6 @@ select.input-lg {
 }
 textarea.input-lg,
 select[multiple].input-lg {
-  height: auto;
 }
 .has-feedback {
   position: relative;

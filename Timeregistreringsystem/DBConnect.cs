@@ -939,6 +939,16 @@ namespace Timeregistreringssystem
                 return list;
         }
 
+        public bool CheckLogin(string brukernavn, string passordmd5)
+        {
+            if (this.OpenConnection() == true)
+            {
+                   
+            }
+
+            return false;
+        }
+
         /**
          * Sjekk innlogging
          * @author Martin
@@ -958,7 +968,9 @@ namespace Timeregistreringssystem
                     salt = dr["Salt"] + "";
                 }
                 dr.Close();
+
                 string passWord = GetHashString(salt + passord);
+
                 string query2 = "SELECT * FROM Bruker WHERE Passord = " + "'" + passWord + "'";
                 MySqlCommand cmd2 = new MySqlCommand(query2, connection);
                 MySqlDataReader dr2 = cmd2.ExecuteReader();
