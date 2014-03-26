@@ -55,7 +55,7 @@ namespace Timeregistreringssystem.Prosjektadmin
              try
             {
                 //Sjekke etter tom/null input
-                if (!String.IsNullOrEmpty(DropDownListEditProsjekt.SelectedValue) || !String.IsNullOrEmpty(textBoxNewNavn.Text) ||
+                if (!String.IsNullOrEmpty(DropDownListEditProsjekt.SelectedValue) && !String.IsNullOrEmpty(textBoxNewNavn.Text) &&
                     !String.IsNullOrEmpty(DropDownListEditProsjekt.Text) )
                 {
                       System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();                 

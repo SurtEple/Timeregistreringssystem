@@ -3,14 +3,20 @@
     <h1>Prosjekt</h1>
 
     <div>
-        <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSource1" CssClass="table">
+        <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSource1" CssClass="table" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="ID">
+            <Columns>
+                <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
+                <asp:BoundField DataField="Navn" HeaderText="Navn" SortExpression="Navn" />
+                <asp:BoundField DataField="Oppsummering" HeaderText="Oppsummering" SortExpression="Oppsummering" />
+                <asp:BoundField DataField="Neste_Fase" HeaderText="Neste_Fase" SortExpression="Neste_Fase" />
+            </Columns>
         </asp:GridView>
        
 
         <h1>Slett Prosjekt</h1>
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" 
                         ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" 
-                        SelectCommand="SELECT ID, Navn, Oppsummering, Neste_Fase FROM Prosjekt"></asp:SqlDataSource>
+                        SelectCommand="SELECT ID, Navn, Oppsummering, Neste_Fase FROM Prosjekt" DeleteCommand="DELETE FROM Prosjekt WHERE (ID = @ID)"></asp:SqlDataSource>
 
         <asp:DropDownList ID="DropDownListSlettProsjekt" runat="server" DataSourceID="SqlDataSourceDropDownDelProject" DataTextField="Navn" DataValueField="ID" Height="34px" Width="141px" CssClass="dropdown">
         </asp:DropDownList>

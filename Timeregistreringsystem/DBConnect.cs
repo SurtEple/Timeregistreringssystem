@@ -147,7 +147,7 @@ namespace Timeregistreringssystem
         * Nytt prosjekt
         * @author Thomas & Thea
        */
-        public void insertProject(string navn, string oppsummering)
+        public void InsertProject(string navn, string oppsummering, int ansvarligID)
         {
 
 
@@ -155,7 +155,7 @@ namespace Timeregistreringssystem
             {
 
                 //Create Command
-                String insertString = String.Format("INSERT INTO Prosjekt(Navn, Oppsummering) VALUES ('{0}','{1}')", navn, oppsummering);
+                String insertString = String.Format("INSERT INTO Prosjekt(Navn, Oppsummering, ansvarligID) VALUES ('{0}','{1}',{2})", navn, oppsummering, ansvarligID);
                 MySqlCommand insertCommand = new MySqlCommand(insertString, connection);
 
                 try

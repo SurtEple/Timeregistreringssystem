@@ -26,13 +26,14 @@ namespace Timeregistreringssystem.Prosjektadmin
         protected void btnLagre_Click(object sender, EventArgs e)
         {
             //Sjekke etter tom/null input
-            if (!String.IsNullOrEmpty(textBoxNavn.Text) || !String.IsNullOrEmpty(textBoxOppsummering.Text))
+            if (!String.IsNullOrEmpty(textBoxNavn.Text) && !String.IsNullOrEmpty(textBoxOppsummering.Text) 
+                && !String.IsNullOrEmpty(lederDropDownList.SelectedValue))
             {
                 //Hente input
-                //lederID = lederDropDownList.Value;
+                lederID = Convert.ToInt32(lederDropDownList.SelectedValue);
                 navn = textBoxNavn.Text;
                 oppsummering = textBoxOppsummering.Text;
-                connection.insertProject(navn, oppsummering); 
+                connection.InsertProject(navn, oppsummering, lederID); 
                 Page.Response.Redirect(Page.Request.Url.ToString(), true);
 
                 

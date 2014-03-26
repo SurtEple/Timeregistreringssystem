@@ -711,6 +711,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Prosjektadmin\EndreFase.aspx" />
+    <Content Include="Prosjektadmin\EndreMilepael.aspx" />
     <Content Include="Prosjektadmin\EndreProsjekt.aspx" />
     <Content Include="Prosjektadmin\Faser.aspx" />
     <Content Include="Prosjektadmin\KobleProsjektTeam.aspx" />
@@ -925,6 +926,13 @@
     </Compile>
     <Compile Include="Prosjektadmin\EndreFase.aspx.designer.cs">
       <DependentUpon>EndreFase.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Prosjektadmin\EndreMilepael.aspx.cs">
+      <DependentUpon>EndreMilepael.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Prosjektadmin\EndreMilepael.aspx.designer.cs">
+      <DependentUpon>EndreMilepael.aspx</DependentUpon>
     </Compile>
     <Compile Include="Prosjektadmin\EndreProsjekt.aspx.cs">
       <DependentUpon>EndreProsjekt.aspx</DependentUpon>
