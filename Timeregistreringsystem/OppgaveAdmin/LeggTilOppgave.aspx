@@ -3,20 +3,20 @@
 
     <h1>Oppgaver</h1>
 
-    <asp:SqlDataSource ID="SqlDataSourceOppgave" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Prosjekt_ID, Foreldreoppgave_ID, EstimertTid AS `Estimert tid`, Tittel, Beskrivelse, Ferdig, Brukt_tid AS `Brukt tid`, Dato_begynt AS `Start dato`, Dato_ferdig AS `Slutt dato` FROM Oppgave"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="SqlDataSourceOppgave" runat="server" ConnectionString="server=kark.hin.no;user id=halvardk;password=halvardk123;database=HLVDKN_DB1" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Prosjekt_ID, Foreldreoppgave_ID, EstimertTid, Tittel, Beskrivelse, Ferdig, Brukt_tid, Dato_begynt, Dato_ferdig FROM Oppgave"></asp:SqlDataSource>
 
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSourceOppgave">
         <Columns>
             <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
             <asp:BoundField DataField="Prosjekt_ID" HeaderText="Prosjekt_ID" SortExpression="Prosjekt_ID" />
             <asp:BoundField DataField="Foreldreoppgave_ID" HeaderText="Foreldreoppgave_ID" SortExpression="Foreldreoppgave_ID" />
-            <asp:BoundField DataField="Estimert tid" HeaderText="Estimert tid" SortExpression="Estimert tid" />
+            <asp:BoundField DataField="EstimertTid" HeaderText="EstimertTid" SortExpression="EstimertTid" />
             <asp:BoundField DataField="Tittel" HeaderText="Tittel" SortExpression="Tittel" />
             <asp:BoundField DataField="Beskrivelse" HeaderText="Beskrivelse" SortExpression="Beskrivelse" />
             <asp:CheckBoxField DataField="Ferdig" HeaderText="Ferdig" SortExpression="Ferdig" />
-            <asp:BoundField DataField="Brukt tid" HeaderText="Brukt tid" SortExpression="Brukt tid" />
-            <asp:BoundField DataField="Start dato" HeaderText="Start dato" SortExpression="Start dato" />
-            <asp:BoundField DataField="Slutt dato" HeaderText="Slutt dato" SortExpression="Slutt dato" />
+            <asp:BoundField DataField="Brukt_tid" HeaderText="Brukt_tid" SortExpression="Brukt_tid" />
+            <asp:BoundField DataField="Dato_begynt" dataformatstring="{0:d}" htmlencode="false" HeaderText="Dato_begynt" SortExpression="Dato_begynt" />
+            <asp:BoundField DataField="Dato_ferdig" dataformatstring="{0:d}" htmlencode="false" HeaderText="Dato_ferdig" SortExpression="Dato_ferdig" />
         </Columns>
     </asp:GridView>
 
@@ -96,7 +96,7 @@
          dpStart.datepicker({
              changeMonth: true,
              changeYear: true,
-             format: "dd.mm.yyyy",
+             format: "yyyy-mm-dd",
              language: "tr"
          }).on('changeDate', function (ev) {
              $(this).blur();
@@ -106,7 +106,7 @@
          dpStop.datepicker({
              changeMonth: true,
              changeYear: true,
-             format: "dd.mm.yyyy",
+             format: "yyyy-mm-dd",
              language: "tr"
          }).on('changeDate', function (ev) {
              $(this).blur();
