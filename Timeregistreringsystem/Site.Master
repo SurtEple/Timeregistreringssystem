@@ -62,7 +62,14 @@
                          </li>
 
                         <!-- Legg til oppgave -->
-                        <li><a runat="server" href="/OppgaveAdmin/LeggTilOppgave">Oppgaveadministrasjon</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Oppgaveadministrasjon <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a runat="server" href="/OppgaveAdmin/LeggTilOppgave">Legg til oppgave</a></li>
+                                <li><a runat="server" href="/OppgaveAdmin/EndreOppgave">Rediger oppgave</a></li>
+                            </ul>
+                        </li>
+                        
 
                         <!-- Prosjektadmin -->
                          <li class="dropdown">
