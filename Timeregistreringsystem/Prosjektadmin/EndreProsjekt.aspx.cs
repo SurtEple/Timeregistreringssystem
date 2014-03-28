@@ -5,81 +5,139 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-
+/**
+ * Endre Prosjekt
+ * @author Thomas og Thea, Surt Eple
+ */ 
 namespace Timeregistreringssystem.Prosjektadmin
 {
     public partial class EndreProsjekt : System.Web.UI.Page
     {
-        //variabler
-       DBConnect connection;
-        private String nyttNavn, nyOppsummering;
-        int nyNesteFase;
-        private bool  deleteOK = false, editOK = false;
+       
+        private DBConnect connection;
+        private string nyttNavn, nyOppsummering, navn, oppsummering;
+        private int nyNesteFase, prosjektAnsvarlig, nyMilestone, id;
+        private Parameter faseParam, milestoneParam;
        
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+            /* Bruker parametere i datasourcene til dropdownlistene for Ny Neste Fase og Ny Neste Milepæl
+            * Slik at brukeren ikke kan sette en fase/milepæl til prosjektet om prosjektet ikke er registrert med den fasen/milepælen
+            * Noen enklere måte å gjøre det på? Fiks gjerne.
+            */ 
+                
+            faseParam = SqlDataSourceNyNesteFase.SelectParameters["Prosjekt_ID"]; //SELECT... FROM Fase WHERE Prosjekt_ID=@Prosjekt_ID
+            if (faseParam == null)
+            SqlDataSourceNyNesteFase.SelectParameters.Add("Prosjekt_ID", "0"); //SELECT... FROM Fase WHERE Prosjekt_ID=0
+
+            milestoneParam = SqlDataSourceNyMilestone.SelectParameters["Prosjekt_ID"]; //SELECT... FROM Milepael WHERE ProsjektID=@Prosjekt_ID
+
+            if (milestoneParam == null)
+            SqlDataSourceNyMilestone.SelectParameters.Add("Prosjekt_ID", "0"); //SELECT... FROM Milepael WHERE ProsjektID=0
+
             connection = new DBConnect();
-        }
 
-        protected void btnSlett_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                //Sjekke etter tom/null input
-                if (!String.IsNullOrEmpty(DropDownListSlettProsjekt.SelectedValue))
-                {
-                    System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
-                    // NB!!! trykke på slettknapp, si nei, trykke slettknapp igjen, så popper ikke messagebox opp, men ligger minimized.
-                    dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil slette prosjekt " + DropDownListSlettProsjekt.SelectedItem," Slette prosjekt", System.Windows.Forms.MessageBoxButtons.YesNo);
-                   //bekreftelse på sletting
-                    if (dr == System.Windows.Forms.DialogResult.Yes)
-                    {
-                       
-                        int id = Convert.ToInt32(DropDownListSlettProsjekt.SelectedValue);
-                        deleteOK = connection.delProject(id); //lagre boolsk returverdi     
-                        System.Windows.Forms.MessageBox.Show("Sletting gjennomført"); 
-                        Page.Response.Redirect(Page.Request.Url.ToString(), true);
-                       
-                    }
-                    else { System.Windows.Forms.MessageBox.Show("Sletting ikke gjennomført"); Page.Response.Redirect(Page.Request.Url.ToString(), true); }    
-                }
-                else resultLabel.Text = "Feltene kan ikke være tomme!";
-            }
-            catch (FormatException formatException) { resultLabel.Text = "Format Exception: " + formatException.Message; }
-            catch (OverflowException overFlowException) { resultLabel.Text = "Overflow Exception: " + overFlowException.Message; }
-            catch (Exception ex) { resultLabel.Text = "Exception: " + ex.Message; }
         }
-
+        
+        /// <summary>
+        /// Eventmetode for Lagre-knappen
+        /// </summary>
         protected void btnLagreNewProject_Click(object sender, EventArgs e)
         {
              try
             {
-                //Sjekke etter tom/null input
-                if (!String.IsNullOrEmpty(DropDownListEditProsjekt.SelectedValue) && !String.IsNullOrEmpty(textBoxNewNavn.Text) &&
-                    !String.IsNullOrEmpty(DropDownListEditProsjekt.Text) )
+                //Sjekke etter tom/null input i non-optonal felter
+                if (!String.IsNullOrEmpty(textBoxNewNavn.Text.Trim()) && !String.IsNullOrEmpty(textBoxNewOppsummering.Text.Trim())
+                    &&  !String.IsNullOrEmpty(idLabel.Text.Trim()) )  
                 {
-                      System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();                 
-                    dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil redigere prosjekt " + DropDownListEditProsjekt.SelectedItem," Redigere prosjekt", System.Windows.Forms.MessageBoxButtons.YesNo);
-                   //bekreftelse på redigering
+                    //Hent verdier   
+                    nyttNavn = textBoxNewNavn.Text; 
+                    nyOppsummering = textBoxNewOppsummering.Text;
+                    id = Convert.ToInt32(idLabel.Text);
+                    prosjektAnsvarlig = Convert.ToInt32(DropDownListAnsvarlig.SelectedValue); //Er aldri null
+
+                    //Bruker dummy items i tilfelle prosjektet ikke har noen faser eller milepæler      
+                    if (String.IsNullOrEmpty(DropDownListMilestone.SelectedValue.Trim()))
+                        nyMilestone = 0; //Dummy-milepæl
+                    else
+                        nyMilestone = Convert.ToInt32(DropDownListMilestone.SelectedValue);
+
+                    if (String.IsNullOrEmpty(DropDownListNyNesteFase.SelectedValue.Trim()))
+                        nyNesteFase = 0; //Dummy-fase
+                    else
+                        nyNesteFase = Convert.ToInt32(DropDownListNyNesteFase.SelectedValue);
+                    
+
+                    /**Få bekreftelse fra brukeren via MessageBoxpå at han/hun ønsker å redigere
+                    *Noen ganger bugger det og den popper ikke opp ordentlig, vet ikke hvorfor.
+                    *Det skjer om du allerede har trykket på "Lagre" og så trykket "No", og så trykke "Lagre" igjen.
+                    */
+                    string dialogString = String.Format("Er du sikker på at du vil redigere prosjektet {0} med Ansvarlig={1}, Milepæl={2}, Fase={3}, id={4}", 
+                        nyttNavn, prosjektAnsvarlig, nyMilestone, nyNesteFase,id);
+                    System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
+
+                    dr = System.Windows.Forms.MessageBox.Show(dialogString, "Endre Prosjekt", System.Windows.Forms.MessageBoxButtons.YesNo);
+                    //bekreftelse på redigering
                     if (dr == System.Windows.Forms.DialogResult.Yes)
-                    {
-                        int id = Convert.ToInt32(DropDownListEditProsjekt.SelectedValue);
-                        nyttNavn = textBoxNewNavn.Text;
-                        nyOppsummering = textBoxNewOppsummering.Text;
-                        nyNesteFase = Convert.ToInt32(DropDownListNyNesteFase.SelectedValue);   
-                      
-                        editOK = connection.editProject(id, nyttNavn, nyOppsummering, nyNesteFase); //lagre boolsk returverdi
-                        Page.Response.Redirect(Page.Request.Url.ToString(), true);
+                   {
+                        connection.EditProject(id, nyttNavn, nyOppsummering, nyNesteFase, prosjektAnsvarlig, nyMilestone); //Metode i DBConnect
+                        Page.Response.Redirect(Page.Request.Url.ToString(), true); //Refresh siden 
                     }
                 }
-                else resultLabel0.Text = "Feltene kan ikke være tomme!";
+                else resultLabel.Text = "Alle feltene må fylles ut!";
             }
 
-             catch (FormatException formatException) { resultLabel0.Text = "Format Exception: " + formatException.Message; }
-             catch (OverflowException overFlowException) { resultLabel0.Text = "Overflow Exception: " + overFlowException.Message; }
-             catch (Exception ex) { resultLabel0.Text = "Exception: " + ex.Message; }
+             catch (FormatException formatException) { resultLabel.Text = "Format Exception: " + formatException.Message; }
+             catch (OverflowException overFlowException) { resultLabel.Text = "Overflow Exception: " + overFlowException.Message; }
+             catch (Exception ex) { resultLabel.Text = "Exception: " + ex.Message; }
 
         
+        }
+        /// <summary>
+        /// Eventmetode for 
+        /// </summary>
+        protected void GridViewEditProject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                GridViewRow row = GridViewEditProject.SelectedRow;
+
+                //hente verdier fra den valgte raden
+                id = Convert.ToInt32(row.Cells[1].Text); 
+                navn = row.Cells[2].Text.ToString();
+                oppsummering = row.Cells[4].Text.ToString();
+
+                textBoxNewNavn.Text = navn;
+                textBoxNewOppsummering.Text = oppsummering;
+                idLabel.Text = id.ToString();
+
+                SqlDataSourceNyNesteFase.SelectParameters.Remove(faseParam);
+                SqlDataSourceNyMilestone.SelectParameters.Remove(milestoneParam);
+
+                SqlDataSourceNyNesteFase.SelectParameters.Add("Prosjekt_ID", id.ToString());
+                SqlDataSourceNyMilestone.SelectParameters.Add("Prosjekt_ID", id.ToString());
+
+            }
+            catch(Exception ex)
+            {
+                //TODO
+            }
+     
+        }
+
+        protected void GridViewEditProject_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            String tname = (string)e.Values["Navn"].ToString();
+
+                System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
+                dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil slette prosjektet " +  tname + " ?", "Slette Prosjekt", System.Windows.Forms.MessageBoxButtons.YesNo);
+                //bekreftelse på redigering
+                if (dr == System.Windows.Forms.DialogResult.No)
+                {
+                    e.Cancel=true;
+                    
+                }    
         }
     }
 }

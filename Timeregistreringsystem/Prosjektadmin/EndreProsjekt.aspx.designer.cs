@@ -13,13 +13,13 @@ namespace Timeregistreringssystem.Prosjektadmin {
     public partial class EndreProsjekt {
         
         /// <summary>
-        /// GridView1 control.
+        /// GridViewEditProject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.WebControls.GridView GridViewEditProject;
         
         /// <summary>
         /// SqlDataSource1 control.
@@ -31,49 +31,31 @@ namespace Timeregistreringssystem.Prosjektadmin {
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
         
         /// <summary>
-        /// DropDownListSlettProsjekt control.
+        /// idLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListSlettProsjekt;
+        protected global::System.Web.UI.WebControls.Label idLabel;
         
         /// <summary>
-        /// SqlDataSourceDropDownDelProject control.
+        /// DropDownListAnsvarlig control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceDropDownDelProject;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListAnsvarlig;
         
         /// <summary>
-        /// resultLabel control.
+        /// SqlDataSourceProsjektAnsvarlig control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label resultLabel;
-        
-        /// <summary>
-        /// btnSlett control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSlett;
-        
-        /// <summary>
-        /// DropDownListEditProsjekt control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListEditProsjekt;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceProsjektAnsvarlig;
         
         /// <summary>
         /// textBoxNewNavn control.
@@ -112,6 +94,24 @@ namespace Timeregistreringssystem.Prosjektadmin {
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceNyNesteFase;
         
         /// <summary>
+        /// DropDownListMilestone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListMilestone;
+        
+        /// <summary>
+        /// SqlDataSourceNyMilestone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceNyMilestone;
+        
+        /// <summary>
         /// btnLagreNewProject control.
         /// </summary>
         /// <remarks>
@@ -121,12 +121,12 @@ namespace Timeregistreringssystem.Prosjektadmin {
         protected global::System.Web.UI.WebControls.Button btnLagreNewProject;
         
         /// <summary>
-        /// resultLabel0 control.
+        /// resultLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label resultLabel0;
+        protected global::System.Web.UI.WebControls.Label resultLabel;
     }
 }

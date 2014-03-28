@@ -219,54 +219,45 @@ namespace Timeregistreringssystem
             return check;
         }//Delete project
 
-        /**
-       * Edit prosjekt
-       * @author Thomas & Thea
-       */
-        public bool editProject(int id, string nyttNavn, string nyOppsummering, int nyNesteFase)
+
+
+       /// <author= "Thomas og Thea, Surt Eple"></author> 
+       /// <referenced inCode="EndreProsjekt.aspx.cs"></referenced>
+       /// <referenced inSite="/Prosjektadmin/EndreProsjekt.aspx"></referenced>
+       /// <summary>
+       /// Redigere prosjekt, oppdaterer tabell Prosjekt
+       /// </summary>
+       /// <param name="id"></param>
+       /// <param name="nyttNavn"></param>
+       /// <param name="nyOppsummering"></param>
+       /// <param name="nyNesteFase"></param>
+       /// <param name="prosjektAnsvarlig"></param>
+       /// <param name="nyMilepael"></param>
+        public void EditProject(int id, string nyttNavn, string nyOppsummering, int nyNesteFase, int prosjektAnsvarlig, int nyMilepael)
         {
-
-            bool check = false;
-            int result = 0;
-
+          
             if (this.OpenConnection())
             {
-
                 //Create Command
-
-                string editString = String.Format("UPDATE Prosjekt SET Navn = '{0}', Oppsummering = '{1}', Neste_Fase='{2}' WHERE ID = {3}",
-                    nyttNavn, nyOppsummering, nyNesteFase, id);
+                string editString = String.Format("UPDATE Prosjekt SET Navn = '{0}', Oppsummering = '{1}', Neste_Fase={2}, ansvarligID = {3}, Neste_Milepæl={4} WHERE ID = {5}",
+                    nyttNavn, nyOppsummering, nyNesteFase, prosjektAnsvarlig, nyMilepael, id);
 
                 MySqlCommand editCommand = new MySqlCommand(editString, connection);
 
                 try
                 {
-
-                    editCommand.Prepare(); //??
-                    result = editCommand.ExecuteNonQuery();
-                    check = true;
+                    editCommand.ExecuteNonQuery();
                 }
                 catch (Exception e)
                 {
-
                     Debug.WriteLine(e.Message);
-                    check = false;
                 }
                 finally
                 {
-                    if (result == 0)
-                    {
-                        editCommand.Cancel();
-                        check = false;
-
-                    }
-
-                    //close Connection
                     this.CloseConnection();
                 }
 
             }
-            return check;
         }
 
         /**

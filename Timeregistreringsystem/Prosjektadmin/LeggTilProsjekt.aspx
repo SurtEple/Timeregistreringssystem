@@ -17,7 +17,9 @@
 
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Prosjekt.ID, Prosjekt.Navn, Bruker.Brukernavn AS Ansvarlig, Prosjekt.Oppsummering, 
 
-(SELECT Beskrivelse FROM Fase WHERE aktiv=true AND Prosjekt_ID = Prosjekt.ID) AS &quot;Beskrivelse Aktiv Fase&quot;, Milepael.Beskrivelse AS &quot;Beskrivelse neste milepæl&quot;,
+(SELECT Beskrivelse FROM Fase WHERE aktiv=true AND Prosjekt_ID = Prosjekt.ID) AS &quot;Beskrivelse Aktiv Fase&quot;, 
+
+Milepael.Beskrivelse AS &quot;Beskrivelse neste milepæl&quot;,
 Fase.Beskrivelse AS &quot;Beskrivelse Neste Fase&quot;
 
 FROM Prosjekt, Fase, Bruker, Milepael 
@@ -41,17 +43,18 @@ ORDER BY Prosjekt.ID"></asp:SqlDataSource>
                 </td>
             </tr>
             <tr>
-                <td class="auto-style4">Oppsummering:</td>
-                <td class="auto-style5">
+                <td class="auto-style4" style="height: 195px">Oppsummering:</td>
+                <td class="auto-style5" style="height: 195px">
                     <asp:TextBox ID="textBoxOppsummering" runat="server" Height="151px"  TextMode="MultiLine" Width="239px" CssClass="input-lg"></asp:TextBox>
                 </td>
             </tr>
             <tr>
                 <td class="auto-style4">Prosjekansvarlig</td>
                 <td class="auto-style5">
-                    <asp:DropDownList ID="lederDropDownList" runat="server" DataSourceID="Lederdropdown" DataTextField="Brukernavn" DataValueField="ID">
+                    &nbsp;<asp:DropDownList ID="lederDropDownList" runat="server" DataSourceID="Lederdropdown" DataTextField="Brukernavn" DataValueField="ID" CssClass="dropdown">
                     </asp:DropDownList>
-                    <asp:SqlDataSource ID="Lederdropdown" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Brukernavn FROM Bruker"></asp:SqlDataSource>
+                    <asp:SqlDataSource ID="Lederdropdown" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Brukernavn FROM Bruker
+ORDER BY ID"></asp:SqlDataSource>
                 </td>
             </tr>
 <asp:SqlDataSource ID="SqlDataSourceNyttProsjektNesteFaseDropDown" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Navn FROM Fase"></asp:SqlDataSource>
