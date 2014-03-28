@@ -221,7 +221,7 @@ namespace Timeregistreringssystem
 
 
 
-       /// <author= "Thomas og Thea, Surt Eple"></author> 
+       /// <author>Thomas og Thea, Surt Eple</author> 
        /// <referenced inCode="EndreProsjekt.aspx.cs"></referenced>
        /// <referenced inSite="/Prosjektadmin/EndreProsjekt.aspx"></referenced>
        /// <summary>
@@ -308,12 +308,52 @@ namespace Timeregistreringssystem
 
         #endregion Prosjekt
 
+        #region milepæl
+        /**
+      * Legger til ny milepæl
+      * @author Thomas
+      */
+        public void InsertMilepael(string beskrivelse, int prosjektID)
+        {
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string insertString = String.Format("INSERT INTO Milepael (Beskrivelse, ProsjektID)" +
+               " VALUES ({0}, '{1}')", prosjektID, beskrivelse);
+                MySqlCommand insertCommand = new MySqlCommand(insertString, connection);
+
+                try
+                {
+                    insertCommand.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+
+        }
+        #endregion milepæl
         #region Fase
 
-        /**
-        * Legger til ny fase
-        * @author Thea
-        */
+
+        /// <author>Thea, Surt Eple</author> 
+        /// <referenced inCode="LeggTilFase.aspx.cs"></referenced>
+        /// <referenced inSite="/Prosjektadmin/LeggTilFase.aspx"></referenced>
+        /// <summary>
+        /// Setter inn en ny fase, oppdaterer tabellen Fase
+        /// </summary>
+        /// <param name="_navn"></param>
+        /// <param name="_startDato"></param>
+        /// <param name="_sluttDato"></param>
+        /// <param name="_beskrivelse"></param>
+        /// <param name="_prosjektID"></param>
         public void InsertFase(string _navn, string _startDato, string _sluttDato, string _beskrivelse, int _prosjektID)
         {
 

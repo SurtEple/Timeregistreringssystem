@@ -718,6 +718,7 @@
     <Content Include="Prosjektadmin\Faser.aspx" />
     <Content Include="Prosjektadmin\KobleProsjektTeam.aspx" />
     <Content Include="Prosjektadmin\LeggTilFase.aspx" />
+    <Content Include="Prosjektadmin\LeggTilMilepael.aspx" />
     <Content Include="Prosjektadmin\LeggTilProsjekt.aspx" />
     <Content Include="Prosjektadmin\Overblikk.aspx" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
@@ -971,6 +972,13 @@
     </Compile>
     <Compile Include="Prosjektadmin\LeggTilFase.aspx.designer.cs">
       <DependentUpon>LeggTilFase.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Prosjektadmin\LeggTilMilepael.aspx.cs">
+      <DependentUpon>LeggTilMilepael.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Prosjektadmin\LeggTilMilepael.aspx.designer.cs">
+      <DependentUpon>LeggTilMilepael.aspx</DependentUpon>
     </Compile>
     <Compile Include="Prosjektadmin\LeggTilProsjekt.aspx.cs">
       <DependentUpon>LeggTilProsjekt.aspx</DependentUpon>

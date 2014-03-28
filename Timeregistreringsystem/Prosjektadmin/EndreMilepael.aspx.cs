@@ -13,10 +13,5 @@ namespace Timeregistreringssystem.Prosjektadmin
         {
 
         }
-
-        protected void btnLagreNewMilestone_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
