@@ -1152,6 +1152,80 @@ namespace Timeregistreringssystem
         }
 
         /**
+        * Henter estimert sluttdato for den ferdige oppgaven fra databasen ved hjelp av id
+        * @author Bjørn
+        */
+        public string ferdigOppgaveHentSluttDato(int id)
+        {
+            string navn = "ingen info";
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string queryString = string.Format(
+                    "SELECT Dato_ferdig FROM Oppgave WHERE id = '{0}'"
+                    , id);
+
+                MySqlCommand command = new MySqlCommand(queryString, connection);
+                try
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        navn = dataReader["Dato_ferdig"] + "";
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+            return navn;
+        }
+
+       /**
+       * Henter brukt tid for den ferdige oppgaven fra databasen ved hjelp av id
+       * @author Bjørn
+       */
+        public string ferdigOppgaveHentBruktTid(int id)
+        {
+            string navn = "ingen info";
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string queryString = string.Format(
+                    "SELECT Brukt_tid FROM Oppgave WHERE id = '{0}'"
+                    , id);
+
+                MySqlCommand command = new MySqlCommand(queryString, connection);
+                try
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        navn = dataReader["Brukt_tid"] + "";
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+            return navn;
+        }
+
+        /**
          * Sette oppgave til å være ferdig
          * @author Bjørn
          */

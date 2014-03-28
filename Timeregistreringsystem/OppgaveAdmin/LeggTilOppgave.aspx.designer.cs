@@ -40,24 +40,6 @@ namespace Timeregistreringssystem.OppgaveAdmin {
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceHovedOppgaveDropDown;
         
         /// <summary>
-        /// lblForeldreOppgave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblForeldreOppgave;
-        
-        /// <summary>
-        /// ddlForeldreOppgave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlForeldreOppgave;
-        
-        /// <summary>
         /// lblProsjekt control.
         /// </summary>
         /// <remarks>
@@ -74,6 +56,24 @@ namespace Timeregistreringssystem.OppgaveAdmin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlForeldreProsjekt;
+        
+        /// <summary>
+        /// lblForeldreOppgave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblForeldreOppgave;
+        
+        /// <summary>
+        /// ddlForeldreOppgave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlForeldreOppgave;
         
         /// <summary>
         /// SqlDataSourceForeldreProsjekt control.

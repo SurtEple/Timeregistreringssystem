@@ -21,7 +21,8 @@ namespace Timeregistreringssystem.OppgaveAdmin
         {
             //Sjekke etter tom/null input
             if (!String.IsNullOrWhiteSpace(tbxOppgaveTittel.Text) && !String.IsNullOrWhiteSpace(tbxOppgaveBeskrivelse.Text)
-                && !String.IsNullOrWhiteSpace(tbxOppgaveEstimertTid.Text) && !String.IsNullOrWhiteSpace(ddlForeldreProsjekt.SelectedValue))
+                && !String.IsNullOrWhiteSpace(tbxOppgaveEstimertTid.Text) && !String.IsNullOrWhiteSpace(ddlForeldreProsjekt.SelectedValue)
+                && !String.IsNullOrWhiteSpace(dateStopTextBox.Text))
             {
                 connection = new DBConnect();
                 string tittel = tbxOppgaveTittel.Text;
@@ -38,7 +39,7 @@ namespace Timeregistreringssystem.OppgaveAdmin
                 lblTilbakemelding.Text = "Oppgaven er nå lagt til!";
                 Page.Response.Redirect(Page.Request.Url.ToString(), true);
             }
-            else lblTilbakemelding.Text = "Alle feltene merket med * må være fyllt ut!";
+            else lblTilbakemelding.Text = "Alle feltene må være fyllt ut!";
         }
     }
 }

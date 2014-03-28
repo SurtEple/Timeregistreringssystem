@@ -25,20 +25,23 @@
         
      <asp:SqlDataSource ID="SqlDataSourceHovedOppgaveDropDown" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Prosjekt_ID, Tittel FROM Oppgave"></asp:SqlDataSource>
         
+    <br />
+         <asp:Label ID="lblProsjekt" Text="* Velg prosjektet denne oppgaven tilhører" runat="server"></asp:Label>
+    <br />
+    <asp:DropDownList ID="ddlForeldreProsjekt" runat="server" DataSourceID="SqlDataSourceForeldreProsjekt" DataTextField="Navn" DataValueField="ID" Height="26px" Width="323px">
+                    </asp:DropDownList>
+
      <br />
 
     <br />
 
-        <asp:Label ID="lblForeldreOppgave" Text="Velg Hovedoppgaven denne oppgave skal tilhøre" runat="server"></asp:Label>
+        <asp:Label ID="lblForeldreOppgave" Text="Velg Hovedoppgaven denne oppgaven skal tilhøre" runat="server"></asp:Label>
         <br />
         <asp:DropDownList ID="ddlForeldreOppgave" runat="server" DataSourceID="SqlDataSourceHovedOppgaveDropDown" DataTextField="Tittel" DataValueField="ID" AppendDataBoundItems="True" Height="26px" Width="323px">
                     </asp:DropDownList>
         <br />
 
-    <asp:Label ID="lblProsjekt" Text="* Velg prosjektet denne oppgave tilhører" runat="server"></asp:Label>
-    <br />
-    <asp:DropDownList ID="ddlForeldreProsjekt" runat="server" DataSourceID="SqlDataSourceForeldreProsjekt" DataTextField="Navn" DataValueField="ID" Height="26px" Width="323px">
-                    </asp:DropDownList>
+   
 
 
     <asp:SqlDataSource ID="SqlDataSourceForeldreProsjekt" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Navn FROM Prosjekt"></asp:SqlDataSource>
@@ -50,29 +53,29 @@
     <table>
         <tr>
             <td>Tittel: </td>
-            <td> <asp:TextBox ID="tbxOppgaveTittel" runat="server"></asp:TextBox></td>
+            <td> <asp:TextBox ID="tbxOppgaveTittel" runat="server" Width="190px"></asp:TextBox></td>
         </tr>
         <tr>
             <td>Beskrivelse: </td>
-            <td><asp:TextBox ID="tbxOppgaveBeskrivelse" runat="server" TextMode="MultiLine"></asp:TextBox></td>
+            <td><asp:TextBox ID="tbxOppgaveBeskrivelse" runat="server" TextMode="MultiLine" Width="190px"></asp:TextBox></td>
         </tr>
         <tr>
             <td>Estimert tid: </td>
-            <td><asp:TextBox ID="tbxOppgaveEstimertTid" runat="server" TextMode="Number"></asp:TextBox> Timer</td>
+            <td><asp:TextBox ID="tbxOppgaveEstimertTid" runat="server" TextMode="Number" Width="190px"></asp:TextBox> Timer</td>
         </tr>
         <tr>
             <td class="auto-style7" style="width: 161px; height: 53px">Dato Start</td>
                 <td class="modal-sm" style="width: 290px; height: 53px">
-                    <asp:TextBox ID="dateStartTextBox" runat="server" Height="28px" CssClass="input-sm">Klikk her</asp:TextBox>
+                    <asp:TextBox ID="dateStartTextBox" runat="server" Height="28px" CssClass="input-sm" Width="125px">Klikk her</asp:TextBox>
                  
                     <asp:Image ID="startCal" runat="server" ImageUrl="~/Content/glyphicons/png/glyphicons_045_calendar.png" />
                  
                 </td>
         </tr> 
         <tr>
-                <td class="auto-style7" style="width: 161px; height: 57px">Dato Slutt</td>
+                <td class="auto-style7" style="width: 161px; height: 57px"> Estimert Slutt dato</td>
                 <td class="modal-sm" style="width: 290px; height: 57px">
-                    <asp:TextBox ID="dateStopTextBox" runat="server" Height="28px" CssClass="input-sm">Klikk her</asp:TextBox>
+                    <asp:TextBox ID="dateStopTextBox" runat="server" Height="28px" CssClass="input-sm" Width="125px">Klikk her</asp:TextBox>
                     <asp:Image ID="Image3" runat="server" ImageUrl="~/Content/glyphicons/png/glyphicons_045_calendar.png" />
                 </td>
             </tr>

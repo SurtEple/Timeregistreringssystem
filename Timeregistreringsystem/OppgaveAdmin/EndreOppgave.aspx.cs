@@ -1,17 +1,13 @@
-﻿/**
-       * Redigere og Slette oppgaver, samt sette dem som ferdige
-       * @author Bjørn
-       * kl  17:00- 19:30   26/3/14 Ferdig med å sette oppgaver som ferdige  
-       *
-       * kl 20:15 - 20:45   26/3/14 Ferdig med slette metode 
-       */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
+/**
+ * Gui endringer 19:20 - 20:45 Wafforo!
+ */
 
 namespace Timeregistreringssystem.OppgaveAdmin
 {
@@ -32,12 +28,17 @@ namespace Timeregistreringssystem.OppgaveAdmin
             tbxNyEstimertTid.Enabled = false;
             tbxNySluttDato.Enabled = false;
             btnEndreOppgave.Enabled = false;
-
+            btnFerdigOppgave.Enabled = false;
+            tbxBruktTid.Enabled = false;
+            dateStopTextBox2.Enabled = false;
+            btnSlettOppgave.Enabled = false;
 
             //Sjekke etter tom/null input
             if (String.IsNullOrEmpty(ddlRedigereOppgave.SelectedValue))
             {
-                tbxNyTittel.Text = "----  Velg en oppgave fra listen  -----";
+                tbxBruktTid.Text = "-----  Velg en oppgave fra listen  -----";
+                dateStopTextBox2.Text = "-----  Velg en oppgave fra listen  -----";
+                tbxNyTittel.Text = "-----  Velg en oppgave fra listen  -----";
                 tbxNyBeskrivelse.Text = "------  Velg en oppgave fra listen  ----";
                 tbxNyBruktTid.Text = "------  Velg en oppgave fra listen  ----";
                 tbxNyEstimertTid.Text = "------  Velg en oppgave fra listen  ----";
@@ -46,6 +47,67 @@ namespace Timeregistreringssystem.OppgaveAdmin
             
         }
 
+        //Index change listener på FerdigOppgave ddl
+        protected void ddlFerdigeOppgaver_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //oppdatere tittel og estimert slutt dato
+            try
+            {
+                int id = Convert.ToInt32(ddlFerdigeOppgaver.SelectedValue);
+
+                if (id != 0)
+                {
+                    btnFerdigOppgave.Enabled = true;
+                    tbxBruktTid.Enabled = true;
+                    dateStopTextBox2.Enabled = true;
+
+                    tbxBruktTid.Text = HentFerdigOppgaveBruktTid(id);
+                    dateStopTextBox2.Text = HentFerdigOppgaveSluttDato(id);
+
+                }
+            }
+            catch (FormatException formatException) { lblEndreOppgave.Text = "Format Exception: " + formatException.Message; }
+            catch (OverflowException overFlowException) { lblEndreOppgave.Text = "Overflow Exception: " + overFlowException.Message; }
+            catch (Exception ex) { lblEndreOppgave.Text = "Exception: " + ex.Message; }
+
+        }
+
+        //Hente brukt tid fra den oppgaven som er ferdig
+        private string HentFerdigOppgaveBruktTid(int id)
+        {
+            connection = new DBConnect();
+            try
+            {
+                //Sjekke etter tom/null input
+                if (!String.IsNullOrEmpty(ddlFerdigeOppgaver.SelectedValue))
+                {
+                    // returnerer resultat på query etter å ha brukt id i søket.
+                    return connection.ferdigOppgaveHentBruktTid(id);
+                    
+                }
+                else return "---------  Velg en fase fra listen  ---------";
+            }
+            catch (Exception ex) { return ex.ToString(); }
+
+        }
+
+        //Hente estimert slutt dato fra den oppgaven som skal settes som ferdig
+        private string HentFerdigOppgaveSluttDato(int id)
+        {
+            connection = new DBConnect();
+            try
+            {
+                //Sjekke etter tom/null input
+                if (!String.IsNullOrEmpty(ddlFerdigeOppgaver.SelectedValue))
+                {
+                    // returnerer resultat på query etter å ha brukt id i søket.
+                    return connection.ferdigOppgaveHentSluttDato(id);
+                }
+                else return "---------  Velg en fase fra listen  ---------";
+            }
+            catch (Exception ex) { return ex.ToString(); }
+
+        }
 
         // Metode for å sette oppgaver som ferdig
         protected void btnFerdigOppgave_Click(object sender, EventArgs e)
@@ -68,6 +130,25 @@ namespace Timeregistreringssystem.OppgaveAdmin
             else lblFerdigTilbakemelding.Text = "Alle felt med * må fylles ut!";
         }
 
+        //Index change listener på SletteOppgave ddl
+        protected void ddlSlettOppgave_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                int id = Convert.ToInt32(ddlSlettOppgave.SelectedValue);
+
+                if (id != 0)
+                {
+                    btnSlettOppgave.Enabled = true;
+
+                }
+            }
+            catch (FormatException formatException) { lblEndreOppgave.Text = "Format Exception: " + formatException.Message; }
+            catch (OverflowException overFlowException) { lblEndreOppgave.Text = "Overflow Exception: " + overFlowException.Message; }
+            catch (Exception ex) { lblEndreOppgave.Text = "Exception: " + ex.Message; }
+
+        }
+
 
         // Metode for å slette oppgave
         protected void btnSlettOppgave_Click(object sender, EventArgs e)
@@ -77,18 +158,20 @@ namespace Timeregistreringssystem.OppgaveAdmin
                 //Sjekke etter tom/null input
                 if (!String.IsNullOrEmpty(ddlSlettOppgave.SelectedValue))
                 {
-                    System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
-                    // NB!!! trykke på slettknapp, si nei, trykke slettknapp igjen, så popper ikke messagebox opp, men ligger minimized.
-                    dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil slette prosjekt " + ddlSlettOppgave.SelectedItem, " Slette prosjekt", System.Windows.Forms.MessageBoxButtons.YesNo);
-                    //bekreftelse på sletting
-                    if (dr == System.Windows.Forms.DialogResult.Yes)
-                    {
+                    
+                        System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
+                        // NB!!! trykke på slettknapp, si nei, trykke slettknapp igjen, så popper ikke messagebox opp, men ligger minimized.
+                        dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil slette prosjekt " + ddlSlettOppgave.SelectedItem, " Slette prosjekt", System.Windows.Forms.MessageBoxButtons.YesNo);
+                        //bekreftelse på sletting
+                        if (dr == System.Windows.Forms.DialogResult.Yes)
+                        {
 
-                        int id = Convert.ToInt32(ddlSlettOppgave.SelectedValue);
-                        deleteOK = connection.slettOppgave(id); //lagre boolsk returverdi     
-                        System.Windows.Forms.MessageBox.Show("Sletting gjennomført");
-                        Page.Response.Redirect(Page.Request.Url.ToString(), true);
+                            int id = Convert.ToInt32(ddlSlettOppgave.SelectedValue);
+                            deleteOK = connection.slettOppgave(id); //lagre boolsk returverdi     
+                            System.Windows.Forms.MessageBox.Show("Sletting gjennomført");
+                            Page.Response.Redirect(Page.Request.Url.ToString(), true);
 
+                        
                     }
                     else { System.Windows.Forms.MessageBox.Show("Sletting ikke gjennomført"); Page.Response.Redirect(Page.Request.Url.ToString(), true); }
                 }
@@ -190,7 +273,7 @@ namespace Timeregistreringssystem.OppgaveAdmin
 
         }
 
-        //Index change listener på dropdownlist
+        //Index change listener på RedigereOppgave ddl
         protected void ddlRedigereOppgave_SelectedIndexChanged(object sender, EventArgs e)
         {
             //oppdatere beskrivelse og navn på valgt fase
@@ -257,6 +340,9 @@ namespace Timeregistreringssystem.OppgaveAdmin
             catch (Exception ex) { lblEndreOppgave.Text = "Exception: " + ex.Message; }
 
         }
+
+     
+       
 
        
 
