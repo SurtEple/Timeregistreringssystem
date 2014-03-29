@@ -4,14 +4,14 @@
     <br />
 
 
-    <asp:SqlDataSource ID="SqlDataSourceMilepael" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Milepael.ID AS ID, Milepael.Beskrivelse AS &quot;Milepæl Beskrivelse&quot;, Møtt, Milepael.ProsjektID, Prosjekt.Navn AS ProsjektNavn
+    <asp:SqlDataSource ID="SqlDataSourceMilepael" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Milepael.ID AS ID, Milepael.Beskrivelse AS &quot;Oppgave&quot;, Møtt, Milepael.ProsjektID, Prosjekt.Navn AS ProsjektNavn
 FROM Milepael INNER JOIN Prosjekt ON Milepael.ProsjektID = Prosjekt.ID
-WHERE Milepael.ID &gt; 0" DeleteCommand="DELETE FROM Milepael WHERE ID=@ID" UpdateCommand="UPDATE Milepael SET Beskrivelse = @Beskrivelse, Møtt = @Møtt WHERE (ID = @ID)"></asp:SqlDataSource>
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSourceMilepael" AllowPaging="True" AllowSorting="True" CssClass="table" OnRowDeleting="GridView1_RowDeleting" OnRowUpdating="GridView1_RowUpdating">
+WHERE Milepael.ID &gt; 0" DeleteCommand="DELETE FROM Milepael WHERE ID=@ID" UpdateCommand="UPDATE Milepael SET Beskrivelse = @Beskrivelse, Møtt = @Møtt WHERE ID = @ID"></asp:SqlDataSource>
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSourceMilepael" AllowPaging="True" AllowSorting="True" CssClass="table" OnRowDeleting="GridView1_RowDeleting" OnRowUpdating="GridView1_RowUpdating" OnRowUpdated="GridView1_RowUpdated">
         <Columns>
-            <asp:CommandField CancelText="Avbryt" DeleteText="Slett" EditText="Endre" ShowDeleteButton="True" ShowEditButton="True" UpdateText="Lagre" />
+            <asp:CommandField CancelText="Avbryt" DeleteText="Slett" EditText="Endre" SelectText="Velg" ShowDeleteButton="True" ShowEditButton="True" UpdateText="Lagre" />
             <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" InsertVisible="False" ReadOnly="True" />
-            <asp:BoundField DataField="Milepæl Beskrivelse" HeaderText="Milepæl Beskrivelse" SortExpression="Milepæl Beskrivelse" />
+            <asp:BoundField DataField="Oppgave" HeaderText="Oppgave" SortExpression="Oppgave" />
             <asp:CheckBoxField DataField="Møtt" HeaderText="Møtt" SortExpression="Møtt" />
             <asp:BoundField DataField="ProsjektID" HeaderText="ProsjektID" SortExpression="ProsjektID" ReadOnly="True" />
             <asp:BoundField DataField="ProsjektNavn" HeaderText="ProsjektNavn" SortExpression="ProsjektNavn" ReadOnly="True" />
@@ -30,7 +30,7 @@ WHERE Milepael.ID &gt; 0" DeleteCommand="DELETE FROM Milepael WHERE ID=@ID" Upda
 
         <table>
             <tr>
-                <td class="auto-style4">Beskrivelse: </td>
+                <td class="auto-style4">Oppgave: </td>
                 <td class="auto-style5">
                     <asp:TextBox ID="textBoxBeskrivelse" runat="server" Height="30px" Width="244px" CssClass="input-sm"></asp:TextBox>
                 </td>

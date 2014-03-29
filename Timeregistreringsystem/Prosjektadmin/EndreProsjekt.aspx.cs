@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 /**
  * Endre Prosjekt
- * @author Thomas og Thea, Surt Eple
+ * @author Thomas og Thea, Gruppe 2
  */ 
 namespace Timeregistreringssystem.Prosjektadmin
 {
@@ -15,7 +15,7 @@ namespace Timeregistreringssystem.Prosjektadmin
     {
        
         private DBConnect connection;
-        private string nyttNavn, nyOppsummering, navn, oppsummering;
+        private string nyttNavn, nyOppsummering, navn, oppsummering, ansvarlig;
         private int nyNesteFase, prosjektAnsvarlig, nyMilestone, id;
         private Parameter faseParam, milestoneParam;
        
@@ -106,11 +106,14 @@ namespace Timeregistreringssystem.Prosjektadmin
                 //hente verdier fra den valgte raden
                 id = Convert.ToInt32(row.Cells[1].Text); 
                 navn = row.Cells[2].Text.ToString();
+                ansvarlig = row.Cells[3].Text.ToString();
                 oppsummering = row.Cells[4].Text.ToString();
 
                 textBoxNewNavn.Text = navn;
                 textBoxNewOppsummering.Text = oppsummering;
                 idLabel.Text = id.ToString();
+                DropDownListAnsvarlig.SelectedValue = DropDownListAnsvarlig.Items.FindByText(ansvarlig).Value;
+                
 
                 SqlDataSourceNyNesteFase.SelectParameters.Remove(faseParam);
                 SqlDataSourceNyMilestone.SelectParameters.Remove(milestoneParam);

@@ -6,14 +6,12 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 /**
- * author Thea, Surt Eple
+ * author Thomas og Thea, Surt Eple
  */
 namespace Timeregistreringssystem.Prosjektadmin
 {
 
-    //Thea 17.03 - 13:00
-    //18.03 10:00-12:32
-    //12:30-14:15 ferdig ish
+  
 
     public partial class LeggTilFase : System.Web.UI.Page
     {
@@ -40,6 +38,8 @@ namespace Timeregistreringssystem.Prosjektadmin
                 int prosjektID = Convert.ToInt16(prosjektDropDownList.SelectedValue);
 
                 connection.InsertFase(navn, startDato, sluttDato,  beskrivelse, prosjektID);
+                
+                Page.Response.Redirect(Page.Request.Url.ToString(), true);
             }
         }
 

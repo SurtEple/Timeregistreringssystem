@@ -1,8 +1,4 @@
-﻿/**
-       * Redigere&Slette Fase
-       * @author Thomas 
-       * kl  10:00-18:40   19/3/14   
-       */
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +6,18 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+/**
+ * Endre Fase
+ * @author Thomas og Thea, Gruppe 2
+ */
+
 namespace Timeregistreringssystem.Prosjektadmin
 {
     public partial class EndreFase : System.Web.UI.Page
     {
-            //variabler
+          //variabler
         DBConnect connection;
         private String nyttNavn, nyBeskrivelse;
-        private bool  deleteOK = false, editOK = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,10 +25,10 @@ namespace Timeregistreringssystem.Prosjektadmin
             textBoxNewNavn.Enabled = false;
             textBoxNewBeskrivelse.Enabled = false;
             btnLagreNewFase.Enabled = false;
-            btnSlettFase.Enabled = false;
+
 
             //Sjekke etter tom/null input
-            if (String.IsNullOrEmpty(DropDownListSlettFase.SelectedValue))
+            if (String.IsNullOrEmpty(DropDownListEditFase.SelectedValue))
             {
                 textBoxNewBeskrivelse.Text = "----  Velg en fase fra listen  -----";
                 textBoxNewNavn.Text = "------  Velg en fase fra listen  ----";
@@ -43,7 +43,7 @@ namespace Timeregistreringssystem.Prosjektadmin
              try
              {
                  //Sjekke etter tom/null input
-                 if (!String.IsNullOrEmpty(DropDownListSlettFase.SelectedValue))
+                 if (!String.IsNullOrEmpty(DropDownListEditFase.SelectedValue))
                  {                  
                      // returnerer resultat på query etter å ha brukt id i søket.
                      return connection.editFaseHentBeskrivelse(id);
@@ -55,13 +55,33 @@ namespace Timeregistreringssystem.Prosjektadmin
         }
 
         //Hente informasjon fra det prosjektet som er valgt til redigering
+        private bool HentRedigerFaseAktiv(int id)
+        {
+            bool aktiv=false;
+            connection = new DBConnect();
+            try
+            {
+                //Sjekke etter tom/null input
+                if (!String.IsNullOrEmpty(DropDownListEditFase.SelectedValue))
+                {
+                    // returnerer resultat på query etter å ha brukt id i søket.
+                    aktiv = connection.EditFaseHentAktiv(id);
+                    
+                }
+                else throw new Exception("Dropdown exception!");
+            }
+            catch (Exception ex) {  }
+            return aktiv;
+        }
+
+        //Hente informasjon fra det prosjektet som er valgt til redigering
         private string HentRedigerFaseNavn(int id)
         {
             connection = new DBConnect();
             try
             {
                 //Sjekke etter tom/null input
-                if (!String.IsNullOrEmpty(DropDownListSlettFase.SelectedValue))
+                if (!String.IsNullOrEmpty(DropDownListEditFase.SelectedValue))
                 {
                     // returnerer resultat på query etter å ha brukt id i søket.
                     return connection.editFaseHentNavn(id);
@@ -70,34 +90,6 @@ namespace Timeregistreringssystem.Prosjektadmin
             }
             catch (Exception ex) { return ex.ToString(); }
 
-        }
-
-        //Slette Fase
-        protected void btnSlett_Click(object sender, EventArgs e)
-        {
-            connection = new DBConnect();
-            try {
-              //Sjekke etter tom/null input
-                if (!String.IsNullOrEmpty(DropDownListSlettFase.SelectedValue))
-                {
-                    System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
-                    // NB!!! trykke på slettknapp, si nei, trykke slettknapp igjen, så popper ikke messagebox opp, men ligger minimized.
-                    dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil slette fasen " + DropDownListSlettFase.SelectedItem," Slette fase", System.Windows.Forms.MessageBoxButtons.YesNo);
-                   //bekreftelse på sletting
-                    if (dr == System.Windows.Forms.DialogResult.Yes)
-                    {                       
-                        int id = Convert.ToInt32(DropDownListSlettFase.SelectedValue);
-                        deleteOK = connection.delFase(id); //lagre boolsk returverdi     
-                        System.Windows.Forms.MessageBox.Show("Sletting gjennomført"); 
-                        Page.Response.Redirect(Page.Request.Url.ToString(), true);                      
-                    }
-                    else { System.Windows.Forms.MessageBox.Show("Sletting ikke gjennomført"); Page.Response.Redirect(Page.Request.Url.ToString(), true); }    
-                }
-                else resultLabel.Text = "Feltene kan ikke være tomme!";
-            }
-            catch (FormatException formatException) { resultLabel.Text = "Format Exception: " + formatException.Message; }
-            catch (OverflowException overFlowException) { resultLabel.Text = "Overflow Exception: " + overFlowException.Message; }
-            catch (Exception ex) { resultLabel.Text = "Exception: " + ex.Message; }
         }
 
 
@@ -124,8 +116,9 @@ namespace Timeregistreringssystem.Prosjektadmin
                         nyttNavn = textBoxNewNavn.Text;
                         nyBeskrivelse = textBoxNewBeskrivelse.Text;
 
-                        bool isActive = EditFaseCheckIsFaseActive.Checked;               
-                        editOK = connection.editFase(id, nyttNavn, nyBeskrivelse,isActive); //lagre boolsk returverdi
+                        bool isActive = EditFaseCheckIsFaseActive.Checked;      
+         
+                       connection.EditFase(id, nyttNavn, nyBeskrivelse,isActive);
                         Page.Response.Redirect(Page.Request.Url.ToString(), true);
                     }
                 }
@@ -153,6 +146,7 @@ namespace Timeregistreringssystem.Prosjektadmin
 
                         textBoxNewNavn.Text = HentRedigerFaseNavn(id);
                         textBoxNewBeskrivelse.Text = HentRedigerFaseBeskrivelse(id);
+                        EditFaseCheckIsFaseActive.Checked = HentRedigerFaseAktiv(id);
                         
                     }                          
                 }
@@ -162,15 +156,6 @@ namespace Timeregistreringssystem.Prosjektadmin
       
         }
 
-        protected void DropDownListSlettFase_SelectedIndexChanged(object sender, EventArgs e)
-        {
-             int id = Convert.ToInt32(DropDownListEditFase.SelectedValue);
-
-             if (id != 0)
-             {
-                 btnSlettFase.Enabled = true;
-             }
-        }
 
 
         protected void GridViewFase_SelectedIndexChanged(object sender, EventArgs e)
@@ -190,6 +175,11 @@ namespace Timeregistreringssystem.Prosjektadmin
                 e.Cancel = true;
 
             }   
+        }
+
+        protected void GridViewFase_RowDeleted(object sender, GridViewDeletedEventArgs e)
+        {
+            Page.Response.Redirect(Page.Request.Url.ToString(), true);
         }
     }
 }

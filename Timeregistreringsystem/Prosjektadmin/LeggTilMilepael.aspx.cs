@@ -42,7 +42,7 @@ namespace Timeregistreringssystem.Prosjektadmin
 
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            string milestoneNavn = (string)e.Values["Milepæl Beskrivelse"].ToString();
+            string milestoneNavn = (string)e.Values["Oppgave"].ToString();
 
             System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
             dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil slette milepælen " + milestoneNavn + " ?", "slette milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
@@ -58,12 +58,16 @@ namespace Timeregistreringssystem.Prosjektadmin
             {
                 GridViewRow row = (GridViewRow)GridView1.Rows[e.RowIndex];
                 int id = Int32.Parse(GridView1.DataKeys[e.RowIndex].Value.ToString());
-                string beskrivelseNew = e.NewValues["Milepæl Beskrivelse"].ToString();
+                string beskrivelseNew = e.NewValues["Oppgave"].ToString();
                 string møtt = e.NewValues["Møtt"].ToString();
+                bool aktiv = Convert.ToBoolean(møtt);
+                int aktivint = Convert.ToInt32(aktiv);
+
+               
 
 
                 System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
-                dr = System.Windows.Forms.MessageBox.Show("ProsjektID: " + id + "Er du sikker på at du vil endre beskrivelsen til' " + beskrivelseNew + "' og status Møtt til " + møtt + " ?", "Endre milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
+                dr = System.Windows.Forms.MessageBox.Show("ProsjektID: " + id + "Er du sikker på at du vil endre beskrivelsen til' " + beskrivelseNew + "' og status Møtt til " + aktivint + " ?", "Endre milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
                 //bekreftelse på Oppdatering
                 if (dr == System.Windows.Forms.DialogResult.No)
                 {
@@ -74,12 +78,24 @@ namespace Timeregistreringssystem.Prosjektadmin
                 {
                     SqlDataSourceMilepael.UpdateParameters.Add("ID", id.ToString()); //UPDATE..WHERE ID=@ID
                     SqlDataSourceMilepael.UpdateParameters.Add("Beskrivelse", beskrivelseNew); //UPDATE..SET Beskrivelse=@Beskrivelse
-                    SqlDataSourceMilepael.UpdateParameters.Add("Møtt", møtt); //Update... SET Møtt=@Møtt
+                    SqlDataSourceMilepael.UpdateParameters.Add("Møtt", aktivint.ToString()); //Update... SET Møtt=@Møtt
+
+                     
 
                 }
             }
             catch (System.ArgumentNullException ane) { resultLabel.Text = "Argument Null Exception while trying to parse ID! " + ane.Message; }
             
+        }
+
+        protected void GridView1_RowUpdated(object sender, GridViewUpdatedEventArgs e)
+        {
+
+            if (e.Exception!=null)
+                System.Windows.Forms.MessageBox.Show(e.Exception.Message);
+
+             Page.Response.Redirect(Page.Request.Url.ToString(), true); //Refresh siden
+
         }
 
     }

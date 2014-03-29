@@ -2,9 +2,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Fase</h1>
     <div>
-        <asp:GridView ID="GridViewFase" runat="server" DataSourceID="SqlDataSource1" AutoGenerateColumns="False" DataKeyNames="ID" CssClass="table" AllowPaging="True" AllowSorting="True" OnRowDeleting="GridViewFase_RowDeleting" OnSelectedIndexChanged="GridViewFase_SelectedIndexChanged">
+        <asp:GridView ID="GridViewFase" runat="server" DataSourceID="SqlDataSource1" AutoGenerateColumns="False" DataKeyNames="ID" CssClass="table" AllowPaging="True" AllowSorting="True" OnRowDeleting="GridViewFase_RowDeleting" OnSelectedIndexChanged="GridViewFase_SelectedIndexChanged" OnRowDeleted="GridViewFase_RowDeleted">
             <Columns>
-                <asp:CommandField DeleteText="Slett" SelectText="Velg" ShowDeleteButton="True" ShowSelectButton="True" />
+                <asp:CommandField DeleteText="Slett" SelectText="Velg" ShowDeleteButton="True" />
                 <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
                 <asp:BoundField DataField="Navn" HeaderText="Navn" SortExpression="Navn" />
                 <asp:BoundField DataField="StartDato" HeaderText="StartDato" SortExpression="StartDato" />
@@ -14,12 +14,13 @@
                 <asp:BoundField DataField="Prosjekt_ID" HeaderText="Prosjekt_ID" SortExpression="Prosjekt_ID" />
             </Columns>
         </asp:GridView>
-        <h1>&nbsp;</h1>
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" 
                         ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" 
                         SelectCommand="SELECT ID, Navn, DATE_FORMAT(Dato_startet , '%d.%m.%Y') AS &quot;StartDato&quot;, DATE_FORMAT(Dato_sluttet , '%d.%m.%Y') AS &quot;SluttDato&quot;,Aktiv, Beskrivelse, Prosjekt_ID FROM Fase
 
 WHERE ID &gt; 0" UpdateCommand="&quot;UPDATE `HLVDKN_DB1`.`Bruker` SET `Stilling_ID` = '4' WHERE `Bruker`.`ID` = &quot; + txtbxID.Text + &quot;;&quot;;" DeleteCommand="DELETE FROM Fase WHERE ID=@ID"></asp:SqlDataSource>
+        
+        <asp:SqlDataSource ID="SqlDataSourceDropDownDelFase" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Navn, ID FROM Fase"></asp:SqlDataSource>
         <br />
     </div>
     <div>

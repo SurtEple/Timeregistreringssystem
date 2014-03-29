@@ -433,49 +433,74 @@ namespace Timeregistreringssystem
       * Edit fase
       * @author Thomas
       */
-        public bool editFase(int id, String nyttNavn, String nyBeskrivelse,bool isActive)
+        public void EditFase(int id, String nyttNavn, String nyBeskrivelse,bool isActive)
         {
-            bool check = false;
-            int result = 0;
-
             if (this.OpenConnection())
             {
                 //Create Command
                 String editString = String.Format(
                     "UPDATE Fase SET Navn = '{0}', Beskrivelse = '{1}', Aktiv = '{2}' WHERE ID = {3}"
-                    , nyttNavn, nyBeskrivelse, isActive?1:0, id);
+                    , nyttNavn, nyBeskrivelse, isActive ? 1 : 0, id);
 
                 MySqlCommand editCommand = new MySqlCommand(editString, connection);
                 try
                 {
-                    editCommand.Prepare(); 
-                    result = editCommand.ExecuteNonQuery();
-                    check = true;
+                    editCommand.ExecuteNonQuery();
+                   
                 }
                 catch (Exception e)
                 {
 
                     Debug.WriteLine(e.Message);
-                    check = false;
+                  
                 }
                 finally
                 {
-                    if (result == 0)
-                    {
-                        editCommand.Cancel();
-                        check = false;
-                    }
                     //close Connection
                     this.CloseConnection();
                 }
             }
-            return check;
         }  //edit fase
 
+        /**
+         * Edit fase hente verdi til "Aktiv
+         * author Thea
+         */
+        internal bool EditFaseHentAktiv(int id)
+        {
+            bool aktiv=false;
 
+            if (this.OpenConnection())
+            {
+                //Create Command
+                String editString = "SELECT Aktiv FROM Fase WHERE ID = " + id;
+
+                MySqlCommand command = new MySqlCommand(editString, connection);
+                try
+                {
+                   
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        aktiv = Convert.ToBoolean(dataReader["Aktiv"]);
+                    }
+                    dataReader.Close();
+
+                }
+                catch (Exception e) { Debug.WriteLine(e.Message);}
+                finally
+                {
+                    //close Connection  
+                    this.CloseConnection();
+                     
+                }
+               
+            }
+            return aktiv;
+        }
         /**
       * Edit fase henting av Beskrivelse fra id
-      * @author Thomas 19/3/14   18:05
+      * @author Thomas 
       */
         public string editFaseHentBeskrivelse(int id)
         {
@@ -496,6 +521,7 @@ namespace Timeregistreringssystem
                     {
                       beskrivelse = dataReader["Beskrivelse"] + "";
                     }
+                    dataReader.Close();
                 }
                 catch (Exception e)
                 {
@@ -513,7 +539,7 @@ namespace Timeregistreringssystem
 
         /**
     * Edit fase henting av Navn fra id
-    * @author Thomas 19/3/14   18:06
+    * @author Thomas 
     */
         public string editFaseHentNavn(int id)
         {
@@ -1552,5 +1578,7 @@ namespace Timeregistreringssystem
             }
             return check;
         }  //edit fase
+
+       
     }
 }
