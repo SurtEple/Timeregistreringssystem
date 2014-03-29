@@ -31,13 +31,31 @@ namespace Timeregistreringssystem.Prosjektadmin {
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
         
         /// <summary>
-        /// DropDownListEditProsjekt control.
+        /// idLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListEditProsjekt;
+        protected global::System.Web.UI.WebControls.Label idLabel;
+        
+        /// <summary>
+        /// DropDownListAnsvarlig control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListAnsvarlig;
+        
+        /// <summary>
+        /// SqlDataSourceProsjektAnsvarlig control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceProsjektAnsvarlig;
         
         /// <summary>
         /// textBoxNewNavn control.
@@ -47,15 +65,6 @@ namespace Timeregistreringssystem.Prosjektadmin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox textBoxNewNavn;
-        
-        /// <summary>
-        /// textBoxNewOppsummering control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textBoxNewOppsummering;
         
         /// <summary>
         /// DropDownListNyNesteFase control.
@@ -74,6 +83,24 @@ namespace Timeregistreringssystem.Prosjektadmin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceNyNesteFase;
+        
+        /// <summary>
+        /// DropDownListMilestone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListMilestone;
+        
+        /// <summary>
+        /// SqlDataSourceNyMilestone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceNyMilestone;
         
         /// <summary>
         /// btnLagreNewMilestone control.

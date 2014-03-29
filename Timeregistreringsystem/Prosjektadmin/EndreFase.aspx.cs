@@ -172,9 +172,24 @@ namespace Timeregistreringssystem.Prosjektadmin
              }
         }
 
-        protected void textBoxNewBeskrivelse_TextChanged(object sender, EventArgs e)
+
+        protected void GridViewFase_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        protected void GridViewFase_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            String tname = (string)e.Values["Navn"].ToString();
+
+            System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
+            dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil slette fasen " + tname + " ?", "Slette Fase", System.Windows.Forms.MessageBoxButtons.YesNo);
+            //bekreftelse på Sletting
+            if (dr == System.Windows.Forms.DialogResult.No)
+            {
+                e.Cancel = true;
+
+            }   
         }
     }
 }

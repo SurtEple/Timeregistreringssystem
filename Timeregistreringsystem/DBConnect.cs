@@ -309,28 +309,32 @@ namespace Timeregistreringssystem
         #endregion Prosjekt
 
         #region milepæl
-        /**
-      * Legger til ny milepæl
-      * @author Thomas
-      */
+
+        /// <author>Thomas, Surt Eple</author> 
+        /// <referenced inCode="LeggTilMilepael.aspx.cs"></referenced>
+        /// <referenced inSite="/Prosjektadmin/LeggTilMilepael.aspx"></referenced>
+        /// <summary>
+        /// Legger til ny milepæl, setter inn i tabellen Milepael
+        /// </summary>
+        /// <param name="beskrivelse"></param>
+        /// <param name="prosjektID"></param>
         public void InsertMilepael(string beskrivelse, int prosjektID)
         {
-
             if (this.OpenConnection())
             {
                 //Create Command
                 string insertString = String.Format("INSERT INTO Milepael (Beskrivelse, ProsjektID)" +
-               " VALUES ({0}, '{1}')", prosjektID, beskrivelse);
+               " VALUES ('{0}', {1})", beskrivelse, prosjektID);
                 MySqlCommand insertCommand = new MySqlCommand(insertString, connection);
 
                 try
                 {
                     insertCommand.ExecuteNonQuery();
                 }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                }
+                catch (System.ArgumentException ae) { Debug.WriteLine("Argument exception while trying to format the command string! "+ ae.Message); }
+                catch (System.FormatException fe) { Debug.WriteLine("Format exception while trying to format the command string!" + fe.Message); }
+                catch (Exception e){Debug.WriteLine("Undefined exception! " + e.Message);}
+
                 finally
                 {
                     //close Connection

@@ -103,7 +103,9 @@ ORDER BY ID;"></asp:SqlDataSource>
 
             <br />
             <asp:Button ID="btnLagreNewProject" runat="server" OnClick="btnLagreNewProject_Click" Text="Lagre" Width="103px" Height="36px" CssClass="btn" />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:Label ID="resultLabel" runat="server" CssClass="label"></asp:Label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+        
+            <asp:Label ID="resultLabel" runat="server"></asp:Label>
 
        
         

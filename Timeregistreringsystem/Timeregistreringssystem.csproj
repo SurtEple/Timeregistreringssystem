@@ -715,7 +715,6 @@
     <Content Include="Prosjektadmin\EndreFase.aspx" />
     <Content Include="Prosjektadmin\EndreMilepael.aspx" />
     <Content Include="Prosjektadmin\EndreProsjekt.aspx" />
-    <Content Include="Prosjektadmin\Faser.aspx" />
     <Content Include="Prosjektadmin\KobleProsjektTeam.aspx" />
     <Content Include="Prosjektadmin\LeggTilFase.aspx" />
     <Content Include="Prosjektadmin\LeggTilMilepael.aspx" />
@@ -951,13 +950,6 @@
     </Compile>
     <Compile Include="Prosjektadmin\EndreProsjekt.aspx.designer.cs">
       <DependentUpon>EndreProsjekt.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Prosjektadmin\Faser.aspx.cs">
-      <DependentUpon>Faser.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Prosjektadmin\Faser.aspx.designer.cs">
-      <DependentUpon>Faser.aspx</DependentUpon>
     </Compile>
     <Compile Include="Prosjektadmin\KobleProsjektTeam.aspx.cs">
       <DependentUpon>KobleProsjektTeam.aspx</DependentUpon>

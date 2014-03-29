@@ -29,12 +29,12 @@ namespace Timeregistreringssystem.Prosjektadmin
                 
             faseParam = SqlDataSourceNyNesteFase.SelectParameters["Prosjekt_ID"]; //SELECT... FROM Fase WHERE Prosjekt_ID=@Prosjekt_ID
             if (faseParam == null)
-            SqlDataSourceNyNesteFase.SelectParameters.Add("Prosjekt_ID", "0"); //SELECT... FROM Fase WHERE Prosjekt_ID=0
+                SqlDataSourceNyNesteFase.SelectParameters.Add("Prosjekt_ID", "0"); //SELECT... FROM Fase WHERE Prosjekt_ID=0
 
             milestoneParam = SqlDataSourceNyMilestone.SelectParameters["Prosjekt_ID"]; //SELECT... FROM Milepael WHERE ProsjektID=@Prosjekt_ID
 
             if (milestoneParam == null)
-            SqlDataSourceNyMilestone.SelectParameters.Add("Prosjekt_ID", "0"); //SELECT... FROM Milepael WHERE ProsjektID=0
+                SqlDataSourceNyMilestone.SelectParameters.Add("Prosjekt_ID", "0"); //SELECT... FROM Milepael WHERE ProsjektID=0
 
             connection = new DBConnect();
 
@@ -132,7 +132,7 @@ namespace Timeregistreringssystem.Prosjektadmin
 
                 System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
                 dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil slette prosjektet " +  tname + " ?", "Slette Prosjekt", System.Windows.Forms.MessageBoxButtons.YesNo);
-                //bekreftelse på redigering
+                //bekreftelse på sletting
                 if (dr == System.Windows.Forms.DialogResult.No)
                 {
                     e.Cancel=true;

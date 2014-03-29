@@ -20,33 +20,64 @@
         <br />
     </div>
     <div>
-        <h1>Redigere Prosjekt</h1>
-        <p>
-            <asp:DropDownList ID="DropDownListEditProsjekt" runat="server" DataSourceID="SqlDataSourceDropDownDelProject" DataTextField="Navn" DataValueField="ID" Height="34px" Width="157px" AutoPostBack="True" CssClass="dropdown">
-            </asp:DropDownList>
-        </p>
-        <table>
-            <tr>
-                <td class="auto-style6">Nytt navn:  </td>
+            <h1>Redigere Milepæl</h1>
+            <table>
+
+                
+                <tr>
+                    <td class="auto-style6" style="width: 110px; height: 58px;">ID: </td>
+                <td class="auto-style5" style="height: 58px">
+                           <asp:Label ID="idLabel" runat="server"> </asp:Label>
+                </td>
+            </tr>
+
+                    <tr>
+                <td class="auto-style6" style="width: 110px">Ny prosjektansvarlig </td>
+                <td class="auto-style5">
+                    <asp:DropDownList ID="DropDownListAnsvarlig" runat="server" DataSourceID="SqlDataSourceProsjektAnsvarlig" DataTextField="Brukernavn" DataValueField="ID" Height="34px" Width="138px" CssClass="dropdown">
+                    </asp:DropDownList>
+                    <asp:SqlDataSource ID="SqlDataSourceProsjektAnsvarlig" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Brukernavn FROM Bruker
+
+ORDER BY ID;"></asp:SqlDataSource>
+                </td>
+            </tr>
+
+                <tr>
+                    <td class="auto-style6" style="width: 110px">Nytt navn:  </td>
                 <td class="auto-style5">
                     <asp:TextBox ID="textBoxNewNavn" runat="server" Width="128px" CssClass="input-sm"></asp:TextBox>
                 </td>
             </tr>
-            <tr>
-                <td class="auto-style6" style="height: 102px">Ny oppsummering: </td>
+
+                 <tr>
+                <td class="auto-style6" style="height: 102px; width: 110px;">&nbsp;</td>
                 <td class="auto-style5" style="height: 102px">
-                    <asp:TextBox ID="textBoxNewOppsummering" runat="server" TextMode="MultiLine" CssClass="input-group-lg" Height="68px" Width="168px"></asp:TextBox>
-                </td>
+                    &nbsp;</td>
             </tr>
+
             <tr>
-                <td class="auto-style6">Ny neste fase: </td>
+                <td class="auto-style6" style="width: 110px">Ny neste fase: </td>
                 <td class="auto-style5">
                     <asp:DropDownList ID="DropDownListNyNesteFase" runat="server" DataSourceID="SqlDataSourceNyNesteFase" DataTextField="Navn" DataValueField="ID" Height="34px" Width="138px" CssClass="dropdown">
                     </asp:DropDownList>
-                    <asp:SqlDataSource ID="SqlDataSourceNyNesteFase" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Navn, ID FROM Fase"></asp:SqlDataSource>
+                    <asp:SqlDataSource ID="SqlDataSourceNyNesteFase" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Navn FROM Fase WHERE Prosjekt_ID=@Prosjekt_ID"></asp:SqlDataSource>
                 </td>
             </tr>
-        </table>
+
+             <tr>
+                <td class="auto-style6" style="width: 110px">Ny Neste milepæl: </td>
+                <td class="auto-style5">
+                    <asp:DropDownList ID="DropDownListMilestone" runat="server" DataSourceID="SqlDataSourceNyMilestone" DataTextField="Beskrivelse" DataValueField="ID" Height="34px" Width="138px" CssClass="dropdown">
+                    </asp:DropDownList>
+                    <asp:SqlDataSource ID="SqlDataSourceNyMilestone" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Beskrivelse FROM Milepael WHERE ProsjektID=@Prosjekt_ID"></asp:SqlDataSource>
+                &nbsp;</td>
+            </tr>
+
+
+            </table>
+
+
+
         <br />
         <asp:Button ID="btnLagreNewMilestone" runat="server" Text="Lagre" Width="103px" Height="36px" CssClass="btn" />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 

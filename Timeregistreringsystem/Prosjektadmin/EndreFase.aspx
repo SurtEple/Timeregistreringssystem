@@ -2,8 +2,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Fase</h1>
     <div>
-        <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSource1" AutoGenerateColumns="False" DataKeyNames="ID" CssClass="table">
+        <asp:GridView ID="GridViewFase" runat="server" DataSourceID="SqlDataSource1" AutoGenerateColumns="False" DataKeyNames="ID" CssClass="table" AllowPaging="True" AllowSorting="True" OnRowDeleting="GridViewFase_RowDeleting" OnSelectedIndexChanged="GridViewFase_SelectedIndexChanged">
             <Columns>
+                <asp:CommandField DeleteText="Slett" SelectText="Velg" ShowDeleteButton="True" ShowSelectButton="True" />
                 <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
                 <asp:BoundField DataField="Navn" HeaderText="Navn" SortExpression="Navn" />
                 <asp:BoundField DataField="StartDato" HeaderText="StartDato" SortExpression="StartDato" />
@@ -13,18 +14,12 @@
                 <asp:BoundField DataField="Prosjekt_ID" HeaderText="Prosjekt_ID" SortExpression="Prosjekt_ID" />
             </Columns>
         </asp:GridView>
-        <h1>Slett Fase</h1>
+        <h1>&nbsp;</h1>
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" 
                         ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" 
                         SelectCommand="SELECT ID, Navn, DATE_FORMAT(Dato_startet , '%d.%m.%Y') AS &quot;StartDato&quot;, DATE_FORMAT(Dato_sluttet , '%d.%m.%Y') AS &quot;SluttDato&quot;,Aktiv, Beskrivelse, Prosjekt_ID FROM Fase
 
-WHERE ID &gt; 0" UpdateCommand="&quot;UPDATE `HLVDKN_DB1`.`Bruker` SET `Stilling_ID` = '4' WHERE `Bruker`.`ID` = &quot; + txtbxID.Text + &quot;;&quot;;"></asp:SqlDataSource>
-        <asp:DropDownList ID="DropDownListSlettFase" runat="server" DataSourceID="SqlDataSourceDropDownDelFase" DataTextField="Navn" DataValueField="ID" Width="263px" Font-Size="Medium" CssClass="dropdown" OnSelectedIndexChanged="DropDownListSlettFase_SelectedIndexChanged">
-        </asp:DropDownList>
-        <asp:SqlDataSource ID="SqlDataSourceDropDownDelFase" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Navn, ID FROM Fase"></asp:SqlDataSource>
-        <br />&nbsp; &nbsp;<asp:Label ID="resultLabel" runat="server"></asp:Label>
-        <br />
-        <asp:Button ID="btnSlettFase" runat="server" Height="36px"  Text="Slett" Width="103px" OnClick="btnSlett_Click" CssClass="btn" Enabled="False" />
+WHERE ID &gt; 0" UpdateCommand="&quot;UPDATE `HLVDKN_DB1`.`Bruker` SET `Stilling_ID` = '4' WHERE `Bruker`.`ID` = &quot; + txtbxID.Text + &quot;;&quot;;" DeleteCommand="DELETE FROM Fase WHERE ID=@ID"></asp:SqlDataSource>
         <br />
     </div>
     <div>
@@ -51,7 +46,7 @@ WHERE ID &gt; 0" UpdateCommand="&quot;UPDATE `HLVDKN_DB1`.`Bruker` SET `Stilling
             <tr>
                 <td class="auto-style6">Ny beskrivelse:</td>
                 <td class="auto-style5">
-                    <asp:TextBox ID="textBoxNewBeskrivelse" runat="server" TextMode="MultiLine" Height="94px" Width="292px" CssClass="input-lg" Enabled="False" OnTextChanged="textBoxNewBeskrivelse_TextChanged"></asp:TextBox>
+                    <asp:TextBox ID="textBoxNewBeskrivelse" runat="server" TextMode="MultiLine" Height="94px" Width="292px" CssClass="input-lg" Enabled="False"></asp:TextBox>
                 </td>
             </tr>
         </table>
