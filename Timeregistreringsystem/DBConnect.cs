@@ -1014,10 +1014,11 @@ namespace Timeregistreringssystem
          * Sjekk innlogging
          * @author Martin
          */ 
-        public int CheckInnlogging(String brukernavn, String passord)
+        public int[] CheckInnlogging(String brukernavn, String passord)
         {
             //bool check = false;
-            int i = -1;
+            int[] i = new int[2];
+            i[0] = -1;
             string salt = null;
             if (this.OpenConnection() == true)
             {
@@ -1037,7 +1038,8 @@ namespace Timeregistreringssystem
                 MySqlDataReader dr2 = cmd2.ExecuteReader();
                 while (dr2.Read())
                 {
-                    i = Convert.ToInt32(dr2["Administrator"]);
+                    i[0] = Convert.ToInt32(dr2["Administrator"]);
+                    i[1] = Convert.ToInt32(dr2["ID"]);
 
                 }
                 dr2.Close();

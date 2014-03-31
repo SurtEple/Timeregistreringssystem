@@ -28,20 +28,26 @@ namespace Timeregistreringssystem.Account
         {
             if (IsValid)
             {
-                // Validate the user password
+                DBConnect db = new DBConnect();
+                int[] bruker = db.CheckInnlogging(UserName.Text, Password.Text);
+                if (bruker[0] >= 0)
+                {
+                    
+                    Session["Innlogget"] = true;
+                    Session["Admin"] = bruker[0];
+                    Session["BrukerID"] = bruker[1];
+                    IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+
+                }
+
+                /*
                 var manager = new UserManager();
-                string username = UserName.Text;
-                string password = Password.Text;
-                DBConnect connect = new DBConnect();
-                //Koble til database, sjekke verdier for input
-                Membership.ValidateUser(username,password);
-                //connect.CheckInnlogging(username,password);
-
+                
                 ApplicationUser user = manager.Find(UserName.Text, Password.Text);
-
                 if (user != null)
                 {
                     IdentityHelper.SignIn(manager, user, RememberMe.Checked);
+
                     IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
                 }
                 else
@@ -49,6 +55,7 @@ namespace Timeregistreringssystem.Account
                     FailureText.Text = "Invalid username or password.";
                     ErrorMessage.Visible = true;
                 }
+                 */
             }
         }
     }
