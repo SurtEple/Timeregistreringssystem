@@ -712,6 +712,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Resource Include="Pictures\MorildDataLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Prosjektadmin\EndreFase.aspx" />
     <Content Include="Prosjektadmin\EndreMilepael.aspx" />
     <Content Include="Prosjektadmin\EndreProsjekt.aspx" />
@@ -719,7 +722,9 @@
     <Content Include="Prosjektadmin\LeggTilFase.aspx" />
     <Content Include="Prosjektadmin\LeggTilMilepael.aspx" />
     <Content Include="Prosjektadmin\LeggTilProsjekt.aspx" />
-    <None Include="Resources\MorildDataLogo.png" />
+    <EmbeddedResource Include="Resources\MorildDataLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

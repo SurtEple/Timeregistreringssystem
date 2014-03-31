@@ -3,7 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="jumbotron">
-        <asp:Image ID="Image1" runat="server" ImageUrl="http://malmen.hin.no/gruppe2/Resources/MorildDataLogo.png" Width="100%" />
+        <asp:Image ID="Image1" runat="server" ImageUrl="~/Pictures/MorildDataLogo.png" Width="100%" />
     </div>
 
     </asp:Content>
