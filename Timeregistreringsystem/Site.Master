@@ -50,11 +50,10 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Hjem</a></li>
                         
                         <!-- Brukeradministrasjon -->
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Brukeradministrasjon <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bruker <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="http://malmen.hin.no/gruppe2/BrukerAdministrasjon/LeggTilBruker.aspx">Legg til bruker</a></li>
                                 <li><a href="http://malmen.hin.no/gruppe2/BrukerAdministrasjon/EndreBruker">Endre/Slett bruker</a></li>
@@ -63,7 +62,7 @@
 
                         <!-- Legg til oppgave -->
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Oppgaveadministrasjon <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Oppgave <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="http://malmen.hin.no/gruppe2/OppgaveAdmin/LeggTilOppgave">Legg til oppgave</a></li>
                                 <li><a runat="server" href="http://malmen.hin.no/gruppe2/OppgaveAdmin/EndreOppgave">Rediger oppgave</a></li>
@@ -73,7 +72,7 @@
 
                         <!-- Prosjektadmin -->
                          <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prosjektadministrasjon <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prosjekt <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/LeggTilProsjekt">Legg til nytt prosjekt</a></li>
                                 <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/EndreProsjekt">Endre/Slette prosjekt </a></li>
@@ -87,7 +86,7 @@
 
                         <!-- Teamadministrasjon -->
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Teamadministrasjon <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Team <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="http://malmen.hin.no/gruppe2/TeamAdministrasjon/OpprettTeam">Legge til nytt team</a></li>
                                 <li><a href="http://malmen.hin.no/gruppe2/TeamAdministrasjon/TeamAdministrasjon">Endre/Slette team</a></li>
