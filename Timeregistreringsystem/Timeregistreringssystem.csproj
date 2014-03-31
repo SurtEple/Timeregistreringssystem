@@ -719,6 +719,7 @@
     <Content Include="Prosjektadmin\LeggTilFase.aspx" />
     <Content Include="Prosjektadmin\LeggTilMilepael.aspx" />
     <Content Include="Prosjektadmin\LeggTilProsjekt.aspx" />
+    <None Include="Resources\MorildDataLogo.png" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1033,6 +1034,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
