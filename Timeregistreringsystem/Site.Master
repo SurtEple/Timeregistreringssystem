@@ -75,13 +75,13 @@
                          <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prosjektadministrasjon <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="/ProsjektAdmin/LeggTilProsjekt">Legg til nytt prosjekt</a></li>
-                                <li><a href="/ProsjektAdmin/EndreProsjekt">Endre/Slette prosjekt </a></li>
-                                <li><a href="/ProsjektAdmin/KobleProsjektTeam">Koble team til prosjekt </a></li>
-                                <li><a href="/ProsjektAdmin/LeggTilFase">Legg til ny fase </a></li>
-                                <li><a href="/ProsjektAdmin/EndreFase">Rediger fase </a></li>
-                                 <li><a href="/ProsjektAdmin/LeggTilMilepael">Legg Til Milepæl </a></li>
-                                  <li><a href="/ProsjektAdmin/EndreMilepael">Endre Milepæl </a></li>
+                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/LeggTilProsjekt">Legg til nytt prosjekt</a></li>
+                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/EndreProsjekt">Endre/Slette prosjekt </a></li>
+                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/KobleProsjektTeam">Koble team til prosjekt </a></li>
+                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/LeggTilFase">Legg til ny fase </a></li>
+                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/EndreFase">Rediger fase </a></li>
+                                 <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/LeggTilMilepael">Legg Til Milepæl </a></li>
+                                  <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/EndreMilepael">Endre Milepæl </a></li>
                             </ul>
                          </li>
                     </ul>
