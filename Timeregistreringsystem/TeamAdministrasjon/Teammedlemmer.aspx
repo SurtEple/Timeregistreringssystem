@@ -1,14 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Teammedlemmer.aspx.cs" Inherits="Timeregistreringssystem.TeamAdministrasjon.Teammedlemmer" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Teammedlemmer.aspx.cs" Inherits="Timeregistreringssystem.TeamAdministrasjon.Teammedlemmer" %>
 
-<!DOCTYPE html>
+<asp:Content ID="TeamMedlemmerContent" ContentPlaceHolderID="MainContent" runat="server">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div>
         <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSource1" AutoGenerateColumns="False"
             BackColor="White" BorderColor="Black" BorderStyle="Solid" CellPadding="5" 
             DataKeyNames="ID">
@@ -41,9 +34,8 @@
         </asp:SqlDataSource>
     
         <br />
-&nbsp;Legg til nytt medlem<br />
+        Legg til nytt medlem<br />
     
-    </div>
         <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource2" DataTextField="Navn" DataValueField="ID">
         </asp:DropDownList>
         &nbsp;
@@ -54,6 +46,5 @@
         <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, CONCAT(Fornavn, &quot; &quot;, Mellomnavn, &quot; &quot;, Etternavn) &quot;Navn&quot; FROM Bruker"></asp:SqlDataSource>
         
         <br /><a href="TeamAdministrasjon.aspx">Tilbake</a><br />
-    </form>
-</body>
-</html>
+
+</asp:Content>
