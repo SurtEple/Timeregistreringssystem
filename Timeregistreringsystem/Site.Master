@@ -60,16 +60,6 @@
                             </ul>
                          </li>
 
-                        <!-- Legg til oppgave -->
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Oppgave <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a runat="server" href="http://malmen.hin.no/gruppe2/OppgaveAdmin/LeggTilOppgave">Legg til oppgave</a></li>
-                                <li><a runat="server" href="http://malmen.hin.no/gruppe2/OppgaveAdmin/EndreOppgave">Rediger oppgave</a></li>
-                            </ul>
-                        </li>
-                        
-
                         <!-- Prosjektadmin -->
                          <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prosjekt <b class="caret"></b></a>
@@ -79,8 +69,10 @@
                                 <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/KobleProsjektTeam">Koble team til prosjekt </a></li>
                                 <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/LeggTilFase">Legg til ny fase </a></li>
                                 <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/EndreFase">Rediger fase </a></li>
-                                 <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/LeggTilMilepael">Legg Til Milepæl </a></li>
-                                  <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/EndreMilepael">Endre Milepæl </a></li>
+                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/LeggTilMilepael">Legg Til Milepæl </a></li>
+                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/EndreMilepael">Endre Milepæl </a></li>
+                                <li><a href="http://malmen.hin.no/gruppe2/OppgaveAdmin/LeggTilOppgave">Legg til oppgave</a></li>
+                                <li><a href="http://malmen.hin.no/gruppe2/OppgaveAdmin/EndreOppgave">Rediger oppgave</a></li>
                             </ul>
                          </li>
 
