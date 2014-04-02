@@ -67,10 +67,8 @@
                                 <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/LeggTilProsjekt">Legg til nytt prosjekt</a></li>
                                 <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/EndreProsjekt">Endre/Slette prosjekt </a></li>
                                 <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/KobleProsjektTeam">Koble team til prosjekt </a></li>
-                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/LeggTilFase">Legg til ny fase </a></li>
-                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/EndreFase">Rediger fase </a></li>
-                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/LeggTilMilepael">Legg Til Milepæl </a></li>
-                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/EndreMilepael">Endre Milepæl </a></li>
+                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/LeggTilFase">Administrer Faser </a></li>
+                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/Milestones">Administrer Milepæler</a></li>
                                 <li><a href="http://malmen.hin.no/gruppe2/OppgaveAdmin/LeggTilOppgave">Legg til oppgave</a></li>
                                 <li><a href="http://malmen.hin.no/gruppe2/OppgaveAdmin/EndreOppgave">Rediger oppgave</a></li>
                             </ul>

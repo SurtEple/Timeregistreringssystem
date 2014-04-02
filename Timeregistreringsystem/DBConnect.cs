@@ -13,6 +13,8 @@ using System.Text.RegularExpressions;
 
 namespace Timeregistreringssystem
 {
+
+
     class DBConnect
     {
         //variabler
@@ -28,6 +30,8 @@ namespace Timeregistreringssystem
             Initialize();
         }
 
+
+        #region connection
         //Initialiserer verdier og setter opp en kobling til databasen
         private void Initialize()
         {
@@ -85,62 +89,10 @@ namespace Timeregistreringssystem
                 return false;
             }
         }
+        
+    
 
-
-
-        //Metode for å hente ut alle brukerene og legge de til en bindinglist
-        public BindingList<Bruker> brukerSelect()
-        {
-            string query = "SELECT * FROM Bruker";
-
-            BindingList<Bruker> blBrukerListe = new BindingList<Bruker>();
-
-            //Open connection
-            if (this.OpenConnection() == true)
-            {
-                //Create Command
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                //Create a data reader and Execute the command
-                MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                //Read the data and store them in the list
-                while (dataReader.Read())
-                {
-
-                    int bruker_id = (int)dataReader["ID"];
-                    string bruker_brukernavn = (string)dataReader["Brukernavn"];
-                    string bruker_passord = (string)dataReader["Passord"];
-                    string bruker_fornavn = (string)dataReader["Fornavn"];
-                    string bruker_mellomnavn = (string)dataReader["Mellomnavn"];
-                    string bruker_etternavn = (string)dataReader["Etternavn"];
-                    string bruker_epost = (string)dataReader["Epost"];
-                    string bruker_im = (string)dataReader["IM"];
-                    int tmp_telefonnr = (int)dataReader["Telefonnr"];
-                    string bruker_telefonnr = Convert.ToString(tmp_telefonnr);
-                    string bruker_adresse = (string)dataReader["Adresse"];
-                    int tmp_postnr = (int)dataReader["Postnummer"];
-                    string bruker_postnr = Convert.ToString(tmp_postnr);
-                    string bruker_by = (string)dataReader["By"];
-
-
-                    Bruker bruker = new Bruker(bruker_id, bruker_brukernavn, bruker_passord, bruker_fornavn, bruker_mellomnavn, bruker_etternavn, bruker_epost, bruker_im, bruker_adresse, bruker_postnr, bruker_telefonnr, bruker_by);
-                    blBrukerListe.Add(bruker);
-                }
-
-                //close Data Reader
-                dataReader.Close();
-
-                //close Connection
-                this.CloseConnection();
-
-                //return list to be displayed
-                return blBrukerListe;
-            }
-            else
-            {
-                return blBrukerListe;
-            }
-        }
+#endregion connection
 
         #region Prosjekt
         /**
@@ -308,7 +260,42 @@ namespace Timeregistreringssystem
 
         #endregion Prosjekt
 
-        #region milepæl
+        #region Milepæl
+
+
+        /// <author>Thomas, Surt Eple</author> 
+        /// <referenced inCode="LeggTilMilepael.aspx.cs"></referenced>
+        /// <referenced inSite="/Prosjektadmin/LeggTilMilepael.aspx"></referenced>
+        /// <summary>
+        /// Legger til ny milepæl, setter inn i tabellen Milepael
+        /// </summary>
+        /// <param name="beskrivelse"></param>
+        /// <param name="prosjektID"></param>
+        internal void InsertMilepæl(string datoFerdig, int oppgaveID)
+        {
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string insertString = String.Format("INSERT INTO Milepæl (Dato_Ferdig, Oppgave_ID)" +
+               " VALUES ('{0}', {1})", datoFerdig, oppgaveID);
+                MySqlCommand insertCommand = new MySqlCommand(insertString, connection);
+
+                try
+                {
+                    insertCommand.ExecuteNonQuery();
+                }
+                catch (System.ArgumentException ae) { Debug.WriteLine("Argument exception while trying to format the command string! " + ae.Message); }
+                catch (System.FormatException fe) { Debug.WriteLine("Format exception while trying to format the command string!" + fe.Message); }
+                catch (Exception e) { Debug.WriteLine("Undefined exception! " + e.Message); }
+
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+        }
+
 
         /// <author>Thomas, Surt Eple</author> 
         /// <referenced inCode="LeggTilMilepael.aspx.cs"></referenced>
@@ -343,7 +330,8 @@ namespace Timeregistreringssystem
             }
 
         }
-        #endregion milepæl
+        #endregion Milepæl
+
         #region Fase
 
 
@@ -577,6 +565,408 @@ namespace Timeregistreringssystem
 
 #endregion Fase
 
+        #region Oppgave
+
+        /**
+         * Legge til ny oppgave
+         * @author Bjørn
+         */
+        public void InsertOppgave(int _foreldreProsjekt, int _foreldreOppgave, int _estimertTid, string _tittel, string _beskrivelse, string _startDato, string _sluttDato)
+        {
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string insertString = String.Format("INSERT INTO Oppgave (Prosjekt_ID, Foreldreoppgave_ID, EstimertTid, Tittel, Beskrivelse, Dato_begynt, Dato_ferdig)" +
+               " VALUES ({0}, {1}, {2}, '{3}', '{4}', '{5}', '{6}'  )", _foreldreProsjekt, _foreldreOppgave, _estimertTid, _tittel, _beskrivelse, _startDato, _sluttDato);
+                MySqlCommand insertCommand = new MySqlCommand(insertString, connection);
+
+                try
+                {
+                    insertCommand.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+
+        }
+
+        /**
+        * Henter estimert sluttdato for den ferdige oppgaven fra databasen ved hjelp av id
+        * @author Bjørn
+        */
+        public string ferdigOppgaveHentSluttDato(int id)
+        {
+            string navn = "ingen info";
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string queryString = string.Format(
+                    "SELECT Dato_ferdig FROM Oppgave WHERE id = '{0}'"
+                    , id);
+
+                MySqlCommand command = new MySqlCommand(queryString, connection);
+                try
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        navn = dataReader["Dato_ferdig"] + "";
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+            return navn;
+        }
+
+        /**
+        * Henter brukt tid for den ferdige oppgaven fra databasen ved hjelp av id
+        * @author Bjørn
+        */
+        public string ferdigOppgaveHentBruktTid(int id)
+        {
+            string navn = "ingen info";
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string queryString = string.Format(
+                    "SELECT Brukt_tid FROM Oppgave WHERE id = '{0}'"
+                    , id);
+
+                MySqlCommand command = new MySqlCommand(queryString, connection);
+                try
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        navn = dataReader["Brukt_tid"] + "";
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+            return navn;
+        }
+
+        /**
+         * Sette oppgave til å være ferdig
+         * @author Bjørn
+         */
+        public void OppgaveFerdig(int id, int _bruktTid, string _sluttDato)
+        {
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string editString = String.Format("UPDATE Oppgave SET Ferdig = 1, Brukt_tid = {0}, Dato_ferdig = '{1}' WHERE ID = {2}",
+                   _bruktTid, _sluttDato, id);
+
+                MySqlCommand editCommand = new MySqlCommand(editString, connection);
+
+
+                try
+                {
+                    editCommand.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+
+        }
+
+         /**
+         * Slett oppgave
+         * @author Bjørn
+        */
+        public bool slettOppgave(int id)
+        {
+            String deleteString = String.Format("DELETE FROM Oppgave WHERE ID = {0}", id);
+            bool check = false;
+            int result = 0;
+
+            MySqlCommand deleteCommand = new MySqlCommand(deleteString, connection);
+
+            if (this.OpenConnection())
+            {
+                try
+                {
+                    deleteCommand.Prepare();
+                    result = deleteCommand.ExecuteNonQuery();
+
+                    check = true;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                    check = false;
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+
+            }
+            return check;
+        }
+
+        /**
+        * Henter beskrivelse av oppgave fra databasen ved hjelp av id
+        * @author Bjørn
+        */
+        public string editOppgaveHentBeskrivelse(int id)
+        {
+            string beskrivelse = "ingen info";
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string queryString = string.Format(
+                    "SELECT Beskrivelse FROM Oppgave WHERE id = '{0}'"
+                    , id);
+
+                MySqlCommand command = new MySqlCommand(queryString, connection);
+                try
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        beskrivelse = dataReader["Beskrivelse"] + "";
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+            return beskrivelse;
+        }
+
+        /**
+       * Henter tittel fra databasen ved hjelp av id
+       * @author Bjørn
+       */
+        public string editOppgaveHentTittel(int id)
+        {
+            string navn = "ingen info";
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string queryString = string.Format(
+                    "SELECT Tittel FROM Oppgave WHERE id = '{0}'"
+                    , id);
+
+                MySqlCommand command = new MySqlCommand(queryString, connection);
+                try
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        navn = dataReader["Tittel"] + "";
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+            return navn;
+        }
+
+        /**
+       * Henter estimert tid fra databasen ved hjelp av id
+       * @author Bjørn
+       */
+        public string editOppgaveHentEstimertTid(int id)
+        {
+            string navn = "ingen info";
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string queryString = string.Format(
+                    "SELECT EstimertTid FROM Oppgave WHERE id = '{0}'"
+                    , id);
+
+                MySqlCommand command = new MySqlCommand(queryString, connection);
+                try
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        navn = dataReader["EstimertTid"] + "";
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+            return navn;
+        }
+
+        /**
+       * Henter brukt tid fra databasen ved hjelp av id
+       * @author Bjørn
+       */
+        public string editOppgaveHentBruktTid(int id)
+        {
+            string navn = "ingen info";
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string queryString = string.Format(
+                    "SELECT Brukt_tid FROM Oppgave WHERE id = '{0}'"
+                    , id);
+
+                MySqlCommand command = new MySqlCommand(queryString, connection);
+                try
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        navn = dataReader["Brukt_tid"] + "";
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+            return navn;
+        }
+
+        /**
+        * Henter sluttdato fra databasen ved hjelp av id
+        * @author Bjørn
+        */
+        public string editOppgaveHentSluttDato(int id)
+        {
+            string navn = "ingen info";
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                string queryString = string.Format(
+                    "SELECT Dato_ferdig FROM Oppgave WHERE id = '{0}'"
+                    , id);
+
+                MySqlCommand command = new MySqlCommand(queryString, connection);
+                try
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        navn = dataReader["Dato_ferdig"] + "";
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+            return navn;
+        }
+
+        /**
+     * Oppdater Oppgave
+     * @author Bjørn
+     */
+        public bool OppdaterOppgave(int _id, string _nyTittel, string _nyBeskrivelse, string _nySluttDato, int _nyEstimertTid, int _nyBruktTid)
+        {
+            bool check = false;
+            int result = 0;
+
+            if (this.OpenConnection())
+            {
+                //Create Command
+                String editString = String.Format(
+                    "UPDATE Oppgave SET Tittel = '{0}', Beskrivelse = '{1}', Dato_ferdig = '{2}', EstimertTid = {3}, Brukt_tid = {4} WHERE ID = {5}"
+                    , _nyTittel, _nyBeskrivelse, _nySluttDato, _nyEstimertTid, _nyBruktTid, _id);
+
+                MySqlCommand editCommand = new MySqlCommand(editString, connection);
+                try
+                {
+                    editCommand.Prepare();
+                    result = editCommand.ExecuteNonQuery();
+                    check = true;
+                }
+                catch (Exception e)
+                {
+
+                    Debug.WriteLine(e.Message);
+                    check = false;
+                }
+                finally
+                {
+
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+            return check;
+        } 
+        #endregion Oppgave
+
+        #region hashOgSalt
         /**
          * Salt-generator
          * @author Halvard
@@ -587,6 +977,34 @@ namespace Timeregistreringssystem
             salt = salt.Replace(".", ""); //Fjerner punktum
             return salt;
         }
+
+        /**
+         * Hash-generering
+         * @author Martin
+         */
+        public static byte[] GetHash(string inputString)
+        {
+            HashAlgorithm algorithm = MD5.Create();  // SHA1.Create()
+            return algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
+        }
+
+        /**
+         * Hash-generering
+         * @author Martin
+         */
+        public static string GetHashString(string inputString)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (byte b in GetHash(inputString))
+                sb.Append(b.ToString("x2"));
+
+            return sb.ToString();
+        }
+
+        #endregion hashOgSalt
+
+
+        #region BrukerAdmin
 
         /**
         * Legge inn ny bruker
@@ -601,7 +1019,7 @@ namespace Timeregistreringssystem
             if (this.OpenConnection() == true)
             {
                 string insertBrukerQuery = String.Format("INSERT INTO Bruker (`ID`, `Brukernavn`, `Passord`, `Salt`, `Fornavn`, `Mellomnavn`, `Etternavn`, `Epost`, `IM`, `Telefonnr`, `Adresse`, `Postnummer`, `By`, `Stilling_ID`, `Administrator`) VALUES (NULL, '{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', NULL, '0')", _brukernavn, passord, _salt, _fornavn, _mellomnavn, _etternavn, _epost, _im, _telefonnr, _adresse, _postnr, _by);
-               // string insertBrukerQuery = String.Format("INSERT INTO `HLVDKN_DB1`.`Bruker` (`ID`, `Brukernavn`, `Passord`, `Salt`, `Fornavn`, `Mellomnavn`, `Etternavn`, `Epost`, `IM`, `Telefonnr`, `Adresse`, `Postnummer`, `By`, `Stilling_ID`, `Administrator`) VALUES (NULL, '{0}', '{1}', '{2}', 'salt', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', NULL, NULL)", _brukernavn, _passord,  _fornavn, _mellomnavn, _etternavn, _epost, _im, _adresse, _postnr, _telefonnr, _by);
+                // string insertBrukerQuery = String.Format("INSERT INTO `HLVDKN_DB1`.`Bruker` (`ID`, `Brukernavn`, `Passord`, `Salt`, `Fornavn`, `Mellomnavn`, `Etternavn`, `Epost`, `IM`, `Telefonnr`, `Adresse`, `Postnummer`, `By`, `Stilling_ID`, `Administrator`) VALUES (NULL, '{0}', '{1}', '{2}', 'salt', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', NULL, NULL)", _brukernavn, _passord,  _fornavn, _mellomnavn, _etternavn, _epost, _im, _adresse, _postnr, _telefonnr, _by);
 
                 MySqlCommand insertBrukerCommand = new MySqlCommand(insertBrukerQuery, connection);
 
@@ -627,7 +1045,7 @@ namespace Timeregistreringssystem
                     this.CloseConnection();
                 }
 
-            } 
+            }
         }
 
         /**
@@ -643,14 +1061,14 @@ namespace Timeregistreringssystem
                 String editBrukerQuery = String.Format("UPDATE Bruker SET Passord = '{0}', Epost = '{1}', IM = '{2}', Adresse = '{3}', Postnummer = '{4}', Telefonnr = '{5}', By = '{6}' WHERE ID = '{7}'", _passord, _epost, _im, _adresse, _postnr, _telefonnr, _by, _id);
 
                 //String editBrukerQuery = String.Format("UPDATE Bruker SET Brukernavn = '{0}', Passord = '{1}', Salt = '" + GenerateSalt() + "', Fornavn ='{2}', Mellomnavn = '{3}', Etternavn = '{4}', Epost = '{5}', IM = '{6}', Telefonnr = '{7}', Adresse = '{8}', Postnummer = '{9}', By = '{10}'  WHERE ID = {11}",
-                  //  _brukernavn, _passord, _fornavn, _mellomnavn, _etternavn, _epost, _im, _telefonnr, _adresse, _postnr, _by, _id);
+                //  _brukernavn, _passord, _fornavn, _mellomnavn, _etternavn, _epost, _im, _telefonnr, _adresse, _postnr, _by, _id);
 
                 MySqlCommand editBrukerCommand = new MySqlCommand(editBrukerQuery, connection);
 
                 try
                 {
 
-                    editBrukerCommand.Prepare(); 
+                    editBrukerCommand.Prepare();
                     result = editBrukerCommand.ExecuteNonQuery();
                 }
                 catch (Exception e)
@@ -670,7 +1088,7 @@ namespace Timeregistreringssystem
                 }
 
             }
-            
+
         }
 
         /**
@@ -711,10 +1129,14 @@ namespace Timeregistreringssystem
             }
         }
 
+        #endregion BrukerAdmin
+
+        #region TeamAdmin
+
         /**
          * Sette team-leder
          * @author Bjørn
-         */ 
+         */
         public bool setTeamLeder(int id)
         {
             bool check = false;
@@ -756,300 +1178,7 @@ namespace Timeregistreringssystem
             return check;
         }
 
-        /**
-         * Hash-generering
-         * @author Martin
-         */ 
-        public static byte[] GetHash(string inputString)
-        {
-            HashAlgorithm algorithm = MD5.Create();  // SHA1.Create()
-            return algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
-        }
 
-        /**
-         * Hash-generering
-         * @author Martin
-         */ 
-        public static string GetHashString(string inputString)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (byte b in GetHash(inputString))
-                sb.Append(b.ToString("x2"));
-
-            return sb.ToString();
-        }
-
-        /**
-         * SelectBruker 
-         * @author Martin
-         */ 
-        public List<Bruker> selectBruker()
-        {
-            string query = "Select `Bruker`.`ID`, `Brukernavn`, `Fornavn`, `Mellomnavn`,`Etternavn`, `Epost`, `IM`, `Telefonnr`, `Adresse`, `Postnummer`, `By`, `Stilling`.`Navn` FROM Bruker, Stilling WHERE Stilling_ID = Stilling.ID";
-            List<Bruker> list = new List<Bruker>();
-            if (this.OpenConnection() == true)
-            {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                while (dataReader.Read())
-                {
-                    int id = Convert.ToInt32(dataReader["ID"]);
-                    string brukernavn = dataReader["Brukernavn"] + "";
-                    string fornavn = dataReader["Fornavn"] + "";
-                    string mellomnavn = dataReader["Mellomnavn"] + "";
-                    string etternavn = dataReader["Etternavn"] + "";
-                    string epost = dataReader["Epost"] + "";
-                    string im = dataReader["IM"] + "";
-                    string telefon = dataReader["Telefonnr"] + "";
-                    string adresse = dataReader["Adresse"] + "";
-                    string postnr = dataReader["Postnummer"] + "";
-                    string by = dataReader["By"] + "";
-                    string stilling = dataReader["Navn"] + "";
-                    list.Add(new Bruker(id, brukernavn, fornavn, mellomnavn, etternavn, epost, im, telefon, adresse, postnr, by, stilling));
-
-
-                }
-                dataReader.Close();
-                this.CloseConnection();
-                return list;
-
-
-            }
-            else
-            {
-                return list;
-            }
-        }
-
-        /**
-         * SelectOppgave
-         * @author Martin
-         */ 
-        public List<Oppgave> selectOppgave()
-        {
-            List<Oppgave> list = new List<Oppgave>();
-            string query = "SELECT c.ID, a.Navn, p.Tittel pt, c.EstimertTid, c.Tittel, c.Beskrivelse, c.Ferdig, c.Brukt_tid, c.Dato_begynt, c.Dato_ferdig\n" +
-                                    "FROM Oppgave c, Oppgave p, Prosjekt a\n" +
-                                    "WHERE c.Foreldreoppgave_ID = p.ID\n" +
-                                    "AND c.Prosjekt_ID = a.ID";
-
-            if (this.OpenConnection() == true)
-            {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                while (dataReader.Read())
-                {
-                    int id = Convert.ToInt32(dataReader["ID"]);
-                    string prosjekt = dataReader["Navn"] + "";
-                    string foreldreOppgave = dataReader["pt"] + "";
-                    double estimertTid = Convert.ToDouble(dataReader["EstimertTid"]);
-                    string tittel = dataReader["Tittel"] + "";
-                    string beskrivelse = dataReader["Beskrivelse"] + "";
-                    string ferdig;
-                    if (Convert.ToInt32(dataReader["Ferdig"]) == 1)
-                        ferdig = "ja";
-                    else
-                        ferdig = "nei";
-                    double bruktTid = Convert.ToDouble(dataReader["Brukt_tid"]);
-                    string datoBegynt = dataReader["Dato_begynt"] + "";
-                    string datoFerdig = dataReader["Dato_ferdig"] + "";
-                    list.Add(new Oppgave(id, prosjekt, foreldreOppgave, estimertTid, tittel, beskrivelse, ferdig, bruktTid, datoBegynt, datoFerdig));
-
-                }
-                dataReader.Close();
-                this.CloseConnection();
-                return list;
-            }
-            else
-                return list;
-        }
-
-        /**
-         * SelectFase
-         * @author Martin
-         */ 
-        public List<Fase> selectFase()
-        {
-            List<Fase> list = new List<Fase>();
-            string query = "SELECT f.ID, f.Navn, f.Dato_startet, f.Dato_sluttet, f.Status, f.Beskrivelse, p.Navn n "
-                            + "FROM Fase f, Prosjekt p WHERE f.Prosjekt_ID = p.ID";
-            if (this.OpenConnection() == true)
-            {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                while (dataReader.Read())
-                {
-                    int id = Convert.ToInt32(dataReader["ID"]);
-                    string navn = dataReader["Navn"] + "";
-                    string datoStartet = dataReader["Dato_startet"] + "";
-                    string datoSluttet = dataReader["Dato_sluttet"] + "";
-                    string status = dataReader["Status"] + "";
-                    string beskrivelse = dataReader["Beskrivelse"] + "";
-                    string prosjekt = dataReader["n"] + "";
-                    list.Add(new Fase(id, navn, datoStartet, datoSluttet, status, beskrivelse, prosjekt));
-                }
-                dataReader.Close();
-                this.CloseConnection();
-                return list;
-            }
-            else
-                return list;
-        }
-
-        /**
-         * SelectProsjekt 
-         * @author Martin
-         */ 
-        public List<Prosjekt> selectProsjekt()
-        {
-            string query = "SELECT * FROM Prosjekt";
-            List<Prosjekt> list = new List<Prosjekt>();
-            if (this.OpenConnection() == true)
-            {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                MySqlDataReader dr = cmd.ExecuteReader();
-
-                while (dr.Read())
-                {
-                    int id = Convert.ToInt32(dr["ID"]);
-                    string navn = dr["Navn"] + "";
-                    string oppsummering = dr["Oppsummering"] + "";
-                    string nesteFase = dr["Neste_Fase"] + "";
-                    list.Add(new Prosjekt(id, navn, oppsummering, nesteFase));
-                }
-                dr.Close();
-                this.CloseConnection();
-                return list;
-            }
-            else
-                return list;
-        }
-
-        /**
-         * SelectTeam 
-         * @author Martin
-         */
-        public List<Team> selectTeam()
-        {
-            List<Team> list = new List<Team>();
-            string query = "SELECT `Team`.`ID` `Team_ID`, `Bruker`.`ID` `Bruker_ID`, `Bruker`.`Fornavn`, `Bruker`.`Mellomnavn`, `Bruker`.`Etternavn`, `Team`.`Beskrivelse` FROM Team, Bruker "
-                    + "WHERE Team.Teamleder = Bruker.ID";
-            if (this.OpenConnection() == true)
-            {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                MySqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
-                {
-                    int id = Convert.ToInt32(dr["Team_ID"]);
-                    int teamLedId = Convert.ToInt32(dr["Bruker_ID"]);
-                    string teamLeder = dr["Fornavn"] + " " + dr["Mellomnavn"] + " " + dr["Etternavn"];
-                    teamLeder = Regex.Replace(teamLeder, @"\s+", " ");
-                    string beskrivelse = dr["Beskrivelse"] + "";
-                    list.Add(new Team(id, teamLedId, teamLeder, beskrivelse));
-
-                }
-                dr.Close();
-                this.CloseConnection();
-                return list;
-            }
-            else
-                return list;
-        }
-
-        /**
-         * SelectTime
-         * @author Martin
-         */ 
-        public List<Time> selectTime()
-        {
-            string query = "SELECT `Time`.`ID`, `Fra`, `Til`, `Pause`, `Dato`, `Bruker`.`Fornavn`, `Bruker`.`Etternavn`, `Oppgave`.`Tittel`, `Kommentar`, `Sted`, `Aktiv` "
-                    + "FROM Time, Bruker, Oppgave WHERE Bruker_ID = Bruker.ID AND Oppgave_ID = Oppgave.ID";
-            List<Time> list = new List<Time>();
-
-            if (this.OpenConnection() == true)
-            {
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-                MySqlDataReader dr = cmd.ExecuteReader();
-
-                while (dr.Read())
-                {
-                    int id = Convert.ToInt32(dr["ID"]);
-                    string fra = dr["Fra"] + "";
-                    string til = dr["Til"] + "";
-                    string oppgave = dr["Tittel"] + "";
-                    string pause = dr["Pause"] + "";
-                    string dato = dr["Dato"] + "";
-                    string bruker = dr["Fornavn"] + " " + dr["Etternavn"];
-                    string kommentar = dr["Kommentar"] + "";
-                    string sted = dr["Sted"] + "";
-                    string aktiv;
-                    if (Convert.ToInt32(dr["Aktiv"]) == 1)
-                        aktiv = "Ja";
-                    else
-                        aktiv = "Nei";
-                    list.Add(new Time(id, fra, til, pause, dato, bruker, oppgave, kommentar, sted, aktiv));
-                }
-                dr.Close();
-                this.CloseConnection();
-                return list;
-            }
-            else
-                return list;
-        }
-
-        public bool CheckLogin(string brukernavn, string passordmd5)
-        {
-            if (this.OpenConnection() == true)
-            {
-                   
-            }
-
-            return false;
-        }
-
-        /**
-         * Sjekk innlogging
-         * @author Martin
-         */ 
-        public int[] CheckInnlogging(String brukernavn, String passord)
-        {
-            //bool check = false;
-            int[] i = new int[2];
-            i[0] = -1;
-            string salt = null;
-            if (this.OpenConnection() == true)
-            {
-                string query1 = "SELECT Salt FROM Bruker WHERE Brukernavn like " + "'" + brukernavn + "'";
-                MySqlCommand cmd = new MySqlCommand(query1, connection);
-                MySqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
-                {
-                    salt = dr["Salt"] + "";
-                }
-                dr.Close();
-
-                string passWord = GetHashString(salt + passord);
-
-                string query2 = "SELECT * FROM Bruker WHERE Passord = " + "'" + passWord + "'";
-                MySqlCommand cmd2 = new MySqlCommand(query2, connection);
-                MySqlDataReader dr2 = cmd2.ExecuteReader();
-                while (dr2.Read())
-                {
-                    i[0] = Convert.ToInt32(dr2["Administrator"]);
-                    i[1] = Convert.ToInt32(dr2["ID"]);
-
-                }
-                dr2.Close();
-                this.CloseConnection();
-                return i;
-
-            }
-            else
-                return i;
-        }
 
         /**
         * Legger til nytt team
@@ -1183,403 +1312,145 @@ namespace Timeregistreringssystem
             return check;
         }
 
+
+
+
         /**
-         * Legge til ny oppgave
-         * @author Bjørn
+         * SelectTeam 
+         * @author Martin
          */
-        public void InsertOppgave(int _foreldreProsjekt, int _foreldreOppgave, int _estimertTid, string _tittel, string _beskrivelse, string _startDato, string _sluttDato)
+        public List<Team> selectTeam()
         {
-
-            if (this.OpenConnection())
+            List<Team> list = new List<Team>();
+            string query = "SELECT `Team`.`ID` `Team_ID`, `Bruker`.`ID` `Bruker_ID`, `Bruker`.`Fornavn`, `Bruker`.`Mellomnavn`, `Bruker`.`Etternavn`, `Team`.`Beskrivelse` FROM Team, Bruker "
+                    + "WHERE Team.Teamleder = Bruker.ID";
+            if (this.OpenConnection() == true)
             {
-                //Create Command
-                string insertString = String.Format("INSERT INTO Oppgave (Prosjekt_ID, Foreldreoppgave_ID, EstimertTid, Tittel, Beskrivelse, Dato_begynt, Dato_ferdig)" +
-               " VALUES ({0}, {1}, {2}, '{3}', '{4}', '{5}', '{6}'  )", _foreldreProsjekt, _foreldreOppgave, _estimertTid, _tittel, _beskrivelse, _startDato, _sluttDato);
-                MySqlCommand insertCommand = new MySqlCommand(insertString, connection);
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    int id = Convert.ToInt32(dr["Team_ID"]);
+                    int teamLedId = Convert.ToInt32(dr["Bruker_ID"]);
+                    string teamLeder = dr["Fornavn"] + " " + dr["Mellomnavn"] + " " + dr["Etternavn"];
+                    teamLeder = Regex.Replace(teamLeder, @"\s+", " ");
+                    string beskrivelse = dr["Beskrivelse"] + "";
+                    list.Add(new Team(id, teamLedId, teamLeder, beskrivelse));
 
-                try
-                {
-                    insertCommand.ExecuteNonQuery();
                 }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                }
-                finally
-                {
-                    //close Connection
-                    this.CloseConnection();
-                }
+                dr.Close();
+                this.CloseConnection();
+                return list;
             }
-
+            else
+                return list;
         }
+
+        #endregion TeamAdmin
+
+        #region Innlogging
 
         /**
-        * Henter estimert sluttdato for den ferdige oppgaven fra databasen ved hjelp av id
-        * @author Bjørn
-        */
-        public string ferdigOppgaveHentSluttDato(int id)
-        {
-            string navn = "ingen info";
-
-            if (this.OpenConnection())
-            {
-                //Create Command
-                string queryString = string.Format(
-                    "SELECT Dato_ferdig FROM Oppgave WHERE id = '{0}'"
-                    , id);
-
-                MySqlCommand command = new MySqlCommand(queryString, connection);
-                try
-                {
-                    MySqlDataReader dataReader = command.ExecuteReader();
-                    while (dataReader.Read())
-                    {
-                        navn = dataReader["Dato_ferdig"] + "";
-                    }
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                }
-                finally
-                {
-                    //close Connection
-                    this.CloseConnection();
-                }
-            }
-            return navn;
-        }
-
-       /**
-       * Henter brukt tid for den ferdige oppgaven fra databasen ved hjelp av id
-       * @author Bjørn
-       */
-        public string ferdigOppgaveHentBruktTid(int id)
-        {
-            string navn = "ingen info";
-
-            if (this.OpenConnection())
-            {
-                //Create Command
-                string queryString = string.Format(
-                    "SELECT Brukt_tid FROM Oppgave WHERE id = '{0}'"
-                    , id);
-
-                MySqlCommand command = new MySqlCommand(queryString, connection);
-                try
-                {
-                    MySqlDataReader dataReader = command.ExecuteReader();
-                    while (dataReader.Read())
-                    {
-                        navn = dataReader["Brukt_tid"] + "";
-                    }
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                }
-                finally
-                {
-                    //close Connection
-                    this.CloseConnection();
-                }
-            }
-            return navn;
-        }
-
-        /**
-         * Sette oppgave til å være ferdig
-         * @author Bjørn
+         * Sjekk innlogging
+         * @author Martin
          */
-        public void OppgaveFerdig(int id, int _bruktTid, string _sluttDato)
+        public int[] CheckInnlogging(String brukernavn, String passord)
         {
-
-            if (this.OpenConnection())
+            //bool check = false;
+            int[] i = new int[2];
+            i[0] = -1;
+            string salt = null;
+            if (this.OpenConnection() == true)
             {
-                //Create Command
-                string editString = String.Format("UPDATE Oppgave SET Ferdig = 1, Brukt_tid = {0}, Dato_ferdig = '{1}' WHERE ID = {2}",
-                   _bruktTid, _sluttDato, id);
-
-                MySqlCommand editCommand = new MySqlCommand(editString, connection);
-
-
-                try
+                string query1 = "SELECT Salt FROM Bruker WHERE Brukernavn like " + "'" + brukernavn + "'";
+                MySqlCommand cmd = new MySqlCommand(query1, connection);
+                MySqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
                 {
-                    editCommand.ExecuteNonQuery();
+                    salt = dr["Salt"] + "";
                 }
-                catch (Exception e)
+                dr.Close();
+
+                string passWord = GetHashString(salt + passord);
+
+                string query2 = "SELECT * FROM Bruker WHERE Passord = " + "'" + passWord + "'";
+                MySqlCommand cmd2 = new MySqlCommand(query2, connection);
+                MySqlDataReader dr2 = cmd2.ExecuteReader();
+                while (dr2.Read())
                 {
-                    Debug.WriteLine(e.Message);
+                    i[0] = Convert.ToInt32(dr2["Administrator"]);
+                    i[1] = Convert.ToInt32(dr2["ID"]);
+
                 }
-                finally
-                {
-                    //close Connection
-                    this.CloseConnection();
-                }
+                dr2.Close();
+                this.CloseConnection();
+                return i;
+
             }
-
+            else
+                return i;
         }
 
-         /**
-      * Slett prosjekt
-      * @author Bjørn
-     */
-        public bool slettOppgave(int id)
+//Metode for å hente ut alle brukerene og legge de til en bindinglist
+        public BindingList<Bruker> brukerSelect()
         {
-            String deleteString = String.Format("DELETE FROM Oppgave WHERE ID = {0}", id);
-            bool check = false;
-            int result = 0;
+            string query = "SELECT * FROM Bruker";
 
-            MySqlCommand deleteCommand = new MySqlCommand(deleteString, connection);
+            BindingList<Bruker> blBrukerListe = new BindingList<Bruker>();
 
-            if (this.OpenConnection())
-            {
-                try
-                {
-                    deleteCommand.Prepare(); 
-                    result = deleteCommand.ExecuteNonQuery();
-
-                    check = true;
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                    check = false;
-                }
-                finally
-                {
-                    //close Connection
-                    this.CloseConnection();
-                }
-
-            }
-            return check;
-        }
-
-     /**
-     * Henter beskrivelse av oppgave fra databasen ved hjelp av id
-     * @author Bjørn
-     */
-        public string editOppgaveHentBeskrivelse(int id)
-        {
-            string beskrivelse = "ingen info";
-
-            if (this.OpenConnection())
+            //Open connection
+            if (this.OpenConnection() == true)
             {
                 //Create Command
-                string queryString = string.Format(
-                    "SELECT Beskrivelse FROM Oppgave WHERE id = '{0}'"
-                    , id);
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                //Create a data reader and Execute the command
+                MySqlDataReader dataReader = cmd.ExecuteReader();
 
-                MySqlCommand command = new MySqlCommand(queryString, connection);
-                try
+                //Read the data and store them in the list
+                while (dataReader.Read())
                 {
-                    MySqlDataReader dataReader = command.ExecuteReader();
-                    while (dataReader.Read())
-                    {
-                        beskrivelse = dataReader["Beskrivelse"] + "";
-                    }
+
+                    int bruker_id = (int)dataReader["ID"];
+                    string bruker_brukernavn = (string)dataReader["Brukernavn"];
+                    string bruker_passord = (string)dataReader["Passord"];
+                    string bruker_fornavn = (string)dataReader["Fornavn"];
+                    string bruker_mellomnavn = (string)dataReader["Mellomnavn"];
+                    string bruker_etternavn = (string)dataReader["Etternavn"];
+                    string bruker_epost = (string)dataReader["Epost"];
+                    string bruker_im = (string)dataReader["IM"];
+                    int tmp_telefonnr = (int)dataReader["Telefonnr"];
+                    string bruker_telefonnr = Convert.ToString(tmp_telefonnr);
+                    string bruker_adresse = (string)dataReader["Adresse"];
+                    int tmp_postnr = (int)dataReader["Postnummer"];
+                    string bruker_postnr = Convert.ToString(tmp_postnr);
+                    string bruker_by = (string)dataReader["By"];
+
+
+                    Bruker bruker = new Bruker(bruker_id, bruker_brukernavn, bruker_passord, bruker_fornavn, bruker_mellomnavn, bruker_etternavn, bruker_epost, bruker_im, bruker_adresse, bruker_postnr, bruker_telefonnr, bruker_by);
+                    blBrukerListe.Add(bruker);
                 }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                }
-                finally
-                {
-                    //close Connection
-                    this.CloseConnection();
-                }
+
+                //close Data Reader
+                dataReader.Close();
+
+                //close Connection
+                this.CloseConnection();
+
+                //return list to be displayed
+                return blBrukerListe;
             }
-            return beskrivelse;
-        }
-
-     /**
-    * Henter tittel fra databasen ved hjelp av id
-    * @author Bjørn
-    */
-        public string editOppgaveHentTittel(int id)
-        {
-            string navn = "ingen info";
-
-            if (this.OpenConnection())
+            else
             {
-                //Create Command
-                string queryString = string.Format(
-                    "SELECT Tittel FROM Oppgave WHERE id = '{0}'"
-                    , id);
-
-                MySqlCommand command = new MySqlCommand(queryString, connection);
-                try
-                {
-                    MySqlDataReader dataReader = command.ExecuteReader();
-                    while (dataReader.Read())
-                    {
-                        navn = dataReader["Tittel"] + "";
-                    }
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                }
-                finally
-                {
-                    //close Connection
-                    this.CloseConnection();
-                }
+                return blBrukerListe;
             }
-            return navn;
+
+
+        #endregion Innlogging
+
+
+
+
         }
-
-        /**
-   * Henter estimert tid fra databasen ved hjelp av id
-   * @author Bjørn
-   */
-        public string editOppgaveHentEstimertTid(int id)
-        {
-            string navn = "ingen info";
-
-            if (this.OpenConnection())
-            {
-                //Create Command
-                string queryString = string.Format(
-                    "SELECT EstimertTid FROM Oppgave WHERE id = '{0}'"
-                    , id);
-
-                MySqlCommand command = new MySqlCommand(queryString, connection);
-                try
-                {
-                    MySqlDataReader dataReader = command.ExecuteReader();
-                    while (dataReader.Read())
-                    {
-                        navn = dataReader["EstimertTid"] + "";
-                    }
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                }
-                finally
-                {
-                    //close Connection
-                    this.CloseConnection();
-                }
-            }
-            return navn;
-        }
-
-     /**
-    * Henter brukt tid fra databasen ved hjelp av id
-    * @author Bjørn
-    */
-        public string editOppgaveHentBruktTid(int id)
-        {
-            string navn = "ingen info";
-
-            if (this.OpenConnection())
-            {
-                //Create Command
-                string queryString = string.Format(
-                    "SELECT Brukt_tid FROM Oppgave WHERE id = '{0}'"
-                    , id);
-
-                MySqlCommand command = new MySqlCommand(queryString, connection);
-                try
-                {
-                    MySqlDataReader dataReader = command.ExecuteReader();
-                    while (dataReader.Read())
-                    {
-                        navn = dataReader["Brukt_tid"] + "";
-                    }
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                }
-                finally
-                {
-                    //close Connection
-                    this.CloseConnection();
-                }
-            }
-            return navn;
-        }
-
-        /**
-        * Henter sluttdato fra databasen ved hjelp av id
-        * @author Bjørn
-        */
-        public string editOppgaveHentSluttDato(int id)
-        {
-            string navn = "ingen info";
-
-            if (this.OpenConnection())
-            {
-                //Create Command
-                string queryString = string.Format(
-                    "SELECT Dato_ferdig FROM Oppgave WHERE id = '{0}'"
-                    , id);
-
-                MySqlCommand command = new MySqlCommand(queryString, connection);
-                try
-                {
-                    MySqlDataReader dataReader = command.ExecuteReader();
-                    while (dataReader.Read())
-                    {
-                        navn = dataReader["Dato_ferdig"] + "";
-                    }
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                }
-                finally
-                {
-                    //close Connection
-                    this.CloseConnection();
-                }
-            }
-            return navn;
-        }
-
-        /**
-     * Oppdater Oppgave
-     * @author Bjørn
-     */
-        public bool OppdaterOppgave(int _id, string _nyTittel, string _nyBeskrivelse, string _nySluttDato, int _nyEstimertTid, int _nyBruktTid )
-        {
-            bool check = false;
-            int result = 0;
-
-            if (this.OpenConnection())
-            {
-                //Create Command
-                String editString = String.Format(
-                    "UPDATE Oppgave SET Tittel = '{0}', Beskrivelse = '{1}', Dato_ferdig = '{2}', EstimertTid = {3}, Brukt_tid = {4} WHERE ID = {5}"
-                    , _nyTittel, _nyBeskrivelse, _nySluttDato, _nyEstimertTid, _nyBruktTid, _id);
-
-                MySqlCommand editCommand = new MySqlCommand(editString, connection);
-                try
-                {
-                    editCommand.Prepare();
-                    result = editCommand.ExecuteNonQuery();
-                    check = true;
-                }
-                catch (Exception e)
-                {
-
-                    Debug.WriteLine(e.Message);
-                    check = false;
-                }
-                finally
-                {
-                  
-                    //close Connection
-                    this.CloseConnection();
-                }
-            }
-            return check;
-        }  //edit fase
 
        
     }
