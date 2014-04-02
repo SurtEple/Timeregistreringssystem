@@ -765,11 +765,63 @@ namespace Timeregistreringssystem
                         beskrivelse = dataReader["Beskrivelse"] + "";
                     }
                 }
+<<<<<<< HEAD
                 catch (Exception e)
+=======
+                dr.Close();
+                this.CloseConnection();
+                return list;
+            }
+            else
+                return list;
+        }
+
+        public bool CheckLogin(string brukernavn, string passordmd5)
+        {
+            if (this.OpenConnection() == true)
+            {
+                   
+            }
+
+            return false;
+        }
+
+        /**
+         * Sjekk innlogging
+         * @author Martin
+         */ 
+        public int[] CheckInnlogging(String brukernavn, String passord)
+        {
+            //bool check = false;
+            int[] i = new int[2];
+            i[0] = -1;
+            string salt = null;
+            if (this.OpenConnection() == true)
+            {
+                string query1 = "SELECT Salt FROM Bruker WHERE Brukernavn like @brukernavn";
+                MySqlCommand cmd = new MySqlCommand(query1, connection);
+                cmd.Parameters.AddWithValue("@brukernavn", brukernavn);
+                cmd.Prepare();
+                MySqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+>>>>>>> 42290d6cb2cbd865c755bf080a11704f9a980737
                 {
                     Debug.WriteLine(e.Message);
                 }
+<<<<<<< HEAD
                 finally
+=======
+                dr.Close();
+
+                string passWord = GetHashString(salt + passord);
+
+                string query2 = "SELECT * FROM Bruker WHERE Passord = @passord";
+                MySqlCommand cmd2 = new MySqlCommand(query2, connection);
+                cmd2.Parameters.AddWithValue("@passord", passWord);
+                cmd2.Prepare();
+                MySqlDataReader dr2 = cmd2.ExecuteReader();
+                while (dr2.Read())
+>>>>>>> 42290d6cb2cbd865c755bf080a11704f9a980737
                 {
                     //close Connection
                     this.CloseConnection();

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.Security;
 using Timeregistreringssystem.Models;
+using System.Windows.Forms;
 
 namespace Timeregistreringssystem.Account
 {
@@ -15,13 +16,7 @@ namespace Timeregistreringssystem.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            RegisterHyperLink.NavigateUrl = "Register";
-            OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
-            var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
-            if (!String.IsNullOrEmpty(returnUrl))
-            {
-                RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
-            }
+
         }
 
         protected void LogIn(object sender, EventArgs e)
@@ -38,6 +33,10 @@ namespace Timeregistreringssystem.Account
                     Session["BrukerID"] = bruker[1];
                     IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
 
+                }
+                else
+                {
+                    MessageBox.Show("Feil brukernavn eller passord");
                 }
 
                 /*
