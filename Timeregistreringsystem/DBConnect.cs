@@ -765,16 +765,19 @@ namespace Timeregistreringssystem
                         beskrivelse = dataReader["Beskrivelse"] + "";
                     }
                 }
-<<<<<<< HEAD
                 catch (Exception e)
-=======
-                dr.Close();
-                this.CloseConnection();
-                return list;
+                {
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    //close Connection
+                    this.CloseConnection();
+                }
             }
-            else
-                return list;
+            return beskrivelse;
         }
+
 
         public bool CheckLogin(string brukernavn, string passordmd5)
         {
@@ -790,6 +793,7 @@ namespace Timeregistreringssystem
          * Sjekk innlogging
          * @author Martin
          */ 
+
         public int[] CheckInnlogging(String brukernavn, String passord)
         {
             //bool check = false;
@@ -804,13 +808,9 @@ namespace Timeregistreringssystem
                 cmd.Prepare();
                 MySqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
->>>>>>> 42290d6cb2cbd865c755bf080a11704f9a980737
                 {
-                    Debug.WriteLine(e.Message);
+                    salt = dr["Salt"] + "";
                 }
-<<<<<<< HEAD
-                finally
-=======
                 dr.Close();
 
                 string passWord = GetHashString(salt + passord);
@@ -821,13 +821,58 @@ namespace Timeregistreringssystem
                 cmd2.Prepare();
                 MySqlDataReader dr2 = cmd2.ExecuteReader();
                 while (dr2.Read())
->>>>>>> 42290d6cb2cbd865c755bf080a11704f9a980737
                 {
-                    //close Connection
-                    this.CloseConnection();
+                    i[0] = Convert.ToInt32(dr2["Administrator"]);
+                    i[1] = Convert.ToInt32(dr2["ID"]);
+
                 }
+                dr2.Close();
+                this.CloseConnection();
+                return i;
+
             }
-            return beskrivelse;
+            else
+                return i;
+        }
+        public int[] CheckInnlogging(String brukernavn, String passord)
+        {
+            //bool check = false;
+            int[] i = new int[2];
+            i[0] = -1;
+            string salt = null;
+            if (this.OpenConnection() == true)
+            {
+                string query1 = "SELECT Salt FROM Bruker WHERE Brukernavn like @brukernavn";
+                MySqlCommand cmd = new MySqlCommand(query1, connection);
+                cmd.Parameters.AddWithValue("@brukernavn", brukernavn);
+                cmd.Prepare();
+                MySqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    salt = dr["Salt"] + "";
+                }
+                dr.Close();
+
+                string passWord = GetHashString(salt + passord);
+
+                string query2 = "SELECT * FROM Bruker WHERE Passord = @passord";
+                MySqlCommand cmd2 = new MySqlCommand(query2, connection);
+                cmd2.Parameters.AddWithValue("@passord", passWord);
+                cmd2.Prepare();
+                MySqlDataReader dr2 = cmd2.ExecuteReader();
+                while (dr2.Read())
+                {
+                    i[0] = Convert.ToInt32(dr2["Administrator"]);
+                    i[1] = Convert.ToInt32(dr2["ID"]);
+
+                }
+                dr2.Close();
+                this.CloseConnection();
+                return i;
+
+            }
+            else
+                return i;
         }
 
         /**
