@@ -1022,8 +1022,10 @@ namespace Timeregistreringssystem
             string salt = null;
             if (this.OpenConnection() == true)
             {
-                string query1 = "SELECT Salt FROM Bruker WHERE Brukernavn like " + "'" + brukernavn + "'";
+                string query1 = "SELECT Salt FROM Bruker WHERE Brukernavn like @brukernavn";
                 MySqlCommand cmd = new MySqlCommand(query1, connection);
+                cmd.Parameters.AddWithValue("@brukernavn", brukernavn);
+                cmd.Prepare();
                 MySqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
@@ -1033,8 +1035,10 @@ namespace Timeregistreringssystem
 
                 string passWord = GetHashString(salt + passord);
 
-                string query2 = "SELECT * FROM Bruker WHERE Passord = " + "'" + passWord + "'";
+                string query2 = "SELECT * FROM Bruker WHERE Passord = @passord";
                 MySqlCommand cmd2 = new MySqlCommand(query2, connection);
+                cmd2.Parameters.AddWithValue("@passord", passWord);
+                cmd2.Prepare();
                 MySqlDataReader dr2 = cmd2.ExecuteReader();
                 while (dr2.Read())
                 {
