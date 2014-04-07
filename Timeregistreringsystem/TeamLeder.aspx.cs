@@ -10,6 +10,7 @@ namespace Timeregistreringssystem
 
     public partial class TeamLeder : System.Web.UI.Page
     {
+
         //Variabler
         private DBConnect connection;
         private String brukernavn;
