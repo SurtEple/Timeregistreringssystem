@@ -735,6 +735,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="ClassDiagram1.cd" />
+    <None Include="Properties\PublishProfiles\Gudergod.pubxml" />
     <None Include="Properties\PublishProfiles\SysUt14Gr2-Timeregistreringssystem.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
