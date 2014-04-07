@@ -11,7 +11,11 @@ namespace Timeregistreringssystem.TeamAdministrasjon
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            int rettighet = Convert.ToInt32(Session["Admin"]);
+            if (rettighet != Rettigheter.Rettighet_prosjekt_ansvarlig)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
         }
 
         protected void gridViewTeam_SelectedIndexChanged(object sender, EventArgs e) 

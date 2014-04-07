@@ -14,7 +14,7 @@ namespace Timeregistreringssystem.TeamAdministrasjon
             int rettighet = Convert.ToInt32(Session["Admin"]);
             if (rettighet != Rettigheter.Rettighet_prosjekt_ansvarlig)
             {
-                Response.Redirect("Default.aspx");
+                Response.Redirect("~/Default.aspx");
             }
         }
 
