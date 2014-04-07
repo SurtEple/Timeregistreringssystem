@@ -18,8 +18,14 @@
         <br />
     
     </div>
-        <rsweb:ReportViewer ID="TeamRV" runat="server">
+        <rsweb:ReportViewer ID="TeamRV" runat="server" Font-Names="Verdana" Font-Size="8pt" WaitMessageFont-Names="Verdana" WaitMessageFont-Size="14pt">
+            <LocalReport ReportEmbeddedResource="Timeregistreringssystem.RapportGenerering.Report1.rdlc">
+                <DataSources>
+                    <rsweb:ReportDataSource DataSourceId="ObjectDataSource1" Name="DataSet1" />
+                </DataSources>
+            </LocalReport>
         </rsweb:ReportViewer>
+        <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="GetData" TypeName="TeamTabellDatasetTableAdapters.TeamTableAdapter"></asp:ObjectDataSource>
         <asp:ScriptManager ID="ScriptManager1" runat="server">
         </asp:ScriptManager>
     </form>
