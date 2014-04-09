@@ -11,6 +11,8 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
+
+
 namespace Timeregistreringssystem
 {
 
@@ -1357,11 +1359,10 @@ namespace Timeregistreringssystem
          * Sjekk innlogging
          * @author Martin
          */
-        public int[] CheckInnlogging(String brukernavn, String passord)
+        public Bruker CheckInnlogging(String brukernavn, String passord)
         {
             //bool check = false;
-            int[] i = new int[2];
-            i[0] = -1;
+            Bruker b = null;
             string salt = null;
             if (this.OpenConnection() == true)
             {
@@ -1381,17 +1382,29 @@ namespace Timeregistreringssystem
                 MySqlDataReader dr2 = cmd2.ExecuteReader();
                 while (dr2.Read())
                 {
-                    i[0] = Convert.ToInt32(dr2["Administrator"]);
-                    i[1] = Convert.ToInt32(dr2["ID"]);
+
+                    int id = Convert.ToInt32(dr2["ID"]);
+                    string brukerNavn = dr2["Brukernavn"] + "";
+                    string fornavn = dr2["Fornavn"] + "";
+                    string mellomnavn = dr2["Mellomnavn"] + "";
+                    string etternavn = dr2["Etternavn"] + "";
+                    string epost = dr2["Epost"] + "";
+                    string im = dr2["IM"] + "";
+                    string adresse = dr2["Adresse"] + "";
+                    string postnummer = dr2["Postnummer"] + "";
+                    string telefonnr = dr2["Telefonnr"] + "";
+                    string by = dr2["By"] + "";
+                    int rettigheter = Convert.ToInt32(dr2["Administrator"]);
+                    b = new Bruker(id, brukernavn, fornavn, mellomnavn, etternavn, epost, im, adresse, postnummer, telefonnr, by, rettigheter);
 
                 }
                 dr2.Close();
                 this.CloseConnection();
-                return i;
+                return b;
 
             }
             else
-                return i;
+                return b;
         }
 
 //Metode for å hente ut alle brukerene og legge de til en bindinglist
@@ -1427,9 +1440,10 @@ namespace Timeregistreringssystem
                     int tmp_postnr = (int)dataReader["Postnummer"];
                     string bruker_postnr = Convert.ToString(tmp_postnr);
                     string bruker_by = (string)dataReader["By"];
+                    int rettigheter = (int)dataReader["Administrator"];
 
 
-                    Bruker bruker = new Bruker(bruker_id, bruker_brukernavn, bruker_passord, bruker_fornavn, bruker_mellomnavn, bruker_etternavn, bruker_epost, bruker_im, bruker_adresse, bruker_postnr, bruker_telefonnr, bruker_by);
+                    Bruker bruker = new Bruker(bruker_id, bruker_brukernavn, bruker_fornavn, bruker_mellomnavn, bruker_etternavn, bruker_epost, bruker_im, bruker_adresse, bruker_postnr, bruker_telefonnr, bruker_by,rettigheter);
                     blBrukerListe.Add(bruker);
                 }
 

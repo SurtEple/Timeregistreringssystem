@@ -25,13 +25,13 @@ namespace Timeregistreringssystem
         private string postnr;
         private string telefonnr;
         private string by;
+        private int rettigheter;
 
         //Konstruktør
-        public Bruker(int _id, string _brukernavn, string _passord, string _fornavn, string _mellomnavn, string _etternavn, string _epost, string _im, string _adresse, string _postnr, string _telefonnr, string _by)
+        public Bruker(int _id, string _brukernavn, string _fornavn, string _mellomnavn, string _etternavn, string _epost, string _im, string _adresse, string _postnr, string _telefonnr, string _by, int _rettigheter)
         {
             id = _id;
             brukernavn = _brukernavn;
-            passord = _passord;
             fornavn = _fornavn;
             mellomnavn = _mellomnavn;
             etternavn = _etternavn;
@@ -41,6 +41,7 @@ namespace Timeregistreringssystem
             postnr = _postnr;
             telefonnr = _telefonnr;
             by = _by;
+            rettigheter = _rettigheter;
         }
 
         public int Id
@@ -54,13 +55,6 @@ namespace Timeregistreringssystem
             get { return brukernavn; }
             set { brukernavn = value; }
         }
-
-        public string Passord
-        {
-            get { return passord; }
-            set { passord = value; }
-        }
-
         public string Fornavn
         {
             get { return fornavn; }
@@ -108,7 +102,11 @@ namespace Timeregistreringssystem
             get { return telefonnr; }
             set { telefonnr = value; }
         }
-
+        public int Rettigheter
+        {
+            get { return rettigheter; }
+            set { rettigheter = value; }
+        }
 
     }
 }
