@@ -3,10 +3,7 @@
 <asp:Content ID="TeamMedlemmerContent" ContentPlaceHolderID="MainContent" runat="server">
 
         <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSource1" AutoGenerateColumns="False"
-            BackColor="White" BorderColor="Black" BorderStyle="Solid" CellPadding="5" 
-            DataKeyNames="ID">
-
-            <HeaderStyle BackColor="#CCCCFF" ForeColor="Black" />
+            CssClass="table" DataKeyNames="ID">
 
             <Columns>
                 <asp:CommandField ShowSelectButton="false" ShowDeleteButton="true" />
