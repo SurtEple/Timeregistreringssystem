@@ -722,7 +722,6 @@
     <Content Include="Prosjektadmin\LeggTilFase.aspx" />
     <Content Include="Prosjektadmin\LeggTilMilepael.aspx" />
     <Content Include="Prosjektadmin\LeggTilProsjekt.aspx" />
-    <EmbeddedResource Include="RapportGenerering\Report1.rdlc" />
     <EmbeddedResource Include="Resources\MorildDataLogo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -835,17 +834,6 @@
     <None Include="Project_Readme.html" />
     <Content Include="Site.Mobile.Master" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
-    <Content Include="TeamTabellDataset.xsc">
-      <DependentUpon>TeamTabellDataset.xsd</DependentUpon>
-    </Content>
-    <None Include="TeamTabellDataset.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>TeamTabellDataset.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="TeamTabellDataset.xss">
-      <DependentUpon>TeamTabellDataset.xsd</DependentUpon>
-    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1051,11 +1039,6 @@
     </Compile>
     <Compile Include="TeamLeder.aspx.designer.cs">
       <DependentUpon>TeamLeder.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="TeamTabellDataset.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TeamTabellDataset.xsd</DependentUpon>
     </Compile>
     <Compile Include="Time.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
