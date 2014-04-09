@@ -67,8 +67,8 @@
 
 
                         <!-- Prosjektadmin -->
-                        <!-- Foreløpig hardkodet, bare prosjektleder får se, 1: prosjektleder -->
-                        <% if (Convert.ToInt32(Session["admin"]) == 1)
+                        <!-- Foreløpig hardkodet, bare prosjektleder får se, 2: prosjektleder -->
+                        <% if (Convert.ToInt32(Session["admin"]) == 2)
                            {  
                            %>
                          <li class="dropdown">
@@ -87,8 +87,8 @@
 
 
                         <!-- Teamadmin -->
-                        <!-- Foreløpig hardkodet, bare prosjektleder får se, 1: prosjektleder -->
-                        <% if (Convert.ToInt32(Session["admin"]) == 1)
+                        <!-- Foreløpig hardkodet, bare prosjektleder får se, 2: prosjektleder -->
+                        <% if (Convert.ToInt32(Session["admin"]) == 2)
                            {  
                            %>
                         <li class="dropdown">
