@@ -52,8 +52,8 @@
                     <ul class="nav navbar-nav">
                         
                         <!-- Brukeradministrasjon -->
-                        <!-- Foreløpig hardkodet, bare administrator får se, 3: administrator -->
-                        <% if (Convert.ToInt32(Session["admin"]) == 3)
+                        <!-- Foreløpig hardkodet, bare administrator og prosjektleder får se, 2: prosjektansvarlig, 3: administrator -->
+                        <% if (Convert.ToInt32(Session["admin"]) == 2 || Convert.ToInt32(Session["admin"]) == 3)
                            {  
                            %>
                         <li class="dropdown">
