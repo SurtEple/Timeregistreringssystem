@@ -1409,6 +1409,8 @@ th {
 }
 .table {
   margin-bottom: 20px;
+    margin-left: 14px;
+    margin-right: 10px;
 }
 .table > thead > tr > th,
 .table > tbody > tr > th,

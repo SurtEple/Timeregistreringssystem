@@ -1,15 +1,28 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Milestones.aspx.cs" Inherits="Timeregistreringssystem.Prosjektadmin.Milestones" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    
+    
     <h1>Milepæler</h1>
     <br />
-    <asp:SqlDataSource ID="SqlDataSourceMilepael" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Milepæl.Dato_Ferdig, Milepæl.ID, Oppgave.Tittel, Oppgave.Beskrivelse, Prosjekt.Navn AS Prosjektnavn FROM Milepæl INNER JOIN Oppgave ON Milepæl.Oppgave_ID = Oppgave.ID INNER JOIN Prosjekt ON Oppgave.Prosjekt_ID = Prosjekt.ID" DeleteCommand="DELETE FROM Milepæl WHERE ID=@ID" UpdateCommand="UPDATE Milepæl SET Dato_Ferdig=@DatoFerdig WHERE ID=@ID"></asp:SqlDataSource>
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSourceMilepael" AllowPaging="True" AllowSorting="True" CssClass="table" OnRowDeleting="GridView1_RowDeleting" OnRowUpdating="GridView1_RowUpdating" OnRowUpdated="GridView1_RowUpdated" Height="384px" Width="16px">
+    <asp:SqlDataSource ID="SqlDataSourceMilepael" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Milepæl.ID, DATE_FORMAT(Milepæl.Dato_Ferdig  , '%Y-%m-%d') AS &quot;Dato Ferdig&quot;, Oppgave.Tittel, Oppgave.Beskrivelse, Prosjekt.Navn AS Prosjektnavn
+ FROM Milepæl
+ INNER JOIN Oppgave ON Milepæl.Oppgave_ID = Oppgave.ID 
+INNER JOIN Prosjekt ON Oppgave.Prosjekt_ID = Prosjekt.ID" DeleteCommand="DELETE FROM Milepæl WHERE ID=@ID" UpdateCommand="UPDATE Milepæl, Oppgave
+SET Milepæl.Dato_Ferdig= @DatoFerdig,
+Oppgave.Beskrivelse=@Beskrivelse
+
+WHERE Milepæl.ID=@ID
+AND Milepæl.Oppgave_ID = Oppgave.ID 
+"></asp:SqlDataSource>
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSourceMilepael" AllowPaging="True" AllowSorting="True" CssClass="table" OnRowDeleting="GridView1_RowDeleting" OnRowUpdating="GridView1_RowUpdating" OnRowUpdated="GridView1_RowUpdated" Height="384px" Width="400px">
         <Columns>
-            <asp:CommandField DeleteText="Slett" EditText="Endre" ShowDeleteButton="True" ShowEditButton="True" UpdateText="Lagre" />
-            <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" InsertVisible="False" ReadOnly="True" />
-            <asp:BoundField DataField="Dato_Ferdig" HeaderText="Dato_Ferdig" SortExpression="Dato_Ferdig" />
-            <asp:BoundField DataField="Tittel" HeaderText="Tittel" SortExpression="Tittel" />
-            <asp:BoundField DataField="Beskrivelse" HeaderText="Beskrivelse" SortExpression="Beskrivelse" />
+              <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
+              <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" InsertVisible="False" ReadOnly="True" />       
+
+            <asp:BoundField DataField="Dato Ferdig" HeaderText="Dato Ferdig" SortExpression="Dato Ferdig" />
+
+            <asp:BoundField DataField="Tittel" HeaderText="Tittel" SortExpression="Tittel" ReadOnly="True" />
+            <asp:BoundField DataField="Beskrivelse" HeaderText="Beskrivelse" SortExpression="Beskrivelse" ReadOnly="True" />
             <asp:BoundField DataField="Prosjektnavn" HeaderText="Prosjektnavn" SortExpression="Prosjektnavn" ReadOnly="True" />
         </Columns>
     </asp:GridView>
@@ -28,11 +41,12 @@
         </tr>
         <tr>
             <td class="auto-style4"">Dato Ferdig:</td>
-            <td class="auto-style5"">
-                    <asp:TextBox ID="dateFerdigTextBox" runat="server" Height="19px" CssClass="input-sm">Klikk her</asp:TextBox>
+            <td class="datepicker1"">
+                <asp:TextBox ID="dateFerdigTextBox" runat="server" Height="19px" CssClass="input-group-sm"></asp:TextBox>
                  
-                    <asp:Image ID="startCal" runat="server" ImageUrl="~/Content/glyphicons/png/glyphicons_045_calendar.png" />
-                 
+               <asp:Image ID="startCal" runat="server" ImageUrl="~/Content/glyphicons/png/glyphicons_045_calendar.png" CssClass="glyphicon-calendar" />
+
+
             </td>
         </tr>
     </table>
@@ -45,25 +59,12 @@
     <asp:Label ID="resultLabel" runat="server"></asp:Label>
 
 
-     <script src="../Scripts/bootstrap-datepicker.js" type="text/javascript"></script>
-
+     <link rel="stylesheet" type="text/css" href="../Content/jquery.datetimepicker.css"/ >
+        <script src="../Scripts/jquery-2.1.0.js"></script>
+        <script src="../Scripts/jquery.datetimepicker.js"></script>
     <script type="text/javascript">
-        $(document).ready(function ()
-        {
-           var dpFerdig = $('#<%=dateFerdigTextBox.ClientID%>');
-
-         dpFerdig.datepicker({
-             changeMonth: true,
-             changeYear: true,
-             format: "yyyy-mm-dd",
-             language: "tr"
-         }).on('changeDate', function (ev) {
-             $(this).blur();
-             $(this).datepicker('hide');
-         });
-
-        }
-
-    );
+        $(function () {
+            $("#<%= dateFerdigTextBox.ClientID %>").datetimepicker();
+       });
         </script>
 </asp:Content>

@@ -6,8 +6,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-/* @author Thomas
-* 26/03/14
+/* @author Thomas og Thea
+* 
+ * 08.04 - 12:30-13:30 fikk til datetimepicker WOOHOO
  */
 namespace Timeregistreringssystem.Prosjektadmin
 {
@@ -58,18 +59,17 @@ namespace Timeregistreringssystem.Prosjektadmin
         {
             try
             {
+                
                 GridViewRow row = (GridViewRow)GridView1.Rows[e.RowIndex];
                 int id = Int32.Parse(GridView1.DataKeys[e.RowIndex].Value.ToString());
-                string beskrivelseNew = e.NewValues["Oppgave"].ToString();
-                string møtt = e.NewValues["Møtt"].ToString();
-                bool aktiv = Convert.ToBoolean(møtt);
-                int aktivint = Convert.ToInt32(aktiv);
-
+                string datoFerdig = e.NewValues["Dato Ferdig"].ToString();
+              //  string beskrivelseNew = e.NewValues["Beskrivelse"].ToString();
+              //  string datoFerdigFormat = string.Format("{yyyy-MM-dd}", datetime);
 
 
 
                 System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
-                dr = System.Windows.Forms.MessageBox.Show("ProsjektID: " + id + "Er du sikker på at du vil endre beskrivelsen til' " + beskrivelseNew + "' og status Møtt til " + aktivint + " ?", "Endre milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
+                dr = System.Windows.Forms.MessageBox.Show("Milepæl ID " + id + "Er du sikker på at du vil endre dato til' " + datoFerdig + "' ?", "Endre milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
                 //bekreftelse på Oppdatering
                 if (dr == System.Windows.Forms.DialogResult.No)
                 {
@@ -79,8 +79,10 @@ namespace Timeregistreringssystem.Prosjektadmin
                 else
                 {
                     SqlDataSourceMilepael.UpdateParameters.Add("ID", id.ToString()); //UPDATE..WHERE ID=@ID
-                    SqlDataSourceMilepael.UpdateParameters.Add("Beskrivelse", beskrivelseNew); //UPDATE..SET Beskrivelse=@Beskrivelse
-                    SqlDataSourceMilepael.UpdateParameters.Add("Møtt", aktivint.ToString()); //Update... SET Møtt=@Møtt
+                   // SqlDataSourceMilepael.UpdateParameters.Add("Tittel", tittel); //UPDATE..WHERE ID=@ID
+                    SqlDataSourceMilepael.UpdateParameters.Add("DatoFerdig", datoFerdig); //UPDATE..WHERE ID=@ID
+                   // SqlDataSourceMilepael.UpdateParameters.Add("Beskrivelse", beskrivelseNew); //UPDATE..SET Beskrivelse=@Beskrivelse
+                  
 
 
 
