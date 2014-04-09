@@ -1013,7 +1013,7 @@ namespace Timeregistreringssystem
         * Legge inn ny bruker
         * @author Halvard
         */
-        public void InsertBruker(string _brukernavn, string _passord, string _fornavn, string _mellomnavn, string _etternavn, string _epost, string _im, string _adresse, string _postnr, string _telefonnr, string _by)
+        public void InsertBruker(string _brukernavn, string _passord, string _fornavn, string _mellomnavn, string _etternavn, string _epost, string _im, string _adresse, string _postnr, string _telefonnr, string _by, int _administrator)
         {
             int result = 0;
             string _salt = GenerateSalt();
@@ -1021,7 +1021,7 @@ namespace Timeregistreringssystem
 
             if (this.OpenConnection() == true)
             {
-                string insertBrukerQuery = String.Format("INSERT INTO Bruker (`ID`, `Brukernavn`, `Passord`, `Salt`, `Fornavn`, `Mellomnavn`, `Etternavn`, `Epost`, `IM`, `Telefonnr`, `Adresse`, `Postnummer`, `By`, `Stilling_ID`, `Administrator`) VALUES (NULL, '{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', NULL, '0')", _brukernavn, passord, _salt, _fornavn, _mellomnavn, _etternavn, _epost, _im, _telefonnr, _adresse, _postnr, _by);
+                string insertBrukerQuery = String.Format("INSERT INTO Bruker (`ID`, `Brukernavn`, `Passord`, `Salt`, `Fornavn`, `Mellomnavn`, `Etternavn`, `Epost`, `IM`, `Telefonnr`, `Adresse`, `Postnummer`, `By`, `Stilling_ID`, `Administrator`) VALUES (NULL, '{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', NULL, '{12}')", _brukernavn, passord, _salt, _fornavn, _mellomnavn, _etternavn, _epost, _im, _telefonnr, _adresse, _postnr, _by, _administrator);
                 // string insertBrukerQuery = String.Format("INSERT INTO `HLVDKN_DB1`.`Bruker` (`ID`, `Brukernavn`, `Passord`, `Salt`, `Fornavn`, `Mellomnavn`, `Etternavn`, `Epost`, `IM`, `Telefonnr`, `Adresse`, `Postnummer`, `By`, `Stilling_ID`, `Administrator`) VALUES (NULL, '{0}', '{1}', '{2}', 'salt', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', NULL, NULL)", _brukernavn, _passord,  _fornavn, _mellomnavn, _etternavn, _epost, _im, _adresse, _postnr, _telefonnr, _by);
 
                 MySqlCommand insertBrukerCommand = new MySqlCommand(insertBrukerQuery, connection);

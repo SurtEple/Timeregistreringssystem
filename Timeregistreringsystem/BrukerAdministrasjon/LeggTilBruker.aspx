@@ -63,6 +63,18 @@
             <td><asp:TextBox ID="tbBy" runat="server"></asp:TextBox></td>
             <td><asp:Image ID="imgStjerne10" runat="server" ImageUrl="~/Content/glyphicons/png/glyphicons_049_star.png" /></td>
         </tr>
+        <tr>
+            <td><asp:Label ID="lblType" runat="server" Text="Type bruker"></asp:Label></td>
+            <td>
+                <asp:DropDownList ID="ddlBrukertype" runat="server">
+                    <asp:ListItem Value="0">Vanlig bruker</asp:ListItem>
+                    <asp:ListItem Value="1">Teamleder</asp:ListItem>
+                    <asp:ListItem Value="2">Prosjektansvarlig</asp:ListItem>
+                    <asp:ListItem Value="3">Administrator</asp:ListItem>
+                </asp:DropDownList>
+            </td>
+            <td><asp:Image ID="Image1" runat="server" ImageUrl="~/Content/glyphicons/png/glyphicons_049_star.png" /></td>
+        </tr>
     </table>
 
     <br />
