@@ -19,10 +19,6 @@
                 <asp:BoundField DataField="Mellomnavn" HeaderText="Mellomnavn" SortExpression="Mellomnavn" ReadOnly="true"/>
                 <asp:BoundField DataField="Etternavn" HeaderText="Etternavn" SortExpression="Etternavn" ReadOnly="true"/>
             </Columns>
-
-         <HeaderStyle BackColor="#CCCCFF" ForeColor="Black" />
-         <selectedrowstyle backcolor="White" forecolor="Black"
-         font-bold="True" BorderColor="Black"/> 
         </asp:GridView>
 
         <br /><a href="OpprettTeam.aspx">Nytt team</a>
