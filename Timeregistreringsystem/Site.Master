@@ -104,9 +104,13 @@
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Register">Register</a></li>
+                                <%if (Session["Admin"] == null)
+                                  { %>
+                                
                                 <li><a runat="server" href="~/Account/Login">Log in</a></li>
+                                <%} else {%>
                                 <li><a runat="server" href="~/Account/Logout">Logout</a></li>
+                                <%} %>
                             </ul>
                         </AnonymousTemplate>
          
