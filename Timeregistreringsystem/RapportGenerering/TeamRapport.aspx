@@ -20,8 +20,6 @@
     </div>
         <rsweb:ReportViewer ID="TeamRV" runat="server">
         </rsweb:ReportViewer>
-        <asp:ScriptManager ID="ScriptManager1" runat="server">
-        </asp:ScriptManager>
     </form>
 </body>
 </html>
