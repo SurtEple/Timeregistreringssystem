@@ -13,6 +13,12 @@ namespace Timeregistreringssystem.BrukerAdministrasjon
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            int rettighet = Convert.ToInt32(Session["Admin"]);
+            if (rettighet == Rettigheter.VANLIG_BRUKER || rettighet == Rettigheter.TEAMLEDER)
+            {
+                Response.Redirect("~/Default");
+            }
+
             lblFeilmelding0.Visible = true;
             imgStjerne0.Visible = true;
             db = new DBConnect();

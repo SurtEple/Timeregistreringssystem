@@ -27,7 +27,7 @@ namespace Timeregistreringssystem.Account
                 int[] bruker = db.CheckInnlogging(UserName.Text, Password.Text);
                 if (bruker[0] >= 0)
                 {
-                    
+
                     Session["Innlogget"] = true;
                     Session["Admin"] = bruker[0];
                     Session["BrukerID"] = bruker[1];
@@ -36,7 +36,7 @@ namespace Timeregistreringssystem.Account
                 }
                 else
                 {
-                    MessageBox.Show("Feil brukernavn eller passord");
+                    MessageBox.Show("Feil brukernavn og/eller passord");
                 }
 
                 /*

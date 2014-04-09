@@ -11,7 +11,11 @@ namespace Timeregistreringssystem.TeamAdministrasjon
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-       
+            int rettighet = Convert.ToInt32(Session["Admin"]);
+            if (rettighet != Rettigheter.PROSJEKT_ANSVARLIG)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
         }
 
         //Henter ut formdata og lagrer nytt team i database
