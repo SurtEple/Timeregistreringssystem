@@ -59,8 +59,8 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bruker <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="http://malmen.hin.no/gruppe2/BrukerAdministrasjon/LeggTilBruker.aspx">Legg til bruker</a></li>
-                                <li><a href="http://malmen.hin.no/gruppe2/BrukerAdministrasjon/EndreBruker">Endre/Slett bruker</a></li>
+                                <li><a runat="server" href="~/BrukerAdministrasjon/LeggTilBruker.aspx">Legg til bruker</a></li>
+                                <li><a runat="server" href="~/BrukerAdministrasjon/EndreBruker">Endre/Slett bruker</a></li>
                             </ul>
                          </li>
                         <% } %>
@@ -74,13 +74,13 @@
                          <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prosjekt <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/LeggTilProsjekt">Legg til nytt prosjekt</a></li>
-                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/EndreProsjekt">Endre/Slette prosjekt </a></li>
-                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/KobleProsjektTeam">Koble team til prosjekt </a></li>
-                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/LeggTilFase">Administrer Faser </a></li>
-                                <li><a href="http://malmen.hin.no/gruppe2/ProsjektAdmin/Milestones">Administrer Milepæler</a></li>
-                                <li><a href="http://malmen.hin.no/gruppe2/OppgaveAdmin/LeggTilOppgave">Legg til oppgave</a></li>
-                                <li><a href="http://malmen.hin.no/gruppe2/OppgaveAdmin/EndreOppgave">Rediger oppgave</a></li>
+                                <li><a runat="server" href="~/ProsjektAdmin/LeggTilProsjekt">Legg til nytt prosjekt</a></li>
+                                <li><a runat="server" href="~/ProsjektAdmin/EndreProsjekt">Endre/Slette prosjekt </a></li>
+                                <li><a runat="server" href="~/ProsjektAdmin/KobleProsjektTeam">Koble team til prosjekt </a></li>
+                                <li><a runat="server" href="~/ProsjektAdmin/LeggTilFase">Administrer Faser </a></li>
+                                <li><a runat="server" href="~/ProsjektAdmin/Milestones">Administrer Milepæler</a></li>
+                                <li><a runat="server" href="~/OppgaveAdmin/LeggTilOppgave">Legg til oppgave</a></li>
+                                <li><a runat="server" href="~/OppgaveAdmin/EndreOppgave">Rediger oppgave</a></li>
                             </ul>
                          </li>
                         <% } %>
@@ -94,8 +94,8 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Team <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="http://malmen.hin.no/gruppe2/TeamAdministrasjon/OpprettTeam">Legge til nytt team</a></li>
-                                <li><a href="http://malmen.hin.no/gruppe2/TeamAdministrasjon/TeamAdministrasjon">Endre/Slette team</a></li>
+                                <li><a runat="server" href="~/TeamAdministrasjon/OpprettTeam">Legge til nytt team</a></li>
+                                <li><a runat="server" href="~/TeamAdministrasjon/TeamAdministrasjon">Endre/Slette team</a></li>
                             </ul>
                          </li>
                         <% } %>
@@ -107,9 +107,9 @@
                                 <%if (Session["Admin"] == null)
                                   { %>
                                 
-                                <li><a runat="server" href="~/Account/Login">Log in</a></li>
+                                <li><a runat="server" href="~/Account/Login">Logg in</a></li>
                                 <%} else {%>
-                                <li><a runat="server" href="~/Account/Logout">Logout</a></li>
+                                <li><a runat="server" href="~/Account/Logout">Logg ut</a></li>
                                 <%} %>
                             </ul>
                         </AnonymousTemplate>
