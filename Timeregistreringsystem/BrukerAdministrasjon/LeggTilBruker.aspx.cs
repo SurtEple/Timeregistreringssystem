@@ -51,8 +51,9 @@ namespace Timeregistreringssystem.BrukerAdministrasjon
                     string postnr = tbPostnr.Text;
                     string telefonnr = tbTelefonnr.Text;
                     string by = tbBy.Text;
+                    int administrator = Convert.ToInt32(ddlBrukertype.SelectedValue);
 
-                    db.InsertBruker(brukernavn, passord, fornavn, mellomnavn, etternavn, epost, im, adresse, postnr, telefonnr, by);
+                    db.InsertBruker(brukernavn, passord, fornavn, mellomnavn, etternavn, epost, im, adresse, postnr, telefonnr, by, administrator);
          
                     lblFeilmelding0.Visible = false;
                     imgStjerne0.Visible = false;

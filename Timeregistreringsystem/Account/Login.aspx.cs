@@ -24,13 +24,13 @@ namespace Timeregistreringssystem.Account
             if (IsValid)
             {
                 DBConnect db = new DBConnect();
-                int[] bruker = db.CheckInnlogging(UserName.Text, Password.Text);
-                if (bruker[0] >= 0)
+                Bruker bruker = db.CheckInnlogging(UserName.Text, Password.Text);
+                if (bruker != null)
                 {
 
                     Session["Innlogget"] = true;
-                    Session["Admin"] = bruker[0];
-                    Session["BrukerID"] = bruker[1];
+                    Session["Admin"] = bruker.Rettigheter;
+                    Session["BrukerID"] = bruker.Id;
                     IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
 
                 }

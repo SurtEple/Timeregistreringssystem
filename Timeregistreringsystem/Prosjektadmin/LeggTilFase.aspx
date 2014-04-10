@@ -4,25 +4,25 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2> Faser</h2>
-      <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSourceFaser" AutoGenerateColumns="False" DataKeyNames="ID,ProsjektID" CssClass="table" AllowPaging="True" AllowSorting="True">
+      <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSourceFaser" AutoGenerateColumns="False" DataKeyNames="ID" CssClass="table" AllowPaging="True" AllowSorting="True" OnRowUpdating="GridView1_RowUpdating">
             <Columns>
                 <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
                 <asp:BoundField DataField="Navn" HeaderText="Navn" SortExpression="Navn" />
-                <asp:BoundField DataField="ProsjektID" HeaderText="ProsjektID" SortExpression="ProsjektID" InsertVisible="False" ReadOnly="True" />
+                <asp:BoundField DataField="ProsjektID" HeaderText="ProsjektID" SortExpression="ProsjektID" />
                 <asp:BoundField DataField="ProsjektNavn" HeaderText="ProsjektNavn" SortExpression="ProsjektNavn" />
-                <asp:BoundField DataField="Fase Start" HeaderText="Fase Start" SortExpression="Fase Start" />
-                <asp:BoundField DataField="Fase Slutt" HeaderText="Fase Slutt" SortExpression="Fase Slutt" />
+                <asp:BoundField DataField="StartDato" HeaderText="StartDato" SortExpression="StartDato" />
+                <asp:BoundField DataField="SluttDato" HeaderText="SluttDato" SortExpression="SluttDato" />
                 <asp:CheckBoxField DataField="Aktiv" HeaderText="Aktiv" SortExpression="Aktiv" />
                 <asp:BoundField DataField="Beskrivelse" HeaderText="Beskrivelse" SortExpression="Beskrivelse" />
             </Columns>
         </asp:GridView>
        
-    <asp:SqlDataSource ID="SqlDataSourceFaser" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Fase.ID, Fase.Navn, Prosjekt.ID AS ProsjektID, Prosjekt.Navn AS ProsjektNavn, DATE_FORMAT(Fase.Dato_startet , '%d.%m.%Y') AS &quot;Fase Start&quot;, DATE_FORMAT(Fase.Dato_sluttet , '%d.%m.%Y') AS &quot;Fase Slutt&quot;, Fase.Aktiv, Fase.Beskrivelse FROM Fase
+    <asp:SqlDataSource ID="SqlDataSourceFaser" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Fase.ID, Fase.Navn, Fase.Prosjekt_ID AS ProsjektID, Prosjekt.Navn AS ProsjektNavn, DATE_FORMAT(Fase.Dato_startet , '%d.%m.%Y') AS &quot;StartDato&quot;, DATE_FORMAT(Fase.Dato_sluttet , '%d.%m.%Y') AS &quot;SluttDato&quot;, Fase.Aktiv, Fase.Beskrivelse FROM Fase
 
  INNER JOIN Prosjekt ON Fase.Prosjekt_ID = Prosjekt.ID
 WHERE Fase.Prosjekt_ID &gt; 0
 ORDER BY Prosjekt.ID
-"></asp:SqlDataSource>
+" UpdateCommand="UPDATE Fase SET Navn = @Navn, Dato_startet = @StartDato, Dato_sluttet = @SluttDato, Aktiv = @Aktiv, Beskrivelse = @Beskrivelse,  WHERE ID = @ID"></asp:SqlDataSource>
        
     <br />
     <br />
@@ -76,6 +76,8 @@ WHERE ID &gt; 0"></asp:SqlDataSource>
 
         </table>
     <br /><asp:Button ID="btnLagre" runat="server" CssClass="btn"  Text="Lagre" Width="119px" OnClick="btnLagre_Click" />
+    
+    <asp:Label ID="resultLabel" runat="server"></asp:Label>
     
     <br />
 
