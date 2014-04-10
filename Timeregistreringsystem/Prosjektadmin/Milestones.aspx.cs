@@ -87,16 +87,15 @@ namespace Timeregistreringssystem.Prosjektadmin
 
                     GridViewRow row = (GridViewRow)GridView1.Rows[e.RowIndex];
                     int id = Int32.Parse(GridView1.DataKeys[e.RowIndex].Value.ToString());
-                    string dato = e.NewValues["Dato Ferdig"].ToString(); //Hent dato fra gridview
                     string beskrivelseNew = e.NewValues["Beskrivelse"].ToString();
                     //DateTime dt = Convert.ToDateTime(dato); //konverter datostringen til DateTime
                     string datoFerdig = dt.ToString("u"); //Konverter DateTime til universelt format og tilbake til en string
 
                     //Spør brukeren om bekreftelse
                     System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
-                    dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil endre milepælen?", "Endre milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
+                    dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil endre milepælen?", "Endre milepæl", MessageBoxButtons.YesNo);
                     //bekreftelse på Oppdatering
-                    if (dr == System.Windows.Forms.DialogResult.No)
+                    if (dr == DialogResult.No)
                         e.Cancel = true;
 
                     else{

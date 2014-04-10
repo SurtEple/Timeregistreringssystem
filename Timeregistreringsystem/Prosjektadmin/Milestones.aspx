@@ -27,7 +27,6 @@ INNER JOIN Prosjekt ON Oppgave.Prosjekt_ID = Prosjekt.ID
 ORDER BY Milepæl.ID DESC" DeleteCommand="DELETE FROM Milepæl WHERE ID=@ID" UpdateCommand="UPDATE Milepæl, Oppgave
 SET Milepæl.Dato_Ferdig= @DatoFerdig,
 Oppgave.Beskrivelse=@Beskrivelse
-
 WHERE Milepæl.ID=@ID
 AND Milepæl.Oppgave_ID = Oppgave.ID 
 " InsertCommand="INSERT INTO Milepæl(Oppgave_ID,Dato_Ferdig) 

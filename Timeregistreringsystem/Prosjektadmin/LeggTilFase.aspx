@@ -4,25 +4,36 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2> Faser</h2>
-      <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSourceFaser" AutoGenerateColumns="False" DataKeyNames="ID" CssClass="table" AllowPaging="True" AllowSorting="True" OnRowUpdating="GridView1_RowUpdating">
+      <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSourceFaser" AutoGenerateColumns="False" 
+          DataKeyNames="ID" CssClass="table" AllowPaging="True" AllowSorting="True" OnRowUpdating="GridView1_RowUpdating" Width="80%" OnRowDeleting="GridView1_RowDeleting">
             <Columns>
+                <asp:CommandField CancelText="Avbryt" DeleteText="Slett" EditText="Endre" ShowDeleteButton="True" ShowEditButton="True" UpdateText="Lagre" />
                 <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
                 <asp:BoundField DataField="Navn" HeaderText="Navn" SortExpression="Navn" />
-                <asp:BoundField DataField="ProsjektID" HeaderText="ProsjektID" SortExpression="ProsjektID" />
-                <asp:BoundField DataField="ProsjektNavn" HeaderText="ProsjektNavn" SortExpression="ProsjektNavn" />
-                <asp:BoundField DataField="StartDato" HeaderText="StartDato" SortExpression="StartDato" />
+                <asp:BoundField DataField="ProsjektID" HeaderText="ProsjektID" SortExpression="ProsjektID" ReadOnly="True" />
+                <asp:BoundField DataField="ProsjektNavn" HeaderText="ProsjektNavn" SortExpression="ProsjektNavn" ReadOnly="True" />
+                <asp:BoundField DataField="StartDato" HeaderText="StartDato" SortExpression="StartDato"/>
                 <asp:BoundField DataField="SluttDato" HeaderText="SluttDato" SortExpression="SluttDato" />
                 <asp:CheckBoxField DataField="Aktiv" HeaderText="Aktiv" SortExpression="Aktiv" />
                 <asp:BoundField DataField="Beskrivelse" HeaderText="Beskrivelse" SortExpression="Beskrivelse" />
             </Columns>
         </asp:GridView>
        
-    <asp:SqlDataSource ID="SqlDataSourceFaser" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Fase.ID, Fase.Navn, Fase.Prosjekt_ID AS ProsjektID, Prosjekt.Navn AS ProsjektNavn, DATE_FORMAT(Fase.Dato_startet , '%d.%m.%Y') AS &quot;StartDato&quot;, DATE_FORMAT(Fase.Dato_sluttet , '%d.%m.%Y') AS &quot;SluttDato&quot;, Fase.Aktiv, Fase.Beskrivelse FROM Fase
+    <asp:SqlDataSource ID="SqlDataSourceFaser" runat="server" 
+        ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" 
+        ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" 
+        SelectCommand="SELECT Fase.ID, Fase.Navn, Fase.Prosjekt_ID AS ProsjektID, Prosjekt.Navn AS ProsjektNavn, 
+        DATE_FORMAT(Fase.Dato_startet , '%Y-%m-%d') AS &quot;StartDato&quot;, DATE_FORMAT(Fase.Dato_sluttet , '%Y-%m-%d') 
+        AS &quot;SluttDato&quot;, Fase.Aktiv, Fase.Beskrivelse FROM Fase
+         INNER JOIN Prosjekt ON Fase.Prosjekt_ID = Prosjekt.ID
+        WHERE Fase.Prosjekt_ID &gt; 0
+        ORDER BY Prosjekt.ID" 
+        
+        UpdateCommand="UPDATE Fase SET Navn = @Navn, Dato_startet = @StartDato, 
+        Dato_sluttet = @SluttDato, Aktiv = @Aktiv, Beskrivelse = @Beskrivelse  WHERE ID = @ID" DeleteCommand="DELETE FROM Fase WHERE ID=@ID">
 
- INNER JOIN Prosjekt ON Fase.Prosjekt_ID = Prosjekt.ID
-WHERE Fase.Prosjekt_ID &gt; 0
-ORDER BY Prosjekt.ID
-" UpdateCommand="UPDATE Fase SET Navn = @Navn, Dato_startet = @StartDato, Dato_sluttet = @SluttDato, Aktiv = @Aktiv, Beskrivelse = @Beskrivelse,  WHERE ID = @ID"></asp:SqlDataSource>
+
+    </asp:SqlDataSource>
        
     <br />
     <br />

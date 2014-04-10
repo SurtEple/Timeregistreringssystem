@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Windows.Forms;
 
 /**
  * author Thomas og Thea, Surt Eple
@@ -18,11 +20,9 @@ namespace Timeregistreringssystem.Prosjektadmin
     {
         private DBConnect connection;
 
-        //string startDato, sluttDato;
-
         protected void Page_Load(object sender, EventArgs e)
         {
-
+          
         }
 
         protected void btnLagre_Click(object sender, EventArgs e)
@@ -54,14 +54,14 @@ namespace Timeregistreringssystem.Prosjektadmin
                 //Sjekker etter injection samtidig som stringen blir parset og lagret i dt-referansen
                 bool startDateIsValid = DateTime.TryParseExact(
                         e.NewValues["StartDato"].ToString(), //Henter string fra tekstboks
-                        "dd.MM.yyyy", //Formatet det skal ha
+                        "yyyy-MM-dd", //Formatet det skal ha
                         CultureInfo.InvariantCulture, //Ha'kke peiling
                         DateTimeStyles.None, //Null aning
                         out dtStart); //Lagrer det nye DateTime-objektet i dt
 
                 bool finishDateIsValid = DateTime.TryParseExact(
                       e.NewValues["SluttDato"].ToString(), //Henter string fra tekstboks
-                      "dd.MM.yyyy", //Formatet det skal ha
+                      "yyyy-MM-dd", //Formatet det skal ha
                       CultureInfo.InvariantCulture, //Ha'kke peiling
                       DateTimeStyles.None, //Null aning
                       out dtStop); //Lagrer det nye DateTime-objektet i dt
@@ -70,30 +70,32 @@ namespace Timeregistreringssystem.Prosjektadmin
 
                     GridViewRow row = (GridViewRow)GridView1.Rows[e.RowIndex];
                     int id = Int32.Parse(GridView1.DataKeys[e.RowIndex].Value.ToString());
-                   // string datoStart = e.NewValues["StartDato"].ToString(); //Hent dato fra gridview
-                    //string datoSlutt = e.NewValues["SluttDato"].ToString(); //Hent dato fra gridview
                     string beskrivelseNew = e.NewValues["Beskrivelse"].ToString();
                     string navnNew = e.NewValues["Navn"].ToString();
                     string aktiv = e.NewValues["Aktiv"].ToString();
+                    
 
-                   // DateTime dt = Convert.ToDateTime(datoStart); //konverter datostringen til DateTime
-                    string datoStart = dtStart.ToString("u"); //Konverter DateTime til universelt format og tilbake til string
-                    string datoFerdig = dtStop.ToString("u"); //Konverter DateTime til universelt format og tilbake til string
+                    //http://msdn.microsoft.com/en-us/library/8kb3ddd4(v=vs.110).aspx for forskjellige formater
+                    //Formatet i Update-querien ser slik ut:
+                    // DATE_FORMAT(Fase.Dato_startet , '%Y-%m-%d') AS &quot;StartDato&quot;
 
+                   string datoStart = dtStart.ToString("yyyy-MM-dd"); //Konverter DateTime til universelt format og tilbake til string
+                     string datoFerdig = dtStop.ToString("yyyy-MM-dd"); //Konverter DateTime til universelt format og tilbake til string
+                    
 
                     //Spør brukeren om bekreftelse
-                    System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
-                    dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil endre milepælen?", "Endre milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
+                    DialogResult dr = new DialogResult();
+                    dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil endre Fasen? Ny StartDato: " + datoStart, "Endre milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
                     //bekreftelse på Oppdatering
-                    if (dr == System.Windows.Forms.DialogResult.No)
+                    if (dr == DialogResult.No)
                         e.Cancel = true;
 
                     else
                     {
                        SqlDataSourceFaser.UpdateParameters.Add("ID", id.ToString()); //UPDATE..WHERE ID=@ID
-                       SqlDataSourceFaser.UpdateParameters.Add("StartDato", datoStart); //UPDATE..WHERE ID=@ID
-                       SqlDataSourceFaser.UpdateParameters.Add("SluttDato", datoStart); //UPDATE..WHERE ID=@ID
-                       SqlDataSourceFaser.UpdateParameters.Add("Navn", navnNew); //UPDATE..WHERE ID=@ID
+                       SqlDataSourceFaser.UpdateParameters.Add("StartDato", datoStart); //UPDATE..SET Dato_startet=@StartDato
+                       SqlDataSourceFaser.UpdateParameters.Add("SluttDato", datoStart); //UPDATE..SET Dato_Sluttet=@SluttDato
+                       SqlDataSourceFaser.UpdateParameters.Add("Navn", navnNew); //UPDATE..SET Navn=@Navn
                        SqlDataSourceFaser.UpdateParameters.Add("Aktiv", aktiv); //UPDATE..SET Aktiv=@Aktiv
                        SqlDataSourceFaser.UpdateParameters.Add("Beskrivelse", beskrivelseNew); //UPDATE..SET Beskrivelse=@Beskrivelse
 
@@ -101,6 +103,16 @@ namespace Timeregistreringssystem.Prosjektadmin
                 }
             }
             catch (System.ArgumentNullException ane) { resultLabel.Text = "Argument Null Exception while trying to parse ID! " + ane.Message; }
+        }
+
+        //Event-metode for å når brukeren vil slette en rad
+        protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("Er du sikker på at du ønsker å slette?", "Slette Fase", MessageBoxButtons.YesNo);
+
+            if (dr == DialogResult.No)
+                e.Cancel = true;
+
         }
 
     }
