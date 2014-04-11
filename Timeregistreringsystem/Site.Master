@@ -60,7 +60,8 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bruker <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="~/BrukerAdministrasjon/LeggTilBruker.aspx">Legg til bruker</a></li>
-                                <li><a runat="server" href="~/BrukerAdministrasjon/EndreBruker">Endre/Slett bruker</a></li>
+                                <li><a runat="server" href="~/BrukerAdministrasjon/EndreBruker.aspx">Endre/Slett bruker</a></li>
+                                 <li><a runat="server" href="~/BrukerAdministrasjon/TimeRegistrering.aspx">Timeregistrering</a></li>
                             </ul>
                          </li>
                         <% } %>
