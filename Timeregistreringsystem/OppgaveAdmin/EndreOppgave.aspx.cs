@@ -17,7 +17,22 @@ namespace Timeregistreringssystem.OppgaveAdmin
         private bool deleteOK = false, editOK = false;
         private string nyTittel, nyBeskrivelse, nySluttDato;
         private int nyEstimertTid, nyBruktTid;
+        private void Page_Init(object sender, EventArgs e)
+        {
+            if (Session["Admin"] != null)
+            {
+                if ((int)Session["Admin"] == Rettigheter.PROSJEKT_ANSVARLIG)
+                {
 
+                }
+                else
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+            }
+            else
+                Response.Redirect("~/Default.aspx");
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
