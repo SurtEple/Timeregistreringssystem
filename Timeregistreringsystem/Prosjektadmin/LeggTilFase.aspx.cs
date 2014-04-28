@@ -27,21 +27,68 @@ namespace Timeregistreringssystem.Prosjektadmin
 
         protected void btnLagre_Click(object sender, EventArgs e)
         {
-            //Sjekke etter tom/null input
-            if (!String.IsNullOrEmpty(faseNavnTextBox.Text) || !String.IsNullOrEmpty(dateStartTextBox.Text)
-                || !String.IsNullOrEmpty(dateStopTextBox.Text) || !String.IsNullOrEmpty(prosjektDropDownList.SelectedValue))
-            {
-                connection = new DBConnect();
-                string navn = faseNavnTextBox.Text;
-                string startDato = dateStartTextBox.Text;
-                string sluttDato = dateStopTextBox.Text;
-                string beskrivelse = beskrivelseTextBox.Text;
-                int prosjektID = Convert.ToInt16(prosjektDropDownList.SelectedValue);
+            //Format i tekstboks: 2014-04-28
+            
+            DateTime dtStart;
+            DateTime dtSlutt;
+            DialogResult dr;
 
-                connection.InsertFase(navn, startDato, sluttDato,  beskrivelse, prosjektID);
-                
-                Page.Response.Redirect(Page.Request.Url.ToString(), true);
+            try{
+                //Sjekker etter injection samtidig som stringen blir parset og lagret i dt-referansen
+                bool startIsValid = DateTime.TryParseExact(
+                        dateStartTextBox.Text, //Henter string fra tekstboks
+                        "yyyy-MM-dd", //Formatet det skal ha
+                        CultureInfo.InvariantCulture, //Ha'kke peiling
+                        DateTimeStyles.None, //Null aning
+                        out dtStart); //Lagrer det nye DateTime-objektet i dt
+
+                bool sluttIsValid = DateTime.TryParseExact(
+                        dateStopTextBox.Text, //Henter string fra tekstboks
+                        "yyyy-MM-dd", //Formatet det skal ha
+                        CultureInfo.InvariantCulture, //Ha'kke peiling
+                        DateTimeStyles.None, //Null aning
+                        out dtSlutt); //Lagrer det nye DateTime-objektet i dt
+
+                //Om datoene har riktig format
+                if (startIsValid && sluttIsValid) {
+
+                    //Sjekke etter tom/null input
+                    if (!String.IsNullOrEmpty(faseNavnTextBox.Text) || !String.IsNullOrEmpty(beskrivelseTextBox.Text)
+                       || !String.IsNullOrEmpty(prosjektDropDownList.SelectedValue)){
+                       
+                       // string datoStart = dtStart.ToString("yyyy-MM-dd"); //Konverter til bestemt format og tilbake til en string
+                       // string datoFerdig = dtSlutt.ToString("yyyy-MM-dd"); //Konverter til bestemt format og tilbake til en string
+
+                        string datoStart = dtStart.ToString();
+                        string datoFerdig = dtSlutt.ToString();
+                        //Spør brukeren om bekreftelse
+                        dr = MessageBox.Show("Er du sikker på at du vil legge til en Fase?", "Legg Til Fase", MessageBoxButtons.YesNo);
+                        if (dr == DialogResult.Yes)
+                        {
+                            
+                            //VALUES (@Navn, @StartDato, @SluttDato, @ProsjektID, @Beskrivelse)
+                            SqlDataSourceFaser.InsertParameters.Add("Navn", faseNavnTextBox.Text); //Setter inn @Navn i Insertkommandoen
+                            SqlDataSourceFaser.InsertParameters.Add("Beskrivelse", beskrivelseTextBox.Text); //Setter inn @Beskrivelse
+                            SqlDataSourceFaser.InsertParameters.Add("StartDato", datoStart); //Setter inn @StartDato
+                            SqlDataSourceFaser.InsertParameters.Add("SluttDato", datoFerdig); //Setter inn @SluttDato
+                            SqlDataSourceFaser.InsertParameters.Add("ProsjektID", prosjektDropDownList.SelectedValue.ToString()); //Setter inn @ProsjektID
+
+                            SqlDataSourceFaser.Insert(); //Utfører insert
+                            resultLabel.Text = "Fasen ble lagret!";
+                            GridView1.DataBind(); //Oppdaterer gridviewet
+                        }
+
+                    }
+                    else resultLabel.Text = "Feltene kan ikke være tomme!";
+
+
+                }
+                else resultLabel.Text = "Invalid Date Format!";
             }
+
+            catch (Exception ex) { }
+
+           
         }
 
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)

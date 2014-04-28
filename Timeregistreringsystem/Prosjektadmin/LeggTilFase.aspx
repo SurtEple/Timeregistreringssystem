@@ -30,7 +30,8 @@
         ORDER BY Prosjekt.ID" 
         
         UpdateCommand="UPDATE Fase SET Navn = @Navn, Dato_startet = @StartDato, 
-        Dato_sluttet = @SluttDato, Aktiv = @Aktiv, Beskrivelse = @Beskrivelse  WHERE ID = @ID" DeleteCommand="DELETE FROM Fase WHERE ID=@ID">
+        Dato_sluttet = @SluttDato, Aktiv = @Aktiv, Beskrivelse = @Beskrivelse  WHERE ID = @ID" DeleteCommand="DELETE FROM Fase WHERE ID=@ID" InsertCommand="INSERT INTO Fase (Navn, Dato_Startet, Dato_sluttet,Prosjekt_ID, Beskrivelse) 
+VALUES (@Navn, @StartDato, @SluttDato, @ProsjektID, @Beskrivelse)">
 
 
     </asp:SqlDataSource>
