@@ -17,7 +17,22 @@ namespace Timeregistreringssystem.Prosjektadmin
         private DBConnect connection;
         private string navn, oppsummering;
         private int lederID;
+        private void Page_Init(object sender, EventArgs e)
+        {
+            if (Session["Admin"] != null)
+            {
+                if ((int)Session["Admin"] == Rettigheter.PROSJEKT_ANSVARLIG)
+                {
 
+                }
+                else
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+            }
+            else
+                Response.Redirect("~/Default.aspx");
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             connection = new DBConnect();

@@ -18,7 +18,22 @@ namespace Timeregistreringssystem.Prosjektadmin
         {
             connection = new DBConnect();
         }
+        private void Page_Init(object sender, EventArgs e)
+        {
+            if (Session["Admin"] != null)
+            {
+                if ((int)Session["Admin"] == Rettigheter.PROSJEKT_ANSVARLIG)
+                {
 
+                }
+                else
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+            }
+            else
+                Response.Redirect("~/Default.aspx");
+        }
         protected void btnConnectTeamProject_Click(object sender, EventArgs e)
         {
             try

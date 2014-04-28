@@ -9,6 +9,22 @@ namespace Timeregistreringssystem.TeamAdministrasjon
 {
     public partial class TeamAdministrasjon : System.Web.UI.Page
     {
+        private void Page_Init(object sender, EventArgs e)
+        {
+            if (Session["Admin"] != null)
+            {
+                if ((int)Session["Admin"] == Rettigheter.PROSJEKT_ANSVARLIG)
+                {
+
+                }
+                else
+                {
+                    Response.Redirect("~/Default.aspx");
+                }
+            }
+            else
+                Response.Redirect("~/Default.aspx");
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             int rettighet = Convert.ToInt32(Session["Admin"]);
