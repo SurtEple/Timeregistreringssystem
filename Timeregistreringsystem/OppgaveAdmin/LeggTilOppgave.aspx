@@ -78,6 +78,18 @@
                     <asp:TextBox ID="dateStopTextBox" runat="server" Height="28px" CssClass="input-sm" Width="125px">Klikk her</asp:TextBox>
                     <asp:Image ID="Image3" runat="server" ImageUrl="~/Content/glyphicons/png/glyphicons_045_calendar.png" />
                 </td>
+
+                <td>
+                  <asp:CompareValidator id="CompareValidatorSluttDatoOppgaver" runat="server"
+                    ForeColor="Red"
+                    ControlToValidate="dateStopTextBox"
+                    ControlToCompare="dateStartTextBox"
+                    Type="Date"       
+                    Operator="GreaterThanEqual"      
+                    ErrorMessage="Sluttdato kan ikke være før startdatoen.">
+                  </asp:CompareValidator >
+                </td>
+
             </tr>
     </table>
 
@@ -100,6 +112,7 @@
              changeMonth: true,
              changeYear: true,
              format: "yyyy-mm-dd",
+             startDate: '+0d',
              language: "tr"
          }).on('changeDate', function (ev) {
              $(this).blur();

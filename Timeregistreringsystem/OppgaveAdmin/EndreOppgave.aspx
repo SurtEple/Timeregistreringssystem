@@ -113,6 +113,7 @@
              changeMonth: true,
              changeYear: true,
              format: "yyyy-mm-dd",
+             startDate: '+0d',
              language: "tr"
          }).on('changeDate', function (ev) {
              $(this).blur();
@@ -123,6 +124,7 @@
              changeMonth: true,
              changeYear: true,
              format: "yyyy-mm-dd",
+             dateStart: '+0d',
              language: "tr"
          }).on('changeDate', function (ev) {
              $(this).blur();
