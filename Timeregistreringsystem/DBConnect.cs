@@ -109,8 +109,14 @@ namespace Timeregistreringssystem
             {
 
                 //Create Command
-                String insertString = String.Format("INSERT INTO Prosjekt(Navn, Oppsummering, ansvarligID) VALUES ('{0}','{1}',{2})", navn, oppsummering, ansvarligID);
+                String insertString = "INSERT INTO Prosjekt(Navn, Oppsummering, ansvarligID) VALUES (@navn, @oppsummering, @ansvarligID)";
+
                 MySqlCommand insertCommand = new MySqlCommand(insertString, connection);
+                insertCommand.Parameters.AddWithValue("@navn", navn);
+                insertCommand.Parameters.AddWithValue("@oppsummering", oppsummering);
+                insertCommand.Parameters.AddWithValue("@ansvarligID", ansvarligID);
+                insertCommand.Prepare();
+                
 
                 try
                 {
@@ -136,11 +142,12 @@ namespace Timeregistreringssystem
      */
         public bool delProject(int id)
         {
-            String deleteString = String.Format("DELETE FROM Prosjekt WHERE ID = {0}", id);
+            String deleteString = "DELETE FROM Prosjekt WHERE ID = @id";
             bool check = false;
             int result = 0;
 
             MySqlCommand deleteCommand = new MySqlCommand(deleteString, connection);
+            deleteCommand.Parameters.AddWithValue("@id", id);
 
             if (this.OpenConnection())
             {
@@ -193,11 +200,16 @@ namespace Timeregistreringssystem
             if (this.OpenConnection())
             {
                 //Create Command
-                string editString = String.Format("UPDATE Prosjekt SET Navn = '{0}', Oppsummering = '{1}', Neste_Fase={2}, ansvarligID = {3}, Neste_Milepæl={4} WHERE ID = {5}",
-                    nyttNavn, nyOppsummering, nyNesteFase, prosjektAnsvarlig, nyMilepael, id);
+                string editString = "UPDATE Prosjekt SET Navn = @navn, Oppsummering = @oppsummering, Neste_Fase= @fase, ansvarligID = @prosjektAnsvarlig, Neste_Milepæl= @milepael WHERE ID = @id";
 
                 MySqlCommand editCommand = new MySqlCommand(editString, connection);
-
+                editCommand.Parameters.AddWithValue("@navn", nyttNavn);
+                editCommand.Parameters.AddWithValue("@oppsummering", nyOppsummering);
+                editCommand.Parameters.AddWithValue("@fase", nyNesteFase);
+                editCommand.Parameters.AddWithValue("@prosjektAnsvarlig", prosjektAnsvarlig);
+                editCommand.Parameters.AddWithValue("@milepael", nyMilepael);
+                editCommand.Parameters.AddWithValue("@id", id);
+                editCommand.Prepare();
                 try
                 {
                     editCommand.ExecuteNonQuery();
@@ -227,10 +239,13 @@ namespace Timeregistreringssystem
             {
 
                 //Create Command
-                String connectString = String.Format("INSERT INTO KoblingTeamProsjekt(Team_ID, Prosjekt_ID) VALUES ({0}, {1}); ", teamID, prosjektID);
+                String connectString = String.Format("INSERT INTO KoblingTeamProsjekt(Team_ID, Prosjekt_ID) VALUES (@teamid, @prosjektid); ", teamID, prosjektID);
+
 
                 MySqlCommand connectCommand = new MySqlCommand(connectString, connection);
-
+                connectCommand.Parameters.AddWithValue("@teamid", teamID);
+                connectCommand.Parameters.AddWithValue("@prosjektid", prosjektID);
+                
                 try
                 {
                     connectCommand.Prepare(); //??
@@ -312,9 +327,12 @@ namespace Timeregistreringssystem
             if (this.OpenConnection())
             {
                 //Create Command
-                string insertString = String.Format("INSERT INTO Milepael (Beskrivelse, ProsjektID)" +
-               " VALUES ('{0}', {1})", beskrivelse, prosjektID);
+                string insertString = "INSERT INTO Milepael (Beskrivelse, ProsjektID)" +
+               " VALUES (@beskrivelse, @prosjektid)";
                 MySqlCommand insertCommand = new MySqlCommand(insertString, connection);
+                insertCommand.Parameters.AddWithValue("@beskrivelse", beskrivelse);
+                insertCommand.Parameters.AddWithValue("@prosjektid", prosjektID);
+                insertCommand.Prepare();
 
                 try
                 {
@@ -579,9 +597,17 @@ namespace Timeregistreringssystem
             if (this.OpenConnection())
             {
                 //Create Command
-                string insertString = String.Format("INSERT INTO Oppgave (Prosjekt_ID, Foreldreoppgave_ID, EstimertTid, Tittel, Beskrivelse, Dato_begynt, Dato_ferdig)" +
-               " VALUES ({0}, {1}, {2}, '{3}', '{4}', '{5}', '{6}'  )", _foreldreProsjekt, _foreldreOppgave, _estimertTid, _tittel, _beskrivelse, _startDato, _sluttDato);
+                string insertString = "INSERT INTO Oppgave (Prosjekt_ID, Foreldreoppgave_ID, EstimertTid, Tittel, Beskrivelse, Dato_begynt, Dato_ferdig)" +
+               " VALUES (@foreldreProsjekt, @foreldreOppgave, @estimertTid, @tittel, @beskrivelse, @startDato, @sluttDato )";
                 MySqlCommand insertCommand = new MySqlCommand(insertString, connection);
+                insertCommand.Parameters.AddWithValue("@foreldreProsjekt",_foreldreProsjekt);
+                insertCommand.Parameters.AddWithValue("@foreldreOppgave", _foreldreOppgave);
+                insertCommand.Parameters.AddWithValue("@estimertTid", _estimertTid);
+                insertCommand.Parameters.AddWithValue("@tittel", _tittel);
+                insertCommand.Parameters.AddWithValue("@beskrivelse", _beskrivelse);
+                insertCommand.Parameters.AddWithValue("@startDato", _startDato);
+                insertCommand.Parameters.AddWithValue("@sluttDato", _sluttDato);
+                insertCommand.Prepare();
 
                 try
                 {
@@ -611,11 +637,11 @@ namespace Timeregistreringssystem
             if (this.OpenConnection())
             {
                 //Create Command
-                string queryString = string.Format(
-                    "SELECT Dato_ferdig FROM Oppgave WHERE id = '{0}'"
-                    , id);
+                string queryString = "SELECT Dato_ferdig FROM Oppgave WHERE id = @id";
 
                 MySqlCommand command = new MySqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@id",id);
+                command.Prepare();
                 try
                 {
                     MySqlDataReader dataReader = command.ExecuteReader();
@@ -648,11 +674,11 @@ namespace Timeregistreringssystem
             if (this.OpenConnection())
             {
                 //Create Command
-                string queryString = string.Format(
-                    "SELECT Brukt_tid FROM Oppgave WHERE id = '{0}'"
-                    , id);
+                string queryString = "SELECT Brukt_tid FROM Oppgave WHERE id = @id";
 
                 MySqlCommand command = new MySqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@id", id);
+                command.Prepare();
                 try
                 {
                     MySqlDataReader dataReader = command.ExecuteReader();
@@ -684,11 +710,13 @@ namespace Timeregistreringssystem
             if (this.OpenConnection())
             {
                 //Create Command
-                string editString = String.Format("UPDATE Oppgave SET Ferdig = 1, Brukt_tid = {0}, Dato_ferdig = '{1}' WHERE ID = {2}",
-                   _bruktTid, _sluttDato, id);
+                string editString = "UPDATE Oppgave SET Ferdig = 1, Brukt_tid = @bruktTid, Dato_ferdig = @sluttDato WHERE ID = @id";
 
                 MySqlCommand editCommand = new MySqlCommand(editString, connection);
-
+                editCommand.Parameters.AddWithValue("@bruktTid", _bruktTid);
+                editCommand.Parameters.AddWithValue("@sluttDato", _sluttDato);
+                editCommand.Parameters.AddWithValue("@id", id);
+                editCommand.Prepare();
 
                 try
                 {
@@ -713,11 +741,13 @@ namespace Timeregistreringssystem
         */
         public bool slettOppgave(int id)
         {
-            String deleteString = String.Format("DELETE FROM Oppgave WHERE ID = {0}", id);
+            String deleteString = "DELETE FROM Oppgave WHERE ID = @id";
             bool check = false;
             int result = 0;
 
             MySqlCommand deleteCommand = new MySqlCommand(deleteString, connection);
+            deleteCommand.Parameters.AddWithValue("@id", id);
+            
 
             if (this.OpenConnection())
             {
@@ -794,11 +824,11 @@ namespace Timeregistreringssystem
             if (this.OpenConnection())
             {
                 //Create Command
-                string queryString = string.Format(
-                    "SELECT Tittel FROM Oppgave WHERE id = '{0}'"
-                    , id);
+                string queryString = "SELECT Tittel FROM Oppgave WHERE id = @id";
 
                 MySqlCommand command = new MySqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@id", id);
+                command.Prepare();
                 try
                 {
                     MySqlDataReader dataReader = command.ExecuteReader();
@@ -831,11 +861,11 @@ namespace Timeregistreringssystem
             if (this.OpenConnection())
             {
                 //Create Command
-                string queryString = string.Format(
-                    "SELECT EstimertTid FROM Oppgave WHERE id = '{0}'"
-                    , id);
+                string queryString = "SELECT EstimertTid FROM Oppgave WHERE id = @id";
 
                 MySqlCommand command = new MySqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@id", id);
+                command.Prepare();
                 try
                 {
                     MySqlDataReader dataReader = command.ExecuteReader();
@@ -868,11 +898,11 @@ namespace Timeregistreringssystem
             if (this.OpenConnection())
             {
                 //Create Command
-                string queryString = string.Format(
-                    "SELECT Brukt_tid FROM Oppgave WHERE id = '{0}'"
-                    , id);
+                string queryString = "SELECT Brukt_tid FROM Oppgave WHERE id = @id";
 
                 MySqlCommand command = new MySqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@id", id);
+                command.Prepare();
                 try
                 {
                     MySqlDataReader dataReader = command.ExecuteReader();
@@ -905,11 +935,11 @@ namespace Timeregistreringssystem
             if (this.OpenConnection())
             {
                 //Create Command
-                string queryString = string.Format(
-                    "SELECT Dato_ferdig FROM Oppgave WHERE id = '{0}'"
-                    , id);
+                string queryString = "SELECT Dato_ferdig FROM Oppgave WHERE id = @id";
 
                 MySqlCommand command = new MySqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@id", id);
+                command.Prepare();
                 try
                 {
                     MySqlDataReader dataReader = command.ExecuteReader();
@@ -943,11 +973,16 @@ namespace Timeregistreringssystem
             if (this.OpenConnection())
             {
                 //Create Command
-                String editString = String.Format(
-                    "UPDATE Oppgave SET Tittel = '{0}', Beskrivelse = '{1}', Dato_ferdig = '{2}', EstimertTid = {3}, Brukt_tid = {4} WHERE ID = {5}"
-                    , _nyTittel, _nyBeskrivelse, _nySluttDato, _nyEstimertTid, _nyBruktTid, _id);
+                String editString = "UPDATE Oppgave SET Tittel = @tittel, Beskrivelse = @beskrivelse, Dato_ferdig = @datoFerdig, EstimertTid = @estimertTid, Brukt_tid = @bruktTid WHERE ID = @id";
 
                 MySqlCommand editCommand = new MySqlCommand(editString, connection);
+                editCommand.Parameters.AddWithValue("@tittel", _nyTittel);
+                editCommand.Parameters.AddWithValue("@beskrivelse", _nyBeskrivelse);
+                editCommand.Parameters.AddWithValue("@datoFerdig", _nySluttDato);
+                editCommand.Parameters.AddWithValue("@estimertTid", _nyEstimertTid);
+                editCommand.Parameters.AddWithValue("@bruktTid", _nyBruktTid);
+                editCommand.Parameters.AddWithValue("@id", _id);
+                
                 try
                 {
                     editCommand.Prepare();
@@ -1023,11 +1058,27 @@ namespace Timeregistreringssystem
 
             if (this.OpenConnection() == true)
             {
-                string insertBrukerQuery = String.Format("INSERT INTO Bruker (`ID`, `Brukernavn`, `Passord`, `Salt`, `Fornavn`, `Mellomnavn`, `Etternavn`, `Epost`, `IM`, `Telefonnr`, `Adresse`, `Postnummer`, `By`, `Stilling_ID`, `Administrator`) VALUES (NULL, '{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', NULL, '{12}')", _brukernavn, passord, _salt, _fornavn, _mellomnavn, _etternavn, _epost, _im, _telefonnr, _adresse, _postnr, _by, _administrator);
+                //string insertBrukerQuery = String.Format("INSERT INTO Bruker (`ID`, `Brukernavn`, `Passord`, `Salt`, `Fornavn`, `Mellomnavn`, `Etternavn`, `Epost`, `IM`, `Telefonnr`, `Adresse`, `Postnummer`, `By`, `Stilling_ID`, `Administrator`) VALUES (NULL, '{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', NULL, '{12}')", _brukernavn, passord, _salt, _fornavn, _mellomnavn, _etternavn, _epost, _im, _telefonnr, _adresse, _postnr, _by, _administrator);
                 // string insertBrukerQuery = String.Format("INSERT INTO `HLVDKN_DB1`.`Bruker` (`ID`, `Brukernavn`, `Passord`, `Salt`, `Fornavn`, `Mellomnavn`, `Etternavn`, `Epost`, `IM`, `Telefonnr`, `Adresse`, `Postnummer`, `By`, `Stilling_ID`, `Administrator`) VALUES (NULL, '{0}', '{1}', '{2}', 'salt', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', NULL, NULL)", _brukernavn, _passord,  _fornavn, _mellomnavn, _etternavn, _epost, _im, _adresse, _postnr, _telefonnr, _by);
+                string insertBrukerQuery = "INSERT INTO Bruker (`ID`, `Brukernavn`, `Passord`, `Salt`, `Fornavn`, `Mellomnavn`, `Etternavn`, `Epost`, `IM`, `Telefonnr`, `Adresse`, `Postnummer`, `By`, `Stilling_ID`, `Administrator`) " 
+                + "VALUES (NULL, @brukernavn, @passord, @salt, @fornavn, @mellomnavn, @etternavn, @epost, @im, @telefonnr, @adresse, @postnr, @by, NULL, @administrator)";
+
 
                 MySqlCommand insertBrukerCommand = new MySqlCommand(insertBrukerQuery, connection);
-
+                insertBrukerCommand.Parameters.AddWithValue("@brukernavn", _brukernavn);
+                insertBrukerCommand.Parameters.AddWithValue("@passord", passord);
+                insertBrukerCommand.Parameters.AddWithValue("@salt", _salt);
+                insertBrukerCommand.Parameters.AddWithValue("@fornavn", _fornavn);
+                insertBrukerCommand.Parameters.AddWithValue("@mellomnavn", _mellomnavn);
+                insertBrukerCommand.Parameters.AddWithValue("@etternavn", _etternavn);
+                insertBrukerCommand.Parameters.AddWithValue("@epost", _epost);
+                insertBrukerCommand.Parameters.AddWithValue("@im", _im);
+                insertBrukerCommand.Parameters.AddWithValue("@telefonnr", _telefonnr);
+                insertBrukerCommand.Parameters.AddWithValue("@adresse", _adresse);
+                insertBrukerCommand.Parameters.AddWithValue("@postnr", _postnr);
+                insertBrukerCommand.Parameters.AddWithValue("@by", _by);
+                insertBrukerCommand.Parameters.AddWithValue("@administrator", _administrator);
+                
                 try
                 {
                     insertBrukerCommand.Prepare();
@@ -1152,10 +1203,10 @@ namespace Timeregistreringssystem
             {
 
                 // Kommando for å oppdatere valgt bruker til Stilling_ID 4 - leder
-                String oppdatering = String.Format("UPDATE Bruker SET Stilling_ID = 4 WHERE ID = {0}",
-                    id);
+                String oppdatering = "UPDATE Bruker SET Stilling_ID = 4 WHERE ID = @id";
 
                 MySqlCommand oppdateringsCommand = new MySqlCommand(oppdatering, connection);
+                oppdateringsCommand.Parameters.AddWithValue("@id", id);
 
                 try
                 {
@@ -1284,11 +1335,12 @@ namespace Timeregistreringssystem
         */
         public bool DeleteTeam(int id)
         {
-            String deleteString = String.Format("DELETE FROM Team WHERE ID = {0}", id);
+            String deleteString = "DELETE FROM Team WHERE ID = @id";
             bool check = false;
             int result = 0;
 
             MySqlCommand deleteCommand = new MySqlCommand(deleteString, connection);
+            deleteCommand.Parameters.AddWithValue("@id", id);
 
             if (this.OpenConnection() == true)
             {
@@ -1366,8 +1418,10 @@ namespace Timeregistreringssystem
             string salt = null;
             if (this.OpenConnection() == true)
             {
-                string query1 = "SELECT Salt FROM Bruker WHERE Brukernavn like " + "'" + brukernavn + "'";
+                string query1 = "SELECT Salt FROM Bruker WHERE Brukernavn like @brukernavn";
                 MySqlCommand cmd = new MySqlCommand(query1, connection);
+                cmd.Parameters.AddWithValue("@brukernavn", brukernavn);
+                cmd.Prepare();
                 MySqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
@@ -1377,8 +1431,10 @@ namespace Timeregistreringssystem
 
                 string passWord = GetHashString(salt + passord);
 
-                string query2 = "SELECT * FROM Bruker WHERE Passord = " + "'" + passWord + "'";
+                string query2 = "SELECT * FROM Bruker WHERE Passord = @passord";
                 MySqlCommand cmd2 = new MySqlCommand(query2, connection);
+                cmd2.Parameters.AddWithValue("@passord", passWord);
+                cmd2.Prepare();
                 MySqlDataReader dr2 = cmd2.ExecuteReader();
                 while (dr2.Read())
                 {

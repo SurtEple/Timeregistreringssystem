@@ -16,8 +16,10 @@ namespace Timeregistreringssystem.BrukerAdministrasjon
             int rettighet = Convert.ToInt32(Session["Admin"]);
             if (rettighet == Rettigheter.ADMINISTRATOR || rettighet == Rettigheter.PROSJEKT_ANSVARLIG)
             {
-                Response.Redirect("~/Default");
+                
             }
+            else
+                Response.Redirect("~/Default");
 
             lblFeilmelding0.Visible = true;
             imgStjerne0.Visible = true;
