@@ -193,6 +193,15 @@ namespace Timeregistreringssystem.BrukerAdministrasjon {
         protected global::System.Web.UI.WebControls.Image imgStjerne6;
         
         /// <summary>
+        /// RegularExpressionValidatorEpost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidatorEpost;
+        
+        /// <summary>
         /// lblIm control.
         /// </summary>
         /// <remarks>
@@ -265,6 +274,15 @@ namespace Timeregistreringssystem.BrukerAdministrasjon {
         protected global::System.Web.UI.WebControls.Image imgStjerne8;
         
         /// <summary>
+        /// RegularExpressionValidatorPostnr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidatorPostnr;
+        
+        /// <summary>
         /// lblTlfnr control.
         /// </summary>
         /// <remarks>
@@ -290,6 +308,15 @@ namespace Timeregistreringssystem.BrukerAdministrasjon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image imgStjerne9;
+        
+        /// <summary>
+        /// RegularExpressionValidatorTlfnr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidatorTlfnr;
         
         /// <summary>
         /// lblBy control.

@@ -38,6 +38,14 @@
             <td><asp:Label ID="lblEpost" runat="server" Text="Epost"></asp:Label></td>
             <td><asp:TextBox ID="tbEpost" runat="server"></asp:TextBox></td>
             <td><asp:Image ID="imgStjerne6" runat="server" ImageUrl="~/Content/glyphicons/png/glyphicons_049_star.png" /></td>
+
+            <td>
+            <asp:RegularExpressionValidator ID="RegularExpressionValidatorEpost" runat="server" 
+            ForeColor="Red"
+            ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" 
+            ControlToValidate="tbEpost" 
+            ErrorMessage="Ugyldig epost format"></asp:RegularExpressionValidator>
+            </td>
         </tr>
         <tr>
             <td><asp:Label ID="lblIm" runat="server" Text="Instant Messenger"></asp:Label></td>
@@ -52,11 +60,34 @@
             <td><asp:Label ID="lblPostnr" runat="server" Text="Postnummer"></asp:Label></td>
             <td><asp:TextBox ID="tbPostnr" runat="server"></asp:TextBox></td>
             <td><asp:Image ID="imgStjerne8" runat="server" ImageUrl="~/Content/glyphicons/png/glyphicons_049_star.png" /></td>
+
+            <td>
+                <asp:RegularExpressionValidator id="RegularExpressionValidatorPostnr" runat="server"
+                     ForeColor="Red"
+                     ControlToValidate="tbPostnr"
+                     ValidationExpression="\d{4}"
+                     ErrorMessage="Vennligst skriv inn et gyldig postnummer, 4 siffer">
+
+                </asp:RegularExpressionValidator>
+
+            </td>
         </tr>
         <tr>
             <td><asp:Label ID="lblTlfnr" runat="server" Text="Telefonnummer"></asp:Label></td>
             <td><asp:TextBox ID="tbTelefonnr" runat="server"></asp:TextBox></td>
             <td><asp:Image ID="imgStjerne9" runat="server" ImageUrl="~/Content/glyphicons/png/glyphicons_049_star.png" /></td>
+
+            <td>
+                <asp:RegularExpressionValidator id="RegularExpressionValidatorTlfnr" runat="server"
+                     ForeColor="Red"
+                     ControlToValidate="tbTelefonnr"
+                     ValidationExpression="\d{8}"
+                     ErrorMessage="Vennligst skriv inn et gyldig telefonnummer, 8 siffer">
+
+                </asp:RegularExpressionValidator>
+
+            </td>
+
         </tr>
         <tr>
             <td><asp:Label ID="lblBy" runat="server" Text="By"></asp:Label></td>
@@ -87,6 +118,5 @@
     <br />
       
         <asp:Button ID="btnRegister" runat="server" OnClick="btnRegister_Click" Text="Registrer bruker" />
-
 
 </asp:Content>
