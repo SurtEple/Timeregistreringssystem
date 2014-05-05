@@ -840,6 +840,7 @@
     <Content Include="TeamAdministrasjon\TeamAdministrasjon.aspx" />
     <Content Include="TeamAdministrasjon\Teammedlemmer.aspx" />
     <Content Include="TeamLeder.aspx" />
+    <Content Include="ErrorXSS.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1050,6 +1051,13 @@
     </Compile>
     <Compile Include="TeamLeder.aspx.designer.cs">
       <DependentUpon>TeamLeder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorXSS.aspx.cs">
+      <DependentUpon>ErrorXSS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorXSS.aspx.designer.cs">
+      <DependentUpon>ErrorXSS.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
