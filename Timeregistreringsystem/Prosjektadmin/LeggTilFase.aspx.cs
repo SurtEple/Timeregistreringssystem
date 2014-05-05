@@ -74,13 +74,13 @@ namespace Timeregistreringssystem.Prosjektadmin
                        // string datoStart = dtStart.ToString("yyyy-MM-dd"); //Konverter til bestemt format og tilbake til en string
                        // string datoFerdig = dtSlutt.ToString("yyyy-MM-dd"); //Konverter til bestemt format og tilbake til en string
 
-                        string datoStart = dtStart.ToString();
-                        string datoFerdig = dtSlutt.ToString();
+                        string datoStart = dateStartTextBox.Text;
+                        string datoFerdig = dateStopTextBox.Text;
+                        
                         //Spør brukeren om bekreftelse
-                        dr = MessageBox.Show("Er du sikker på at du vil legge til en Fase?", "Legg Til Fase", MessageBoxButtons.YesNo);
-                        if (dr == DialogResult.Yes)
+                        string confirmValue = Request.Form["confirm_value"];
+                        if (confirmValue == "Yes")
                         {
-                            
                             //VALUES (@Navn, @StartDato, @SluttDato, @ProsjektID, @Beskrivelse)
                             SqlDataSourceFaser.InsertParameters.Add("Navn", faseNavnTextBox.Text); //Setter inn @Navn i Insertkommandoen
                             SqlDataSourceFaser.InsertParameters.Add("Beskrivelse", beskrivelseTextBox.Text); //Setter inn @Beskrivelse
@@ -91,9 +91,30 @@ namespace Timeregistreringssystem.Prosjektadmin
                             SqlDataSourceFaser.Insert(); //Utfører insert
                             resultLabel.Text = "Fasen ble lagret!";
                             GridView1.DataBind(); //Oppdaterer gridviewet
+                            this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Fasen er lagt til')", true);
                         }
+                        else
+                        {
+                            this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Avbrutt')", true);
+                        }
+                           /*
+                           dr = MessageBox.Show("Er du sikker på at du vil legge til en Fase?", "Legg Til Fase", MessageBoxButtons.YesNo);
+                           if (dr == DialogResult.Yes)
+                           {
+                               //VALUES (@Navn, @StartDato, @SluttDato, @ProsjektID, @Beskrivelse)
+                               SqlDataSourceFaser.InsertParameters.Add("Navn", faseNavnTextBox.Text); //Setter inn @Navn i Insertkommandoen
+                               SqlDataSourceFaser.InsertParameters.Add("Beskrivelse", beskrivelseTextBox.Text); //Setter inn @Beskrivelse
+                               SqlDataSourceFaser.InsertParameters.Add("StartDato", datoStart); //Setter inn @StartDato
+                               SqlDataSourceFaser.InsertParameters.Add("SluttDato", datoFerdig); //Setter inn @SluttDato
+                               SqlDataSourceFaser.InsertParameters.Add("ProsjektID", prosjektDropDownList.SelectedValue.ToString()); //Setter inn @ProsjektID
 
-                    }
+                               SqlDataSourceFaser.Insert(); //Utfører insert
+                               resultLabel.Text = "Fasen ble lagret!";
+                               GridView1.DataBind(); //Oppdaterer gridviewet
+                           
+                           }*/
+
+                       }
                     else resultLabel.Text = "Feltene kan ikke være tomme!";
 
 
@@ -174,7 +195,6 @@ namespace Timeregistreringssystem.Prosjektadmin
 
             if (dr == DialogResult.No)
                 e.Cancel = true;
-
         }
 
     }
