@@ -119,7 +119,7 @@
       
         <asp:Button ID="btnRegister" runat="server" OnClick="btnRegister_Click" Text="Registrer bruker" OnClientClick="Confirm()" />
 
-
+    <!-- Confirm dialogbox, Husk å legge til OnClientClick="Confirm()" på hvilken knapp denne skal benyttes-->
     <script type = "text/javascript">
         function Confirm() {
             var confirm_value = document.createElement("INPUT");
@@ -132,7 +132,7 @@
             }
             document.forms[0].appendChild(confirm_value);
         }
-</script>
+    </script>
 
 
 </asp:Content>

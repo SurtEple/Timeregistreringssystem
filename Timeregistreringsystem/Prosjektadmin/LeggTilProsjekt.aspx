@@ -49,7 +49,7 @@ ORDER BY Prosjekt.ID"></asp:SqlDataSource>
                 </td>
             </tr>
             <tr>
-                <td class="auto-style4">Prosjekansvarlig</td>
+                <td class="auto-style4">Prosjektansvarlig</td>
                 <td class="auto-style5">
                     &nbsp;<asp:DropDownList ID="lederDropDownList" runat="server" DataSourceID="Lederdropdown" DataTextField="Brukernavn" DataValueField="ID" CssClass="dropdown">
                     </asp:DropDownList>
