@@ -14,7 +14,7 @@ namespace Timeregistreringssystem.BrukerAdministrasjon
         protected void Page_Load(object sender, EventArgs e)
         {
             int rettighet = Convert.ToInt32(Session["Admin"]);
-            if (rettighet == Rettigheter.ADMINISTRATOR || rettighet == Rettigheter.PROSJEKT_ANSVARLIG)
+            if (rettighet == Rettigheter.ADMINISTRATOR || rettighet == Rettigheter.PROSJEKT_ANSVARLIG && Global.CheckIP())
             {
                 
             }

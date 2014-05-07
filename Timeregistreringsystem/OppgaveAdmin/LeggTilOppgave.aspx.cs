@@ -15,7 +15,7 @@ namespace Timeregistreringssystem.OppgaveAdmin
         {
             if (Session["Admin"] != null)
             {
-                if ((int)Session["Admin"] == Rettigheter.PROSJEKT_ANSVARLIG)
+                if ((int)Session["Admin"] == Rettigheter.PROSJEKT_ANSVARLIG && Global.CheckIP())
                 {
 
                 }

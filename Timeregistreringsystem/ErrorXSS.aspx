@@ -11,6 +11,8 @@
     <form id="form1" runat="server">
     <div>
         Det er mistanke om forsøk på Cross-site scripting vennligst ikke bruk script/HTML tagger som f.eks: &lt;script&gt;
+        <br />
+        <a href="javascript:history.back()">Gå tilbake</a>
     </div>
     </form>
 </body>

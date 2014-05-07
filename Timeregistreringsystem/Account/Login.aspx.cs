@@ -19,6 +19,7 @@ namespace Timeregistreringssystem.Account
 
         }
 
+
         protected void LogIn(object sender, EventArgs e)
         {
             if (IsValid)
@@ -31,6 +32,7 @@ namespace Timeregistreringssystem.Account
                     Session["Innlogget"] = true;
                     Session["Admin"] = bruker.Rettigheter;
                     Session["BrukerID"] = bruker.Id;
+                    Session["IP"] = Global.GetIPAddress();
                     IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
 
                 }

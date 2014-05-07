@@ -11,11 +11,16 @@ namespace Timeregistreringssystem.BrukerAdministrasjon
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
             int rettighet = Convert.ToInt32(Session["Admin"]);
-            if (rettighet == Rettigheter.VANLIG_BRUKER || rettighet == Rettigheter.TEAMLEDER)
+            if (rettighet == Rettigheter.ADMINISTRATOR || rettighet == Rettigheter.PROSJEKT_ANSVARLIG && Global.CheckIP())
             {
-                Response.Redirect("~/Default");
+                
             }
+            else
+                Response.Redirect("~/Default");
+
+
         }
     }
 }
