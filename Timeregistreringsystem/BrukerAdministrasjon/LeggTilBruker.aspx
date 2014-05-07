@@ -117,6 +117,22 @@
     <br />
     <br />
       
-        <asp:Button ID="btnRegister" runat="server" OnClick="btnRegister_Click" Text="Registrer bruker" />
+        <asp:Button ID="btnRegister" runat="server" OnClick="btnRegister_Click" Text="Registrer bruker" OnClientClick="Confirm()" />
+
+
+    <script type = "text/javascript">
+        function Confirm() {
+            var confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "confirm_value";
+            if (confirm("Er du sikker på at du vil legge til denne brukeren?")) {
+                confirm_value.value = "Yes";
+            } else {
+                confirm_value.value = "No";
+            }
+            document.forms[0].appendChild(confirm_value);
+        }
+</script>
+
 
 </asp:Content>

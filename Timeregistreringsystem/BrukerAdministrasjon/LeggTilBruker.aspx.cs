@@ -28,54 +28,62 @@ namespace Timeregistreringssystem.BrukerAdministrasjon
 
         protected void btnRegister_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(tbBrukernavn.Text) 
-                && !String.IsNullOrEmpty(tbPassord.Text) 
-                && !String.IsNullOrEmpty(tbFornavn.Text)
-                && !String.IsNullOrEmpty(tbEtternavn.Text)
-                && !String.IsNullOrEmpty(tbEpost.Text)
-                && !String.IsNullOrEmpty(tbAdresse.Text)
-                && !String.IsNullOrEmpty(tbPostnr.Text)
-                && !String.IsNullOrEmpty(tbTelefonnr.Text)
-                && !String.IsNullOrEmpty(tbBy.Text))
+            string confirmValue = Request.Form["confirm_value"];
+            if (confirmValue == "Yes")
             {
-                if (tbPassord.Text.Equals(tbPassord2.Text))
+                if (!String.IsNullOrEmpty(tbBrukernavn.Text)
+                    && !String.IsNullOrEmpty(tbPassord.Text)
+                    && !String.IsNullOrEmpty(tbFornavn.Text)
+                    && !String.IsNullOrEmpty(tbEtternavn.Text)
+                    && !String.IsNullOrEmpty(tbEpost.Text)
+                    && !String.IsNullOrEmpty(tbAdresse.Text)
+                    && !String.IsNullOrEmpty(tbPostnr.Text)
+                    && !String.IsNullOrEmpty(tbTelefonnr.Text)
+                    && !String.IsNullOrEmpty(tbBy.Text))
                 {
-                    db = new DBConnect();
-                    string brukernavn = tbBrukernavn.Text;
-                    string passord = tbPassord.Text;
-                    string passord2 = tbPassord2.Text;
-                    string fornavn = tbFornavn.Text;
-                    string mellomnavn = tbMellomnavn.Text;
-                    string etternavn = tbEtternavn.Text;
-                    string epost = tbEpost.Text;
-                    string im = tbIm.Text;
-                    string adresse = tbAdresse.Text;
-                    string postnr = tbPostnr.Text;
-                    string telefonnr = tbTelefonnr.Text;
-                    string by = tbBy.Text;
-                    int administrator = Convert.ToInt32(ddlBrukertype.SelectedValue);
+                    if (tbPassord.Text.Equals(tbPassord2.Text))
+                    {
+                        db = new DBConnect();
+                        string brukernavn = tbBrukernavn.Text;
+                        string passord = tbPassord.Text;
+                        string passord2 = tbPassord2.Text;
+                        string fornavn = tbFornavn.Text;
+                        string mellomnavn = tbMellomnavn.Text;
+                        string etternavn = tbEtternavn.Text;
+                        string epost = tbEpost.Text;
+                        string im = tbIm.Text;
+                        string adresse = tbAdresse.Text;
+                        string postnr = tbPostnr.Text;
+                        string telefonnr = tbTelefonnr.Text;
+                        string by = tbBy.Text;
+                        int administrator = Convert.ToInt32(ddlBrukertype.SelectedValue);
 
-                    db.InsertBruker(brukernavn, passord, fornavn, mellomnavn, etternavn, epost, im, adresse, postnr, telefonnr, by, administrator);
-         
-                    lblFeilmelding0.Visible = false;
-                    imgStjerne0.Visible = false;
-                    lblFeilmelding.Text = "Bruker lagt til!";
+                        db.InsertBruker(brukernavn, passord, fornavn, mellomnavn, etternavn, epost, im, adresse, postnr, telefonnr, by, administrator);
+
+                        lblFeilmelding0.Visible = false;
+                        imgStjerne0.Visible = false;
+                        lblFeilmelding.Text = "Bruker lagt til!";
+                        this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Brukeren er lagt til')", true);
+                    }
+                    else //else passord ikke matcher
+                    {
+                        lblFeilmelding0.Visible = false;
+                        imgStjerne0.Visible = false;
+                        lblFeilmelding.Visible = true;
+                        lblFeilmelding.Text = "Passordene matcher ikke!";
+                    }
                 }
-                else //else passord ikke matcher
+                else //else tomme felter
                 {
                     lblFeilmelding0.Visible = false;
                     imgStjerne0.Visible = false;
                     lblFeilmelding.Visible = true;
-                    lblFeilmelding.Text = "Passordene matcher ikke!";
+                    lblFeilmelding.Text = "Du må fylle ut alle feltene som kreves";
                 }
-            }
-            else //else tomme felter
-            {
-                lblFeilmelding0.Visible = false;
-                imgStjerne0.Visible = false;
-                lblFeilmelding.Visible = true;
-                lblFeilmelding.Text = "Du må fylle ut alle feltene som kreves";
-            }
-        }
+            } //slutt confirm if
+            else
+                this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Avbrutt')", true);
+            
+        } //slutt btnRegister_click
     }
 }

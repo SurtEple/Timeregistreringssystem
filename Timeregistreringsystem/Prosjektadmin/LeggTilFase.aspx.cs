@@ -46,7 +46,7 @@ namespace Timeregistreringssystem.Prosjektadmin
             
             DateTime dtStart;
             DateTime dtSlutt;
-            DialogResult dr;
+            //DialogResult dr;
 
             try{
                 //Sjekker etter injection samtidig som stringen blir parset og lagret i dt-referansen
@@ -164,8 +164,15 @@ namespace Timeregistreringssystem.Prosjektadmin
 
                    string datoStart = dtStart.ToString("yyyy-MM-dd"); //Konverter DateTime til universelt format og tilbake til string
                      string datoFerdig = dtStop.ToString("yyyy-MM-dd"); //Konverter DateTime til universelt format og tilbake til string
-                    
 
+                     SqlDataSourceFaser.UpdateParameters.Add("ID", id.ToString()); //UPDATE..WHERE ID=@ID
+                     SqlDataSourceFaser.UpdateParameters.Add("StartDato", datoStart); //UPDATE..SET Dato_startet=@StartDato
+                     SqlDataSourceFaser.UpdateParameters.Add("SluttDato", datoStart); //UPDATE..SET Dato_Sluttet=@SluttDato
+                     SqlDataSourceFaser.UpdateParameters.Add("Navn", navnNew); //UPDATE..SET Navn=@Navn
+                     SqlDataSourceFaser.UpdateParameters.Add("Aktiv", aktiv); //UPDATE..SET Aktiv=@Aktiv
+                     SqlDataSourceFaser.UpdateParameters.Add("Beskrivelse", beskrivelseNew); //UPDATE..SET Beskrivelse=@Beskrivelse
+
+                    /*
                     //Spør brukeren om bekreftelse
                     DialogResult dr = new DialogResult();
                     dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil endre Fasen? Ny StartDato: " + datoStart, "Endre milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
@@ -182,7 +189,7 @@ namespace Timeregistreringssystem.Prosjektadmin
                        SqlDataSourceFaser.UpdateParameters.Add("Aktiv", aktiv); //UPDATE..SET Aktiv=@Aktiv
                        SqlDataSourceFaser.UpdateParameters.Add("Beskrivelse", beskrivelseNew); //UPDATE..SET Beskrivelse=@Beskrivelse
 
-                    }
+                    }*/
                 }
             }
             catch (System.ArgumentNullException ane) { resultLabel.Text = "Argument Null Exception while trying to parse ID! " + ane.Message; }
@@ -191,10 +198,12 @@ namespace Timeregistreringssystem.Prosjektadmin
         //Event-metode for å når brukeren vil slette en rad
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            /*
             DialogResult dr = MessageBox.Show("Er du sikker på at du ønsker å slette?", "Slette Fase", MessageBoxButtons.YesNo);
 
             if (dr == DialogResult.No)
                 e.Cancel = true;
+             * */
         }
 
     }
