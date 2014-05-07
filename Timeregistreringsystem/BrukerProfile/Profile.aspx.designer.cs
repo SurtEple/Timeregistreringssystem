@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Timeregistreringssystem.Bruker
+namespace Timeregistreringssystem.BrukerProfile
 {
 
 

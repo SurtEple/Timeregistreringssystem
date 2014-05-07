@@ -178,6 +178,7 @@
     <Content Include="BrukerAdministrasjon\EndreBruker.aspx" />
     <Content Include="BrukerAdministrasjon\LeggTilBruker.aspx" />
     <Content Include="BrukerAdministrasjon\TimeRegistrering.aspx" />
+    <Content Include="BrukerProfile\Profile.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker3.css" />
@@ -930,6 +931,13 @@
     </Compile>
     <Compile Include="BrukerAdministrasjon\TimeRegistrering.aspx.designer.cs">
       <DependentUpon>TimeRegistrering.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BrukerProfile\Profile.aspx.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BrukerProfile\Profile.aspx.designer.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
     </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
