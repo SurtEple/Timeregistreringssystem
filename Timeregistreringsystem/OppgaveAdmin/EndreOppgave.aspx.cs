@@ -174,7 +174,21 @@ namespace Timeregistreringssystem.OppgaveAdmin
                 //Sjekke etter tom/null input
                 if (!String.IsNullOrEmpty(ddlSlettOppgave.SelectedValue))
                 {
-                    
+                     //bekreftelse på sletting
+                     string confirmValue = Request.Form["confirm_value"];
+                     if (confirmValue == "Yes")
+                     {
+                         int id = Convert.ToInt32(ddlSlettOppgave.SelectedValue);
+                         deleteOK = connection.slettOppgave(id); //lagre boolsk returverdi     
+                         //System.Windows.Forms.MessageBox.Show("Sletting gjennomført");
+                         Page.Response.Redirect(Page.Request.Url.ToString(), true);
+                         this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Oppgaven er slettet')", true);
+                     }
+                     else
+                         this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Avbrutt')", true);
+
+
+                        /*
                         System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
                         // NB!!! trykke på slettknapp, si nei, trykke slettknapp igjen, så popper ikke messagebox opp, men ligger minimized.
                         dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil slette prosjekt " + ddlSlettOppgave.SelectedItem, " Slette prosjekt", System.Windows.Forms.MessageBoxButtons.YesNo);
@@ -186,10 +200,8 @@ namespace Timeregistreringssystem.OppgaveAdmin
                             deleteOK = connection.slettOppgave(id); //lagre boolsk returverdi     
                             System.Windows.Forms.MessageBox.Show("Sletting gjennomført");
                             Page.Response.Redirect(Page.Request.Url.ToString(), true);
-
-                        
                     }
-                    else { System.Windows.Forms.MessageBox.Show("Sletting ikke gjennomført"); Page.Response.Redirect(Page.Request.Url.ToString(), true); }
+                    else { System.Windows.Forms.MessageBox.Show("Sletting ikke gjennomført"); Page.Response.Redirect(Page.Request.Url.ToString(), true); }*/
                 }
                 else lblSlettOppgaveTilbakemelding.Text = "Alle felt med * må fylles ut!";
             }
@@ -331,6 +343,23 @@ namespace Timeregistreringssystem.OppgaveAdmin
                     && !String.IsNullOrEmpty(tbxNyBruktTid.Text) && !String.IsNullOrEmpty(tbxNySluttDato.Text))
                 {
                     //bekreftelse på redigering av fase
+                    string confirmValue = Request.Form["confirm_value"];
+                    if (confirmValue == "Yes")
+                    {
+                        int id = Convert.ToInt32(ddlRedigereOppgave.SelectedValue);
+                        nyTittel = tbxNyTittel.Text;
+                        nyBeskrivelse = tbxNyBeskrivelse.Text;
+                        nySluttDato = tbxNySluttDato.Text;
+                        nyEstimertTid = Convert.ToInt32(tbxNyEstimertTid.Text);
+                        nyBruktTid = Convert.ToInt32(tbxNyBruktTid.Text);
+
+                        editOK = connection.OppdaterOppgave(id, nyTittel, nyBeskrivelse, nySluttDato, nyEstimertTid, nyBruktTid); //lagre boolsk returverdi
+                        Page.Response.Redirect(Page.Request.Url.ToString(), true);
+                        this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Oppgaven er endret')", true);
+                    }
+                    else
+                        this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Avbrutt')", true);
+                    /*
                     System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
                     dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil redigere oppgaven til å ha disse verdiene?", "Redigere oppgave", System.Windows.Forms.MessageBoxButtons.YesNo);
 
@@ -346,7 +375,7 @@ namespace Timeregistreringssystem.OppgaveAdmin
 
                         editOK = connection.OppdaterOppgave(id, nyTittel, nyBeskrivelse, nySluttDato, nyEstimertTid, nyBruktTid); //lagre boolsk returverdi
                         Page.Response.Redirect(Page.Request.Url.ToString(), true);
-                    }
+                    }*/
                 }
                 else lblEndreOppgave.Text = "Feltene kan ikke være tomme!";
             }

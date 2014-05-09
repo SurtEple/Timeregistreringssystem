@@ -91,13 +91,13 @@ namespace Timeregistreringssystem.Prosjektadmin
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             string milestoneNavn = (string)e.Values["Beskrivelse"].ToString();
-
+            /*
             System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
             dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil slette milepælen " + milestoneNavn + " ?", "slette milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
             //bekreftelse på sletting
             if (dr == System.Windows.Forms.DialogResult.No){
                 e.Cancel = true;
-            }
+            }*/
         }
 
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -122,17 +122,17 @@ namespace Timeregistreringssystem.Prosjektadmin
                     string datoFerdig = dt.ToString("u"); //Konverter DateTime til universelt format og tilbake til en string
 
                     //Spør brukeren om bekreftelse
-                    System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
-                    dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil endre milepælen?", "Endre milepæl", MessageBoxButtons.YesNo);
+                    //System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
+                    //dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil endre milepælen?", "Endre milepæl", MessageBoxButtons.YesNo);
                     //bekreftelse på Oppdatering
-                    if (dr == DialogResult.No)
-                        e.Cancel = true;
+                    //if (dr == DialogResult.No)
+                    //    e.Cancel = true;
 
-                    else{
+                    //else{
                         SqlDataSourceMilepael.UpdateParameters.Add("ID", id.ToString()); //UPDATE..WHERE ID=@ID
                         SqlDataSourceMilepael.UpdateParameters.Add("DatoFerdig", datoFerdig); //UPDATE..WHERE ID=@ID
                         SqlDataSourceMilepael.UpdateParameters.Add("Beskrivelse", beskrivelseNew); //UPDATE..SET Beskrivelse=@Beskrivelse
-                    }
+                    //}
                 }
                 else resultLabel.Text = "Invalid Date Format!";
             }

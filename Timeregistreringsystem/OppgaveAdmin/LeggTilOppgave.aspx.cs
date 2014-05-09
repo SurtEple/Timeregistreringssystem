@@ -52,7 +52,9 @@ namespace Timeregistreringssystem.OppgaveAdmin
                 connection.InsertOppgave(foreldreProsjekt, foreldreOppgave, estimertTid, tittel, beskrivelse, startDato, sluttDato);
 
                 lblTilbakemelding.Text = "Oppgaven er nå lagt til!";
+                
                 Page.Response.Redirect(Page.Request.Url.ToString(), true);
+                this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Oppgaven er nå lagt til!')", true);
             }
             else lblTilbakemelding.Text = "Alle feltene må være fyllt ut!";
         }

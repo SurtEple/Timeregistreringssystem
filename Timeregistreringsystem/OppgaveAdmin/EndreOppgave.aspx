@@ -56,7 +56,7 @@
     <asp:DropDownList ID="ddlSlettOppgave" runat="server" DataSourceID="SqlDataSourceSlettOppgave" DataTextField="Tittel" DataValueField="ID" Width="230px" AutoPostBack="True" OnSelectedIndexChanged="ddlSlettOppgave_SelectedIndexChanged"></asp:DropDownList>
     <asp:SqlDataSource ID="SqlDataSourceSlettOppgave" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Tittel FROM Oppgave"></asp:SqlDataSource>
 
-    <asp:Button ID="btnSlettOppgave" runat="server" Text="Slett" OnClick="btnSlettOppgave_Click" />
+    <asp:Button ID="btnSlettOppgave" runat="server" Text="Slett" OnClick="btnSlettOppgave_Click" OnClientClick="ConfirmDelete()"/>
     <br />
     <asp:Label ID="lblSlettOppgaveTilbakemelding" runat="server" Text=""></asp:Label>
 
@@ -94,7 +94,7 @@
         </tr>
     </table>
 
-    <asp:Button ID="btnEndreOppgave" runat="server" Text="Endre" OnClick="btnEndreOppgave_Click" />
+    <asp:Button ID="btnEndreOppgave" runat="server" Text="Endre" OnClick="btnEndreOppgave_Click" OnClientClick="ConfirmEdit()"/>
     <br />
     <asp:Label ID="lblEndreOppgave" runat="server" Text=""></asp:Label>
 
@@ -136,13 +136,28 @@
     );
 </script>
 
-<!-- Confirm dialogbox, Husk å legge til OnClientClick="Confirm()" på hvilken knapp denne skal benyttes-->
+    <!-- Confirm dialogbox, Husk å legge til OnClientClick="ConfirmDelete()" på hvilken knapp denne skal benyttes-->
     <script type = "text/javascript">
-        function Confirm() {
+        function ConfirmDelete() {
             var confirm_value = document.createElement("INPUT");
             confirm_value.type = "hidden";
             confirm_value.name = "confirm_value";
-            if (confirm("Er du sikker på at du vil legge til denne brukeren?")) {
+            if (confirm("Er du sikker på at du vil slette denne oppgaven?")) {
+                confirm_value.value = "Yes";
+            } else {
+                confirm_value.value = "No";
+            }
+            document.forms[0].appendChild(confirm_value);
+        }
+    </script>
+
+    <!-- Confirm dialogbox, Husk å legge til OnClientClick="ConfirmEdit()" på hvilken knapp denne skal benyttes-->
+    <script type = "text/javascript">
+        function ConfirmEdit() {
+            var confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "confirm_value";
+            if (confirm("Er du sikker på at du vil endre denne oppgaven?")) {
                 confirm_value.value = "Yes";
             } else {
                 confirm_value.value = "No";

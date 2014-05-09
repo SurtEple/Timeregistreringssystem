@@ -46,7 +46,7 @@ VALUES (@OppgID, NOW())"></asp:SqlDataSource>
 
             <asp:BoundField DataField="Dato Ferdig" HeaderText="Dato ferdig" SortExpression="Dato Ferdig" />
 
-              <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" InsertVisible="False" ReadOnly="True" Visible="False" />       
+              <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" InsertVisible="False" ReadOnly="True" />       
 
         </Columns>
     </asp:GridView>

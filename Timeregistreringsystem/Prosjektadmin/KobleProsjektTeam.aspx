@@ -30,7 +30,7 @@
             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT * FROM Team"></asp:SqlDataSource>
     <br />
   <h2>Team og prosjekter</h2>  <br />
-        <asp:GridView ID="GridView3" runat="server" DataSourceID="SqlDataSource3" AutoGenerateColumns="False" DataKeyNames="ID,ID1" OnSelectedIndexChanged="GridView3_SelectedIndexChanged">
+        <asp:GridView ID="GridView3" runat="server" DataSourceID="SqlDataSource3" AutoGenerateColumns="False" DataKeyNames="ID,ID1">
           
                    
               <Columns>
