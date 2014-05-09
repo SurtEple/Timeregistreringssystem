@@ -39,7 +39,7 @@ namespace Timeregistreringssystem.Prosjektadmin
 
         protected void btnLagre_Click(object sender, EventArgs e)
         {
-            DialogResult dr;
+            //DialogResult dr;
             DateTime dt;
             //Sjekke etter tom/null input
             if (!String.IsNullOrEmpty(dateFerdigTextBox.Text) && DropDownListOppgave.SelectedValue != null) {
@@ -56,7 +56,21 @@ namespace Timeregistreringssystem.Prosjektadmin
                         string datoFerdig = dt.ToString("u"); //Konverter til universelt format og tilbake til en string
 
                         //Spør brukeren om bekreftelse
-                        dr = MessageBox.Show("Er du sikker på at du vil legge til en milepæl? Dato Ferdig = " + datoFerdig, "Legg Til milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
+                        string confirmValue = Request.Form["confirm_value"];
+                        if (confirmValue == "Yes")
+                        {
+                            SqlDataSource1.InsertParameters.Add("Dato", datoFerdig); //INSERT INTO .. VALUES (@OppgID, @Dato)
+                            SqlDataSource1.InsertParameters.Add("OppgID", DropDownListOppgave.SelectedValue.ToString()); //INSERT INTO .. VALUES (@OppgID, @Dato)
+
+                            SqlDataSource1.Insert(); //Utfører insert
+                            resultLabel.Text = "Milepælen ble lagret!";
+                            GridView1.DataBind(); //Oppdaterer gridviewet
+                            this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Milepælen er lagt til')", true);
+                        }
+                        else
+                            this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Avbrutt')", true);
+
+                        /*dr = MessageBox.Show("Er du sikker på at du vil legge til en milepæl? Dato Ferdig = " + datoFerdig, "Legg Til milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
                         if (dr == System.Windows.Forms.DialogResult.Yes) {
                             SqlDataSource1.InsertParameters.Add("Dato", datoFerdig); //INSERT INTO .. VALUES (@OppgID, @Dato)
                             SqlDataSource1.InsertParameters.Add("OppgID", DropDownListOppgave.SelectedValue.ToString()); //INSERT INTO .. VALUES (@OppgID, @Dato)
@@ -64,7 +78,7 @@ namespace Timeregistreringssystem.Prosjektadmin
                             SqlDataSource1.Insert(); //Utfører insert
                             resultLabel.Text = "Milepælen ble lagret!";
                             GridView1.DataBind(); //Oppdaterer gridviewet
-                        }
+                        }*/
                     }
                     else resultLabel.Text = "Invalid format!";
                 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Legg Til Bruker" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="LeggTilBruker.aspx.cs" Inherits="Timeregistreringssystem.BrukerAdministrasjon.LeggTilBruker" %>
+﻿<%@ Page Title="Legg til bruker" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="LeggTilBruker.aspx.cs" Inherits="Timeregistreringssystem.BrukerAdministrasjon.LeggTilBruker" %>
 <asp:Content ID="LeggTilBrukerContent" ContentPlaceHolderID="MainContent" runat="server">
     
 

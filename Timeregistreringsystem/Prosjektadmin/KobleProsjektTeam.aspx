@@ -9,10 +9,10 @@
           
                    
               <Columns>
-                <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
-                <asp:BoundField DataField="Navn" HeaderText="Navn" SortExpression="Navn" />
+                <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" Visible="False" />
+                <asp:BoundField DataField="Navn" HeaderText="Prosjektnavn" SortExpression="Navn" />
                 <asp:BoundField DataField="Oppsummering" HeaderText="Oppsummering" SortExpression="Oppsummering" />
-                <asp:BoundField DataField="Neste_Fase" HeaderText="Neste_Fase" SortExpression="Neste_Fase" />
+                <asp:BoundField DataField="Neste_Fase" HeaderText="Neste fase" SortExpression="Neste_Fase" />
             </Columns>
         </asp:GridView>
 
@@ -21,28 +21,28 @@
           
                    
               <Columns>
-                <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
-                <asp:BoundField DataField="Teamleder" HeaderText="Teamleder" SortExpression="Teamleder" />
-                <asp:BoundField DataField="Beskrivelse" HeaderText="Beskrivelse" SortExpression="Beskrivelse" />
+                <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" Visible="False" />
+                <asp:BoundField DataField="Teamleder" HeaderText="Teamleder" SortExpression="Teamleder" Visible="False" />
+                <asp:BoundField DataField="Beskrivelse" HeaderText="Teamnavn" SortExpression="Beskrivelse" />
             </Columns>
         </asp:GridView>
 
             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT * FROM Team"></asp:SqlDataSource>
     <br />
   <h2>Team og prosjekter</h2>  <br />
-        <asp:GridView ID="GridView3" runat="server" DataSourceID="SqlDataSource3" AutoGenerateColumns="False" DataKeyNames="ID,ID1">
+        <asp:GridView ID="GridView3" runat="server" DataSourceID="SqlDataSource3" AutoGenerateColumns="False" DataKeyNames="ID,ID1" OnSelectedIndexChanged="GridView3_SelectedIndexChanged">
           
                    
               <Columns>
-                <asp:BoundField DataField="Team_ID" HeaderText="Team_ID" SortExpression="Team_ID" />
-                <asp:BoundField DataField="Prosjekt_ID" HeaderText="Prosjekt_ID" SortExpression="Prosjekt_ID" />
-                <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" InsertVisible="False" ReadOnly="True" />
+                  <asp:BoundField DataField="Navn" HeaderText="Prosjektnavn" SortExpression="Navn" />
+                  <asp:BoundField DataField="Beskrivelse" HeaderText="Teamnavn" SortExpression="Beskrivelse" />
                   <asp:BoundField DataField="Teamleder" HeaderText="Teamleder" SortExpression="Teamleder" />
-                  <asp:BoundField DataField="Beskrivelse" HeaderText="Beskrivelse" SortExpression="Beskrivelse" />
-                  <asp:BoundField DataField="ID1" HeaderText="ID1" InsertVisible="False" ReadOnly="True" SortExpression="ID1" />
-                  <asp:BoundField DataField="Navn" HeaderText="Navn" SortExpression="Navn" />
                   <asp:BoundField DataField="Oppsummering" HeaderText="Oppsummering" SortExpression="Oppsummering" />
-                  <asp:BoundField DataField="Neste_Fase" HeaderText="Neste_Fase" SortExpression="Neste_Fase" />
+                  <asp:BoundField DataField="Neste_Fase" HeaderText="Neste fase" SortExpression="Neste_Fase" />
+                <asp:BoundField DataField="Team_ID" HeaderText="Team_ID" SortExpression="Team_ID" Visible="False" />
+                <asp:BoundField DataField="Prosjekt_ID" HeaderText="Prosjekt_ID" SortExpression="Prosjekt_ID" Visible="False" />
+                <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" InsertVisible="False" ReadOnly="True" Visible="False" />
+                  <asp:BoundField DataField="ID1" HeaderText="ID1" InsertVisible="False" ReadOnly="True" SortExpression="ID1" Visible="False" />
             </Columns>
         </asp:GridView>
 

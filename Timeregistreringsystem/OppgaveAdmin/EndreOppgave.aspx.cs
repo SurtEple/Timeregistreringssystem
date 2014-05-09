@@ -138,8 +138,9 @@ namespace Timeregistreringssystem.OppgaveAdmin
 
                 connection.OppgaveFerdig(id, bruktTid, sluttDato);
 
-                System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
-                dr = System.Windows.Forms.MessageBox.Show("Oppgaven er nå registrert som ferdig, godt jobbet!");
+                //System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
+                //dr = System.Windows.Forms.MessageBox.Show("Oppgaven er nå registrert som ferdig, godt jobbet!");
+                this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Oppgaven er nå registrert som ferdig, godt jobbet!')", true);
                 Page.Response.Redirect(Page.Request.Url.ToString(), true);
             }
             else lblFerdigTilbakemelding.Text = "Alle felt med * må fylles ut!";

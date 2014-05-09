@@ -8,10 +8,10 @@
           DataKeyNames="ID" CssClass="table" AllowPaging="True" AllowSorting="True" OnRowUpdating="GridView1_RowUpdating" Width="80%" OnRowDeleting="GridView1_RowDeleting">
             <Columns>
                 <asp:CommandField CancelText="Avbryt" DeleteText="Slett" EditText="Endre" ShowDeleteButton="True" ShowEditButton="True" UpdateText="Lagre" />
-                <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
-                <asp:BoundField DataField="Navn" HeaderText="Navn" SortExpression="Navn" />
-                <asp:BoundField DataField="ProsjektID" HeaderText="ProsjektID" SortExpression="ProsjektID" ReadOnly="True" />
-                <asp:BoundField DataField="ProsjektNavn" HeaderText="ProsjektNavn" SortExpression="ProsjektNavn" ReadOnly="True" />
+                <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" Visible="False" />
+                <asp:BoundField DataField="Navn" HeaderText="Fasenavn" SortExpression="Navn" />
+                <asp:BoundField DataField="ProsjektID" HeaderText="ProsjektID" SortExpression="ProsjektID" ReadOnly="True" Visible="False" />
+                <asp:BoundField DataField="ProsjektNavn" HeaderText="Prosjektnavn" SortExpression="ProsjektNavn" ReadOnly="True" />
                 <asp:BoundField DataField="StartDato" HeaderText="StartDato" SortExpression="StartDato"/>
                 <asp:BoundField DataField="SluttDato" HeaderText="SluttDato" SortExpression="SluttDato" />
                 <asp:CheckBoxField DataField="Aktiv" HeaderText="Aktiv" SortExpression="Aktiv" />

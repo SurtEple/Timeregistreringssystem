@@ -7,16 +7,16 @@
 
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSourceOppgave">
         <Columns>
-            <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
-            <asp:BoundField DataField="Prosjekt_ID" HeaderText="Prosjekt_ID" SortExpression="Prosjekt_ID" />
-            <asp:BoundField DataField="Foreldreoppgave_ID" HeaderText="Foreldreoppgave_ID" SortExpression="Foreldreoppgave_ID" />
-            <asp:BoundField DataField="EstimertTid" HeaderText="EstimertTid" SortExpression="EstimertTid" />
             <asp:BoundField DataField="Tittel" HeaderText="Tittel" SortExpression="Tittel" />
             <asp:BoundField DataField="Beskrivelse" HeaderText="Beskrivelse" SortExpression="Beskrivelse" />
+            <asp:BoundField DataField="EstimertTid" HeaderText="Estimert tid" SortExpression="EstimertTid" />
+            <asp:BoundField DataField="Dato_begynt" dataformatstring="{0:d}" htmlencode="false" HeaderText="Dato begynt" SortExpression="Dato_begynt" />
+            <asp:BoundField DataField="Dato_ferdig" dataformatstring="{0:d}" htmlencode="false" HeaderText="Dato ferdig" SortExpression="Dato_ferdig" />
+            <asp:BoundField DataField="Brukt_tid" HeaderText="Brukt tid" SortExpression="Brukt_tid" />
             <asp:CheckBoxField DataField="Ferdig" HeaderText="Ferdig" SortExpression="Ferdig" />
-            <asp:BoundField DataField="Brukt_tid" HeaderText="Brukt_tid" SortExpression="Brukt_tid" />
-            <asp:BoundField DataField="Dato_begynt" dataformatstring="{0:d}" htmlencode="false" HeaderText="Dato_begynt" SortExpression="Dato_begynt" />
-            <asp:BoundField DataField="Dato_ferdig" dataformatstring="{0:d}" htmlencode="false" HeaderText="Dato_ferdig" SortExpression="Dato_ferdig" />
+            <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" Visible="False" />
+            <asp:BoundField DataField="Prosjekt_ID" HeaderText="Prosjekt_ID" SortExpression="Prosjekt_ID" Visible="False" />
+            <asp:BoundField DataField="Foreldreoppgave_ID" HeaderText="Foreldreoppgave_ID" SortExpression="Foreldreoppgave_ID" Visible="False" />
         </Columns>
     </asp:GridView>
 

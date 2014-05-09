@@ -6,8 +6,8 @@
 
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSourceEndreOppgaver">
         <Columns>
-            <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
-            <asp:BoundField DataField="Tittel" HeaderText="Tittel" SortExpression="Tittel" />
+            <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" Visible="False" />
+            <asp:BoundField DataField="Tittel" HeaderText="Oppgavenavn" SortExpression="Tittel" />
             <asp:BoundField DataField="Beskrivelse" HeaderText="Beskrivelse" SortExpression="Beskrivelse" />
             <asp:BoundField DataField="Hovedoppgave" HeaderText="Hovedoppgave" SortExpression="Hovedoppgave" />
             <asp:BoundField DataField="Prosjekt" HeaderText="Prosjekt" SortExpression="Prosjekt" />
@@ -135,6 +135,21 @@
 
     );
 </script>
+
+<!-- Confirm dialogbox, Husk å legge til OnClientClick="Confirm()" på hvilken knapp denne skal benyttes-->
+    <script type = "text/javascript">
+        function Confirm() {
+            var confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "confirm_value";
+            if (confirm("Er du sikker på at du vil legge til denne brukeren?")) {
+                confirm_value.value = "Yes";
+            } else {
+                confirm_value.value = "No";
+            }
+            document.forms[0].appendChild(confirm_value);
+        }
+    </script>
 
 
 </asp:Content>

@@ -8,7 +8,7 @@
         <asp:GridView ID="GridViewEditProject" runat="server" DataSourceID="SqlDataSource1" CssClass="table" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="ID" OnSelectedIndexChanged="GridViewEditProject_SelectedIndexChanged" OnRowDeleting="GridViewEditProject_RowDeleting">
             <Columns>
                 <asp:CommandField DeleteText="Slett" SelectText="Velg" ShowDeleteButton="True" ShowSelectButton="True" />
-                <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
+                <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" Visible="False" />
                 <asp:BoundField DataField="Navn" HeaderText="Navn" SortExpression="Navn" />
                 <asp:BoundField DataField="Ansvarlig" HeaderText="Ansvarlig" SortExpression="Ansvarlig" />
                 <asp:BoundField DataField="Oppsummering" HeaderText="Oppsummering" SortExpression="Oppsummering" />

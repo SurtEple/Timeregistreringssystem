@@ -109,7 +109,7 @@
                                 <%if (Session["Admin"] == null)
                                   { %>
                                 
-                                <li><a runat="server" href="~/Account/Login">Logg in</a></li>
+                                <li><a runat="server" href="~/Account/Login">Logg inn</a></li>
                                 <%} else {%>
                                 <li><a runat="server" href="~/Account/Logout">Logg ut</a></li>
                                 <%} %>
