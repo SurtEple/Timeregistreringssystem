@@ -13,7 +13,7 @@
             <Columns>
                 <asp:CommandField ShowSelectButton="True" />
                 <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" ReadOnly="true"/>
-                <asp:BoundField DataField="Beskrivelse" HeaderText="Beskrivelse" SortExpression="Beskrivelse"/>
+                <asp:BoundField DataField="Beskrivelse" HeaderText="Teamnavn" SortExpression="Beskrivelse"/>
                 <asp:BoundField DataField="Teamleder" HeaderText="Teamleder" SortExpression="Teamleder"/>
                 <asp:BoundField DataField="Fornavn" HeaderText="Fornavn" SortExpression="Fornavn" ReadOnly="true"/>
                 <asp:BoundField DataField="Mellomnavn" HeaderText="Mellomnavn" SortExpression="Mellomnavn" ReadOnly="true"/>

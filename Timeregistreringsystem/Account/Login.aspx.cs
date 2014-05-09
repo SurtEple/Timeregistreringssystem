@@ -39,7 +39,8 @@ namespace Timeregistreringssystem.Account
                 }
                 else
                 {
-                    MessageBox.Show("Feil brukernavn og/eller passord");
+                    this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Feil brukernavn/passord!')", true);
+                    //MessageBox.Show("Feil brukernavn og/eller passord");
                 }
 
                 /*

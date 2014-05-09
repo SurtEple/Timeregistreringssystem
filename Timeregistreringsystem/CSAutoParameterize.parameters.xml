@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=(LocalDb)\v11.0;AttachDbFilename=|DataDirectory|\aspnet-Timeregistreringssystem-20140307020348.mdf;Initial Catalog=aspnet-Timeregistreringssystem-20140307020348;Integrated Security=True;Convert Zero Datetime=true;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Vos\\Documents\\GitHub\\Timeregistreringssystem\\Timeregistreringsystem\\Package\\PackageTmp\\TransformWebConfig\\original\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Vos\\Documents\\GitHub\\Timeregistreringssystem\\Timeregistreringsystem\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="HLVDKN_DB1ConnectionString-Web.config Connection String" description="HLVDKN_DB1ConnectionString Connection String used in web.config by the application to access the database." defaultValue="server=kark.hin.no;user id=halvardk;password=halvardk123;database=HLVDKN_DB1;Convert Zero Datetime=true;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Vos\\Documents\\GitHub\\Timeregistreringssystem\\Timeregistreringsystem\\Package\\PackageTmp\\TransformWebConfig\\original\\Web\.config$" match="/configuration/connectionStrings/add[@name='HLVDKN_DB1ConnectionString']/@connectionString" />
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Vos\\Documents\\GitHub\\Timeregistreringssystem\\Timeregistreringsystem\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='HLVDKN_DB1ConnectionString']/@connectionString" />
+  </parameter>
+  <parameter name="MyConnectionString-Web.config Connection String" description="MyConnectionString Connection String used in web.config by the application to access the database." defaultValue="Data Source=sergio-desktop\sqlexpress;Initial &#xD;&#xA;    Catalog=MyDatabase;User ID=userName;Password=password" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Vos\\Documents\\GitHub\\Timeregistreringssystem\\Timeregistreringsystem\\Package\\PackageTmp\\TransformWebConfig\\original\\Account\\Web\.config$" match="/configuration/connectionStrings/add[@name='MyConnectionString']/@connectionString" />
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Vos\\Documents\\GitHub\\Timeregistreringssystem\\Timeregistreringsystem\\Package\\PackageTmp\\Account\\Web\.config$" match="/configuration/connectionStrings/add[@name='MyConnectionString']/@connectionString" />
+  </parameter>
+  <parameter name="Timeregistreringssystem.Models.ApplicationDbContext-Web.config Connection String" description="Timeregistreringssystem.Models.ApplicationDbContext Connection String used in web.config by the application to access the database." defaultValue="Timeregistreringssystem.Models.ApplicationDbContext_ConnectionString" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Vos\\Documents\\GitHub\\Timeregistreringssystem\\Timeregistreringsystem\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='Timeregistreringssystem.Models.ApplicationDbContext']/@connectionString" />
+  </parameter>
+</parameters>
