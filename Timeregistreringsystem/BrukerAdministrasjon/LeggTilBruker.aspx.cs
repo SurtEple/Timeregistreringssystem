@@ -71,6 +71,7 @@ namespace Timeregistreringssystem.BrukerAdministrasjon
                         imgStjerne0.Visible = false;
                         lblFeilmelding.Visible = true;
                         lblFeilmelding.Text = "Passordene matcher ikke!";
+                        
                     }
                 }
                 else //else tomme felter

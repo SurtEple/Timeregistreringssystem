@@ -111,7 +111,10 @@
                                 
                                 <li><a runat="server" href="~/Account/Login">Logg inn</a></li>
                                 <%} else {%>
+                                <li><p class="navbar-text">Du er logget inn som <%= (string)Session["Brukernavn"] %></p></li>
                                 <li><a runat="server" href="~/Account/Logout">Logg ut</a></li>
+                                
+
                                 <%} %>
                             </ul>
                         </AnonymousTemplate>

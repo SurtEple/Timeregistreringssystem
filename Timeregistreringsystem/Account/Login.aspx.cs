@@ -33,6 +33,7 @@ namespace Timeregistreringssystem.Account
                     Session["Admin"] = bruker.Rettigheter;
                     Session["BrukerID"] = bruker.Id;
                     Session["IP"] = Global.GetIPAddress();
+                    Session["Brukernavn"] = bruker.Brukernavn;
                     IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
 
                 }

@@ -465,7 +465,8 @@ h6,
   font-size: 12px;
 }
 p {
-  margin: 0 0 10px;
+  margin: 0 0 10px 6px;
+    height: 21px;
 }
 .lead {
   margin-bottom: 20px;
@@ -1402,7 +1403,8 @@ pre code {
 table {
   max-width: 100%;
   background-color: transparent;
-    width: 465px;
+    margin-left: 6px;
+    margin-top: 38px;
 }
 th {
   text-align: left;

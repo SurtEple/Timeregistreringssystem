@@ -11,7 +11,7 @@ namespace Timeregistreringssystem.BrukerProfile
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
     }
 }
