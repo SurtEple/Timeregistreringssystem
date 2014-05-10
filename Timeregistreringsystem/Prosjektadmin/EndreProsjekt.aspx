@@ -102,7 +102,7 @@ ORDER BY ID;"></asp:SqlDataSource>
 
 
             <br />
-            <asp:Button ID="btnLagreNewProject" runat="server" OnClick="btnLagreNewProject_Click" OnClientClick="Confirm()" Text="Lagre" Width="103px" Height="36px" CssClass="btn" />
+            <asp:Button ID="btnLagreNewProject" runat="server" OnClick="btnLagreNewProject_Click" Text="Lagre" Width="103px" Height="36px" CssClass="btn" />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
         
             <asp:Label ID="resultLabel" runat="server"></asp:Label>
@@ -116,22 +116,4 @@ ORDER BY ID;"></asp:SqlDataSource>
 
         <br />
         <br />
-
-
-    <!-- Confirm dialogbox, Husk å legge til OnClientClick="Confirm()" på hvilken knapp denne skal benyttes-->
-    <script type = "text/javascript">
-        function Confirm() {
-            var confirm_value = document.createElement("INPUT");
-            confirm_value.type = "hidden";
-            confirm_value.name = "confirm_value";
-            if (confirm("Er du sikker på at du vil endre dette prosjektet?")) {
-                confirm_value.value = "Yes";
-            } else {
-                confirm_value.value = "No";
-            }
-            document.forms[0].appendChild(confirm_value);
-        }
-    </script>
-
-
 </asp:Content>

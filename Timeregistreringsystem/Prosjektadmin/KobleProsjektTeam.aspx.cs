@@ -22,7 +22,7 @@ namespace Timeregistreringssystem.Prosjektadmin
         {
             if (Session["Admin"] != null)
             {
-                if ((int)Session["Admin"] == Rettigheter.PROSJEKT_ANSVARLIG && Global.CheckIP())
+                if ((int)Session["Admin"] == Rettigheter.PROSJEKT_ANSVARLIG)
                 {
 
                 }

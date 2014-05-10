@@ -23,7 +23,7 @@ namespace Timeregistreringssystem.Prosjektadmin
         {
             if (Session["Admin"] != null)
             {
-                if ((int)Session["Admin"] == Rettigheter.PROSJEKT_ANSVARLIG && Global.CheckIP())
+                if ((int)Session["Admin"] == Rettigheter.PROSJEKT_ANSVARLIG)
                 {
 
                 }
@@ -85,16 +85,10 @@ namespace Timeregistreringssystem.Prosjektadmin
                         nyNesteFase = Convert.ToInt32(DropDownListNyNesteFase.SelectedValue);
                     
 
-                    //Få bekreftelse fra brukeren vha javascript
-                    string confirmValue = Request.Form["confirm_value"];
-                    if (confirmValue == "Yes")
-                    {
-                        connection.EditProject(id, nyttNavn, nyOppsummering, nyNesteFase, prosjektAnsvarlig, nyMilestone); //Metode i DBConnect
-                        Page.Response.Redirect(Page.Request.Url.ToString(), true); //Refresh siden 
-                    }
-                    else
-                        this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Avbrutt')", true);
-                    /*
+                    /**Få bekreftelse fra brukeren via MessageBoxpå at han/hun ønsker å redigere
+                    *Noen ganger bugger det og den popper ikke opp ordentlig, vet ikke hvorfor.
+                    *Det skjer om du allerede har trykket på "Lagre" og så trykket "No", og så trykke "Lagre" igjen.
+                    */
                     string dialogString = String.Format("Er du sikker på at du vil redigere prosjektet {0} med Ansvarlig={1}, Milepæl={2}, Fase={3}, id={4}", 
                         nyttNavn, prosjektAnsvarlig, nyMilestone, nyNesteFase,id);
                     System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
@@ -106,7 +100,6 @@ namespace Timeregistreringssystem.Prosjektadmin
                         connection.EditProject(id, nyttNavn, nyOppsummering, nyNesteFase, prosjektAnsvarlig, nyMilestone); //Metode i DBConnect
                         Page.Response.Redirect(Page.Request.Url.ToString(), true); //Refresh siden 
                     }
-                     */
                 }
                 else resultLabel.Text = "Alle feltene må fylles ut!";
             }
@@ -153,17 +146,16 @@ namespace Timeregistreringssystem.Prosjektadmin
 
         protected void GridViewEditProject_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            /*
             String tname = (string)e.Values["Navn"].ToString();
-           
-            System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
-            dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil slette prosjektet " +  tname + " ?", "Slette Prosjekt", System.Windows.Forms.MessageBoxButtons.YesNo);
-            //bekreftelse på sletting
-            if (dr == System.Windows.Forms.DialogResult.No)
-            {
-                e.Cancel=true;
+
+                System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
+                dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil slette prosjektet " +  tname + " ?", "Slette Prosjekt", System.Windows.Forms.MessageBoxButtons.YesNo);
+                //bekreftelse på sletting
+                if (dr == System.Windows.Forms.DialogResult.No)
+                {
+                    e.Cancel=true;
                     
-            }*/
+                }    
         }
     }
 }
