@@ -39,13 +39,15 @@ VALUES (@OppgID, NOW())"></asp:SqlDataSource>
          >
         <Columns>
               <asp:CommandField CancelText="Avbryt" DeleteText="Slett" EditText="Endre" ShowDeleteButton="True" ShowEditButton="True" UpdateText="Lagre" />
+            <asp:BoundField DataField="Prosjektnavn" HeaderText="Prosjektnavn" SortExpression="Prosjektnavn" ReadOnly="True" />
+
+            <asp:BoundField DataField="Tittel" HeaderText="Milepæl" SortExpression="Tittel" ReadOnly="True" />
+            <asp:BoundField DataField="Beskrivelse" HeaderText="Beskrivelse" SortExpression="Beskrivelse" />
+
+            <asp:BoundField DataField="Dato Ferdig" HeaderText="Dato ferdig" SortExpression="Dato Ferdig" />
+
               <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" InsertVisible="False" ReadOnly="True" />       
 
-            <asp:BoundField DataField="Dato Ferdig" HeaderText="Dato Ferdig" SortExpression="Dato Ferdig" />
-
-            <asp:BoundField DataField="Tittel" HeaderText="Tittel" SortExpression="Tittel" ReadOnly="True" />
-            <asp:BoundField DataField="Beskrivelse" HeaderText="Beskrivelse" SortExpression="Beskrivelse" />
-            <asp:BoundField DataField="Prosjektnavn" HeaderText="Prosjektnavn" SortExpression="Prosjektnavn" ReadOnly="True" />
         </Columns>
     </asp:GridView>
     <asp:SqlDataSource ID="oppgaveDropDown" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Tittel FROM Oppgave WHERE (Foreldreoppgave_ID = 0) "></asp:SqlDataSource>
@@ -73,7 +75,7 @@ VALUES (@OppgID, NOW())"></asp:SqlDataSource>
         </tr>
     </table>
     <br />
-    <asp:Button ID="btnLagre" runat="server" Height="34px" OnClick="btnLagre_Click" Text="Lagre Ny Milepæl" Width="159px" CssClass="btn" />
+    <asp:Button ID="btnLagre" runat="server" Height="34px" OnClick="btnLagre_Click" Text="Lagre Ny Milepæl" Width="159px" CssClass="btn" OnClientClick="Confirm()"/>
 
 
       
@@ -89,4 +91,19 @@ VALUES (@OppgID, NOW())"></asp:SqlDataSource>
             $("#<%= dateFerdigTextBox.ClientID %>").datetimepicker();
        });
         </script>
+
+     <!-- Confirm dialogbox, Husk å legge til OnClientClick="Confirm()" på hvilken knapp denne skal benyttes-->
+    <script type = "text/javascript">
+        function Confirm() {
+            var confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "confirm_value";
+            if (confirm("Er du sikker på at du vil legge til denne milepælen?")) {
+                confirm_value.value = "Yes";
+            } else {
+                confirm_value.value = "No";
+            }
+            document.forms[0].appendChild(confirm_value);
+        }
+    </script>
 </asp:Content>

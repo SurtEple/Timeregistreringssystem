@@ -21,7 +21,7 @@ namespace Timeregistreringssystem.Prosjektadmin
         {
             if (Session["Admin"] != null)
             {
-                if ((int)Session["Admin"] == Rettigheter.PROSJEKT_ANSVARLIG)
+                if ((int)Session["Admin"] == Rettigheter.PROSJEKT_ANSVARLIG && Global.CheckIP())
                 {
 
                 }
@@ -39,7 +39,7 @@ namespace Timeregistreringssystem.Prosjektadmin
 
         protected void btnLagre_Click(object sender, EventArgs e)
         {
-            DialogResult dr;
+            //DialogResult dr;
             DateTime dt;
             //Sjekke etter tom/null input
             if (!String.IsNullOrEmpty(dateFerdigTextBox.Text) && DropDownListOppgave.SelectedValue != null) {
@@ -56,7 +56,21 @@ namespace Timeregistreringssystem.Prosjektadmin
                         string datoFerdig = dt.ToString("u"); //Konverter til universelt format og tilbake til en string
 
                         //Spør brukeren om bekreftelse
-                        dr = MessageBox.Show("Er du sikker på at du vil legge til en milepæl? Dato Ferdig = " + datoFerdig, "Legg Til milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
+                        string confirmValue = Request.Form["confirm_value"];
+                        if (confirmValue == "Yes")
+                        {
+                            SqlDataSource1.InsertParameters.Add("Dato", datoFerdig); //INSERT INTO .. VALUES (@OppgID, @Dato)
+                            SqlDataSource1.InsertParameters.Add("OppgID", DropDownListOppgave.SelectedValue.ToString()); //INSERT INTO .. VALUES (@OppgID, @Dato)
+
+                            SqlDataSource1.Insert(); //Utfører insert
+                            resultLabel.Text = "Milepælen ble lagret!";
+                            GridView1.DataBind(); //Oppdaterer gridviewet
+                            this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Milepælen er lagt til')", true);
+                        }
+                        else
+                            this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Avbrutt')", true);
+
+                        /*dr = MessageBox.Show("Er du sikker på at du vil legge til en milepæl? Dato Ferdig = " + datoFerdig, "Legg Til milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
                         if (dr == System.Windows.Forms.DialogResult.Yes) {
                             SqlDataSource1.InsertParameters.Add("Dato", datoFerdig); //INSERT INTO .. VALUES (@OppgID, @Dato)
                             SqlDataSource1.InsertParameters.Add("OppgID", DropDownListOppgave.SelectedValue.ToString()); //INSERT INTO .. VALUES (@OppgID, @Dato)
@@ -64,7 +78,7 @@ namespace Timeregistreringssystem.Prosjektadmin
                             SqlDataSource1.Insert(); //Utfører insert
                             resultLabel.Text = "Milepælen ble lagret!";
                             GridView1.DataBind(); //Oppdaterer gridviewet
-                        }
+                        }*/
                     }
                     else resultLabel.Text = "Invalid format!";
                 }
@@ -77,13 +91,13 @@ namespace Timeregistreringssystem.Prosjektadmin
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             string milestoneNavn = (string)e.Values["Beskrivelse"].ToString();
-
+            /*
             System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
             dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil slette milepælen " + milestoneNavn + " ?", "slette milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
             //bekreftelse på sletting
             if (dr == System.Windows.Forms.DialogResult.No){
                 e.Cancel = true;
-            }
+            }*/
         }
 
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -108,17 +122,17 @@ namespace Timeregistreringssystem.Prosjektadmin
                     string datoFerdig = dt.ToString("u"); //Konverter DateTime til universelt format og tilbake til en string
 
                     //Spør brukeren om bekreftelse
-                    System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
-                    dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil endre milepælen?", "Endre milepæl", MessageBoxButtons.YesNo);
+                    //System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
+                    //dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil endre milepælen?", "Endre milepæl", MessageBoxButtons.YesNo);
                     //bekreftelse på Oppdatering
-                    if (dr == DialogResult.No)
-                        e.Cancel = true;
+                    //if (dr == DialogResult.No)
+                    //    e.Cancel = true;
 
-                    else{
+                    //else{
                         SqlDataSourceMilepael.UpdateParameters.Add("ID", id.ToString()); //UPDATE..WHERE ID=@ID
                         SqlDataSourceMilepael.UpdateParameters.Add("DatoFerdig", datoFerdig); //UPDATE..WHERE ID=@ID
                         SqlDataSourceMilepael.UpdateParameters.Add("Beskrivelse", beskrivelseNew); //UPDATE..SET Beskrivelse=@Beskrivelse
-                    }
+                    //}
                 }
                 else resultLabel.Text = "Invalid Date Format!";
             }

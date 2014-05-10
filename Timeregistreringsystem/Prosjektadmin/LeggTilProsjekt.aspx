@@ -4,7 +4,7 @@
     <h1>Prosjekt</h1>
       <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSource1" AutoGenerateColumns="False" DataKeyNames="ID" CssClass="table" AllowPaging="True" AllowSorting="True">
             <Columns>
-                <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
+                <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" Visible="False" />
                 <asp:BoundField DataField="Navn" HeaderText="Navn" SortExpression="Navn" />
                 <asp:BoundField DataField="Ansvarlig" HeaderText="Ansvarlig" SortExpression="Ansvarlig" />
                 <asp:BoundField DataField="Oppsummering" HeaderText="Oppsummering" SortExpression="Oppsummering" />
@@ -49,7 +49,7 @@ ORDER BY Prosjekt.ID"></asp:SqlDataSource>
                 </td>
             </tr>
             <tr>
-                <td class="auto-style4">Prosjekansvarlig</td>
+                <td class="auto-style4">Prosjektansvarlig</td>
                 <td class="auto-style5">
                     &nbsp;<asp:DropDownList ID="lederDropDownList" runat="server" DataSourceID="Lederdropdown" DataTextField="Brukernavn" DataValueField="ID" CssClass="dropdown">
                     </asp:DropDownList>
