@@ -91,10 +91,10 @@ namespace Timeregistreringssystem
                 return false;
             }
         }
-        
-    
 
-#endregion connection
+
+
+        #endregion connection
 
         #region Prosjekt
         /**
@@ -116,7 +116,7 @@ namespace Timeregistreringssystem
                 insertCommand.Parameters.AddWithValue("@oppsummering", oppsummering);
                 insertCommand.Parameters.AddWithValue("@ansvarligID", ansvarligID);
                 insertCommand.Prepare();
-                
+
 
                 try
                 {
@@ -182,21 +182,21 @@ namespace Timeregistreringssystem
 
 
 
-       /// <author>Thomas og Thea, Surt Eple</author> 
-       /// <referenced inCode="EndreProsjekt.aspx.cs"></referenced>
-       /// <referenced inSite="/Prosjektadmin/EndreProsjekt.aspx"></referenced>
-       /// <summary>
-       /// Redigere prosjekt, oppdaterer tabell Prosjekt
-       /// </summary>
-       /// <param name="id"></param>
-       /// <param name="nyttNavn"></param>
-       /// <param name="nyOppsummering"></param>
-       /// <param name="nyNesteFase"></param>
-       /// <param name="prosjektAnsvarlig"></param>
-       /// <param name="nyMilepael"></param>
+        /// <author>Thomas og Thea, Surt Eple</author> 
+        /// <referenced inCode="EndreProsjekt.aspx.cs"></referenced>
+        /// <referenced inSite="/Prosjektadmin/EndreProsjekt.aspx"></referenced>
+        /// <summary>
+        /// Redigere prosjekt, oppdaterer tabell Prosjekt
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="nyttNavn"></param>
+        /// <param name="nyOppsummering"></param>
+        /// <param name="nyNesteFase"></param>
+        /// <param name="prosjektAnsvarlig"></param>
+        /// <param name="nyMilepael"></param>
         public void EditProject(int id, string nyttNavn, string nyOppsummering, int nyNesteFase, int prosjektAnsvarlig, int nyMilepael)
         {
-          
+
             if (this.OpenConnection())
             {
                 //Create Command
@@ -245,7 +245,7 @@ namespace Timeregistreringssystem
                 MySqlCommand connectCommand = new MySqlCommand(connectString, connection);
                 connectCommand.Parameters.AddWithValue("@teamid", teamID);
                 connectCommand.Parameters.AddWithValue("@prosjektid", prosjektID);
-                
+
                 try
                 {
                     connectCommand.Prepare(); //??
@@ -338,9 +338,9 @@ namespace Timeregistreringssystem
                 {
                     insertCommand.ExecuteNonQuery();
                 }
-                catch (System.ArgumentException ae) { Debug.WriteLine("Argument exception while trying to format the command string! "+ ae.Message); }
+                catch (System.ArgumentException ae) { Debug.WriteLine("Argument exception while trying to format the command string! " + ae.Message); }
                 catch (System.FormatException fe) { Debug.WriteLine("Format exception while trying to format the command string!" + fe.Message); }
-                catch (Exception e){Debug.WriteLine("Undefined exception! " + e.Message);}
+                catch (Exception e) { Debug.WriteLine("Undefined exception! " + e.Message); }
 
                 finally
                 {
@@ -373,7 +373,7 @@ namespace Timeregistreringssystem
             {
                 //Create Command
                 string insertString = String.Format("INSERT INTO Fase (Navn, Dato_Startet, Dato_sluttet,Prosjekt_ID, Beskrivelse)" +
-               " VALUES ('{0}', '{1}', '{2}', {3}, '{4}'  )", _navn, _startDato, _sluttDato,  _prosjektID, _beskrivelse);
+               " VALUES ('{0}', '{1}', '{2}', {3}, '{4}'  )", _navn, _startDato, _sluttDato, _prosjektID, _beskrivelse);
                 MySqlCommand insertCommand = new MySqlCommand(insertString, connection);
 
                 try
@@ -392,7 +392,7 @@ namespace Timeregistreringssystem
             }
 
         }
-     
+
         /**
       * Slett fase
       * @author Thomas 
@@ -409,7 +409,7 @@ namespace Timeregistreringssystem
             {
                 try
                 {
-                    deleteCommand.Prepare(); 
+                    deleteCommand.Prepare();
                     result = deleteCommand.ExecuteNonQuery();
 
                     check = true;
@@ -436,12 +436,12 @@ namespace Timeregistreringssystem
             return check;
         }//Delete fase
 
-       
+
         /**
       * Edit fase
       * @author Thomas
       */
-        public void EditFase(int id, String nyttNavn, String nyBeskrivelse,bool isActive)
+        public void EditFase(int id, String nyttNavn, String nyBeskrivelse, bool isActive)
         {
             if (this.OpenConnection())
             {
@@ -454,13 +454,13 @@ namespace Timeregistreringssystem
                 try
                 {
                     editCommand.ExecuteNonQuery();
-                   
+
                 }
                 catch (Exception e)
                 {
 
                     Debug.WriteLine(e.Message);
-                  
+
                 }
                 finally
                 {
@@ -476,7 +476,7 @@ namespace Timeregistreringssystem
          */
         internal bool EditFaseHentAktiv(int id)
         {
-            bool aktiv=false;
+            bool aktiv = false;
 
             if (this.OpenConnection())
             {
@@ -486,7 +486,7 @@ namespace Timeregistreringssystem
                 MySqlCommand command = new MySqlCommand(editString, connection);
                 try
                 {
-                   
+
                     MySqlDataReader dataReader = command.ExecuteReader();
                     while (dataReader.Read())
                     {
@@ -495,14 +495,14 @@ namespace Timeregistreringssystem
                     dataReader.Close();
 
                 }
-                catch (Exception e) { Debug.WriteLine(e.Message);}
+                catch (Exception e) { Debug.WriteLine(e.Message); }
                 finally
                 {
                     //close Connection  
                     this.CloseConnection();
-                     
+
                 }
-               
+
             }
             return aktiv;
         }
@@ -512,7 +512,7 @@ namespace Timeregistreringssystem
       */
         public string editFaseHentBeskrivelse(int id)
         {
-            string beskrivelse ="ingen info";
+            string beskrivelse = "ingen info";
 
             if (this.OpenConnection())
             {
@@ -520,23 +520,23 @@ namespace Timeregistreringssystem
                 string queryString = string.Format(
                     "SELECT Beskrivelse FROM Fase WHERE id = '{0}'"
                     , id);
-                
+
                 MySqlCommand command = new MySqlCommand(queryString, connection);
                 try
                 {
-                   MySqlDataReader dataReader = command.ExecuteReader();
+                    MySqlDataReader dataReader = command.ExecuteReader();
                     while (dataReader.Read())
                     {
-                      beskrivelse = dataReader["Beskrivelse"] + "";
+                        beskrivelse = dataReader["Beskrivelse"] + "";
                     }
                     dataReader.Close();
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(e.Message);                  
+                    Debug.WriteLine(e.Message);
                 }
                 finally
-                {                  
+                {
                     //close Connection
                     this.CloseConnection();
                 }
@@ -583,7 +583,7 @@ namespace Timeregistreringssystem
         }  //edit fase hente Navn fra id
 
 
-#endregion Fase
+        #endregion Fase
 
         #region Oppgave
 
@@ -600,7 +600,7 @@ namespace Timeregistreringssystem
                 string insertString = "INSERT INTO Oppgave (Prosjekt_ID, Foreldreoppgave_ID, EstimertTid, Tittel, Beskrivelse, Dato_begynt, Dato_ferdig)" +
                " VALUES (@foreldreProsjekt, @foreldreOppgave, @estimertTid, @tittel, @beskrivelse, @startDato, @sluttDato )";
                 MySqlCommand insertCommand = new MySqlCommand(insertString, connection);
-                insertCommand.Parameters.AddWithValue("@foreldreProsjekt",_foreldreProsjekt);
+                insertCommand.Parameters.AddWithValue("@foreldreProsjekt", _foreldreProsjekt);
                 insertCommand.Parameters.AddWithValue("@foreldreOppgave", _foreldreOppgave);
                 insertCommand.Parameters.AddWithValue("@estimertTid", _estimertTid);
                 insertCommand.Parameters.AddWithValue("@tittel", _tittel);
@@ -640,7 +640,7 @@ namespace Timeregistreringssystem
                 string queryString = "SELECT Dato_ferdig FROM Oppgave WHERE id = @id";
 
                 MySqlCommand command = new MySqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@id",id);
+                command.Parameters.AddWithValue("@id", id);
                 command.Prepare();
                 try
                 {
@@ -735,10 +735,10 @@ namespace Timeregistreringssystem
 
         }
 
-         /**
-         * Slett oppgave
-         * @author Bjørn
-        */
+        /**
+        * Slett oppgave
+        * @author Bjørn
+       */
         public bool slettOppgave(int id)
         {
             String deleteString = "DELETE FROM Oppgave WHERE ID = @id";
@@ -747,7 +747,7 @@ namespace Timeregistreringssystem
 
             MySqlCommand deleteCommand = new MySqlCommand(deleteString, connection);
             deleteCommand.Parameters.AddWithValue("@id", id);
-            
+
 
             if (this.OpenConnection())
             {
@@ -811,7 +811,7 @@ namespace Timeregistreringssystem
         }
 
 
-     
+
 
         /**
        * Henter tittel fra databasen ved hjelp av id
@@ -982,7 +982,7 @@ namespace Timeregistreringssystem
                 editCommand.Parameters.AddWithValue("@estimertTid", _nyEstimertTid);
                 editCommand.Parameters.AddWithValue("@bruktTid", _nyBruktTid);
                 editCommand.Parameters.AddWithValue("@id", _id);
-                
+
                 try
                 {
                     editCommand.Prepare();
@@ -1003,7 +1003,7 @@ namespace Timeregistreringssystem
                 }
             }
             return check;
-        } 
+        }
         #endregion Oppgave
 
         #region hashOgSalt
@@ -1060,7 +1060,7 @@ namespace Timeregistreringssystem
             {
                 //string insertBrukerQuery = String.Format("INSERT INTO Bruker (`ID`, `Brukernavn`, `Passord`, `Salt`, `Fornavn`, `Mellomnavn`, `Etternavn`, `Epost`, `IM`, `Telefonnr`, `Adresse`, `Postnummer`, `By`, `Stilling_ID`, `Administrator`) VALUES (NULL, '{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', NULL, '{12}')", _brukernavn, passord, _salt, _fornavn, _mellomnavn, _etternavn, _epost, _im, _telefonnr, _adresse, _postnr, _by, _administrator);
                 // string insertBrukerQuery = String.Format("INSERT INTO `HLVDKN_DB1`.`Bruker` (`ID`, `Brukernavn`, `Passord`, `Salt`, `Fornavn`, `Mellomnavn`, `Etternavn`, `Epost`, `IM`, `Telefonnr`, `Adresse`, `Postnummer`, `By`, `Stilling_ID`, `Administrator`) VALUES (NULL, '{0}', '{1}', '{2}', 'salt', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', NULL, NULL)", _brukernavn, _passord,  _fornavn, _mellomnavn, _etternavn, _epost, _im, _adresse, _postnr, _telefonnr, _by);
-                string insertBrukerQuery = "INSERT INTO Bruker (`ID`, `Brukernavn`, `Passord`, `Salt`, `Fornavn`, `Mellomnavn`, `Etternavn`, `Epost`, `IM`, `Telefonnr`, `Adresse`, `Postnummer`, `By`, `Stilling_ID`, `Administrator`) " 
+                string insertBrukerQuery = "INSERT INTO Bruker (`ID`, `Brukernavn`, `Passord`, `Salt`, `Fornavn`, `Mellomnavn`, `Etternavn`, `Epost`, `IM`, `Telefonnr`, `Adresse`, `Postnummer`, `By`, `Stilling_ID`, `Administrator`) "
                 + "VALUES (NULL, @brukernavn, @passord, @salt, @fornavn, @mellomnavn, @etternavn, @epost, @im, @telefonnr, @adresse, @postnr, @by, NULL, @administrator)";
 
 
@@ -1078,7 +1078,7 @@ namespace Timeregistreringssystem
                 insertBrukerCommand.Parameters.AddWithValue("@postnr", _postnr);
                 insertBrukerCommand.Parameters.AddWithValue("@by", _by);
                 insertBrukerCommand.Parameters.AddWithValue("@administrator", _administrator);
-                
+
                 try
                 {
                     insertBrukerCommand.Prepare();
@@ -1463,7 +1463,7 @@ namespace Timeregistreringssystem
                 return b;
         }
 
-//Metode for å hente ut alle brukerene og legge de til en bindinglist
+        //Metode for å hente ut alle brukerene og legge de til en bindinglist
         public BindingList<Bruker> brukerSelect()
         {
             string query = "SELECT * FROM Bruker";
@@ -1499,7 +1499,7 @@ namespace Timeregistreringssystem
                     int rettigheter = (int)dataReader["Administrator"];
 
 
-                    Bruker bruker = new Bruker(bruker_id, bruker_brukernavn, bruker_fornavn, bruker_mellomnavn, bruker_etternavn, bruker_epost, bruker_im, bruker_adresse, bruker_postnr, bruker_telefonnr, bruker_by,rettigheter);
+                    Bruker bruker = new Bruker(bruker_id, bruker_brukernavn, bruker_fornavn, bruker_mellomnavn, bruker_etternavn, bruker_epost, bruker_im, bruker_adresse, bruker_postnr, bruker_telefonnr, bruker_by, rettigheter);
                     blBrukerListe.Add(bruker);
                 }
 
@@ -1518,13 +1518,53 @@ namespace Timeregistreringssystem
             }
 
 
-        #endregion Innlogging
+
 
 
 
 
         }
+        #endregion Innlogging
+        #region EndrePassord
+        public void EndrePassord(int id, string password)
+        {
+            int result = 0;
 
-       
+            if (this.OpenConnection() == true)
+            {
+                string salt = GenerateSalt();
+                string hashedPassword = GetHashString(salt + password);
+                string endrePassordQuery = "UPDATE Bruker SET Passord = @password, Salt = @salt WHERE ID = @id";
+                MySqlCommand editPasswordCommand = new MySqlCommand(endrePassordQuery, connection);
+                editPasswordCommand.Parameters.AddWithValue("@password", hashedPassword);
+                editPasswordCommand.Parameters.AddWithValue("@salt", salt);
+                editPasswordCommand.Parameters.AddWithValue("@id", id);
+
+                try
+                {
+
+                    editPasswordCommand.Prepare();
+                    result = editPasswordCommand.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+
+                    Debug.WriteLine(e.Message);
+                }
+                finally
+                {
+                    if (result == 0)
+                    {
+                        editPasswordCommand.Cancel();
+                    }
+
+                    //close Connection
+                    this.CloseConnection();
+                }
+            }
+        }
+
+        #endregion
     }
+    
 }

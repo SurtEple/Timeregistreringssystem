@@ -32,7 +32,7 @@
                 <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
                 <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
                 <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
-                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                                                         <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
                 <%--Site Scripts--%>
             </Scripts>
@@ -50,7 +50,10 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        
+                        <%if (Session["Admin"] == null)
+                          {
+                              Session["Admin"] = -1;
+                          } %>
                         <!-- Brukeradministrasjon -->
                         <!-- Foreløpig hardkodet, bare administrator og prosjektleder får se, 2: prosjektansvarlig, 3: administrator -->
                         <% if (Convert.ToInt32(Session["admin"]) == 2 || Convert.ToInt32(Session["admin"]) == 3)
@@ -101,12 +104,20 @@
                             </ul>
                          </li>
                         <% } %>
-
+                        <%if (Convert.ToInt32(Session["admin"]) == 0 ){ %>
+                         <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Profil <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a runat="server" href="~/BrukerProfile/Profile">Oversikt</a></li>
+                                <li><a runat="server" href="~/BrukerProfile/ChangePassword">Bytt Passord</a></li>
+                            </ul>
+                         </li>
+                        <%} %>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <%if (Session["Admin"] == null)
+                                <%if (Convert.ToBoolean(Session["Innlogget"]) == false)
                                   { %>
                                 
                                 <li><a runat="server" href="~/Account/Login">Logg inn</a></li>
