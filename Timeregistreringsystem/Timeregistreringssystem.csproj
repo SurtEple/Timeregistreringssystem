@@ -728,7 +728,6 @@
     <Content Include="Prosjektadmin\EndreProsjekt.aspx" />
     <Content Include="Prosjektadmin\KobleProsjektTeam.aspx" />
     <Content Include="Prosjektadmin\LeggTilFase.aspx" />
-    <Content Include="Prosjektadmin\LeggTilMilepael.aspx" />
     <Content Include="Prosjektadmin\LeggTilProsjekt.aspx" />
     <EmbeddedResource Include="Resources\MorildDataLogo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1001,13 +1000,6 @@
     </Compile>
     <Compile Include="Prosjektadmin\LeggTilFase.aspx.designer.cs">
       <DependentUpon>LeggTilFase.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Prosjektadmin\LeggTilMilepael.aspx.cs">
-      <DependentUpon>LeggTilMilepael.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Prosjektadmin\LeggTilMilepael.aspx.designer.cs">
-      <DependentUpon>LeggTilMilepael.aspx</DependentUpon>
     </Compile>
     <Compile Include="Prosjektadmin\LeggTilProsjekt.aspx.cs">
       <DependentUpon>LeggTilProsjekt.aspx</DependentUpon>
