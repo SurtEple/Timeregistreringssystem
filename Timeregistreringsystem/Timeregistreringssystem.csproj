@@ -837,6 +837,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
+    <Content Include="Startside\BrukerForside.aspx" />
     <Content Include="TeamAdministrasjon\OpprettTeam.aspx" />
     <Content Include="TeamAdministrasjon\TeamAdministrasjon.aspx" />
     <Content Include="TeamAdministrasjon\Teammedlemmer.aspx" />
@@ -1029,6 +1030,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Startside\BrukerForside.aspx.cs">
+      <DependentUpon>BrukerForside.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Startside\BrukerForside.aspx.designer.cs">
+      <DependentUpon>BrukerForside.aspx</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Team.cs" />
