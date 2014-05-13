@@ -11,7 +11,16 @@ namespace Timeregistreringssystem.BrukerProfile
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            int rettighet = Convert.ToInt32(Session["Admin"]);
+            if (rettighet == Rettigheter.VANLIG_BRUKER && Global.CheckIP())
+            {
+                string id = Convert.ToString(Session["BrukerID"]);
+                SqlDataSource1.SelectParameters["@brukerID"].DefaultValue = id;
+                SqlDataSource2.SelectParameters["@brukerID"].DefaultValue = id;
+                SqlDataSource3.SelectParameters["@brukerID"].DefaultValue = id;
+            }
+            else
+                Response.Redirect("~/Default");
         }
     }
 }
