@@ -56,6 +56,10 @@ namespace Timeregistreringssystem.BrukerAdministrasjon
         // Starttidspunkt, må være logget inn for å koble en bruker til registreringen
         protected void Button1_Click(object sender, EventArgs e)
         {
+            ButtonStart.Enabled = false;
+            ButtonPause.Enabled = true;
+            ButtonStop.Enabled = true;
+
             dateStart = DateTime.Now;
             Session["StartDato"] = dateStart;
             int BrukerID = (int)Session["BrukerID"];
@@ -71,6 +75,10 @@ namespace Timeregistreringssystem.BrukerAdministrasjon
 
         protected void ButtonPause_Click(object sender, EventArgs e)
         {
+            ButtonStart.Enabled = false;
+            ButtonStop.Enabled = false;
+            ButtonPause.Text = "Unpause";
+
           
             var timerID = GridView1.DataKeys[0].Value.ToString();
            
@@ -109,6 +117,10 @@ namespace Timeregistreringssystem.BrukerAdministrasjon
             }
             else //Brukeren er ferdig med pausen
             {
+               
+                ButtonStop.Enabled = true;
+                ButtonPause.Text = "Pause";
+
                 DateTime dtStart;
                
                 datePauseStop = DateTime.Now;
@@ -170,6 +182,7 @@ namespace Timeregistreringssystem.BrukerAdministrasjon
         //@author Thea
         protected void ButtonStop_Click(object sender, EventArgs e)
         {
+            ButtonStart.Enabled = true;
             dateStop = DateTime.Now;
 
            TimeSpan stopStartDelta = dateStop.Subtract(dateStart);
