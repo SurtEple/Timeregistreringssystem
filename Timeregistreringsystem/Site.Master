@@ -64,7 +64,42 @@
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="~/BrukerAdministrasjon/LeggTilBruker.aspx">Legg til bruker</a></li>
                                 <li><a runat="server" href="~/BrukerAdministrasjon/EndreBruker.aspx">Endre/Slett bruker</a></li>
-                                 <li><a runat="server" href="~/BrukerAdministrasjon/TimeRegistrering.aspx">Timeregistrering</a></li>
+                                <li><a runat="server" href="~/BrukerAdministrasjon/TimeRegistrering.aspx">Timeregistrering</a></li>
+                            </ul>
+                         </li>
+                        <% } %>
+
+                        <!-- Rettigheter for teamleder -->
+                        <% if (Convert.ToInt32(Session["admin"]) == 1)
+                           {  
+                           %>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Profil <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a runat="server" href="~/BrukerProfile/Profile">Oversikt</a></li>
+                                <li><a runat="server" href="~/BrukerProfile/ChangePassword">Bytt Passord</a></li>
+                            </ul>
+                         </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Timeregistrering <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a runat="server" href="~/Startside/BrukerForside.aspx">Velg oppgave</a></li>
+                                <li><a runat="server" href="~/BrukerAdministrasjon/TimeRegistrering.aspx">Registrer timer</a></li>
+                            </ul>
+                         </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrer Team <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a runat="server" href="~/TeamAdministrasjon/OpprettTeam">Legge til nytt team</a></li>
+                                <li><a runat="server" href="~/TeamAdministrasjon/TeamAdministrasjon">Endre/Slette team</a></li>
+                                <li><a runat="server" href="~/TeamLeder">Sett team leder</a></li>
+                            </ul>
+                         </li>
+                         <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Oppgaveadministrasjon <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a runat="server" href="~/OppgaveAdmin/LeggTilOppgave">Legg til oppgave</a></li>
+                                <li><a runat="server" href="~/OppgaveAdmin/EndreOppgave">Rediger oppgave</a></li>
                             </ul>
                          </li>
                         <% } %>
@@ -112,6 +147,14 @@
                                 <li><a runat="server" href="~/BrukerProfile/ChangePassword">Bytt Passord</a></li>
                             </ul>
                          </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Timeregistrering <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a runat="server" href="~/Startside/BrukerForside.aspx">Velg oppgave</a></li>
+                                <li><a runat="server" href="~/BrukerAdministrasjon/TimeRegistrering.aspx">Registrer timer</a></li>
+                            </ul>
+                         </li>
+                        
                         <%} %>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
