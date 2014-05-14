@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSetRapportGenerering" targetNamespace="http://tempuri.org/DataSetRapportGenerering.xsd" xmlns:mstns="http://tempuri.org/DataSetRapportGenerering.xsd" xmlns="http://tempuri.org/DataSetRapportGenerering.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="HLVDKN_DB1ConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="HLVDKN_DB1ConnectionString (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.HLVDKN_DB1ConnectionString.ConnectionString" Provider="MySql.Data.MySqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="BrukerTableAdapter" GeneratorDataComponentClassName="BrukerTableAdapter" Name="Bruker" UserDataComponentName="BrukerTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="HLVDKN_DB1ConnectionString (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT b.ID, b.Brukernavn, b.Fornavn, b.Mellomnavn, b.Etternavn, sum(TIME_TO_SEC( Timer.Totaltid))/3600 `Timer`, COUNT(DISTINCT Prosjekt.ID) `Prosjekter`, Team.Beskrivelse `Team`, Prosjekt.Navn `Prosjekt`, b.Administrator `Rettigheter` 
+FROM Bruker b
+LEFT JOIN KoblingBrukerTeam ON b.ID = KoblingBrukerTeam.Bruker_ID
+LEFT JOIN Team ON KoblingBrukerTeam.Team_ID = Team.ID
+LEFT JOIN KoblingTeamProsjekt ON KoblingBrukerTeam.Team_ID = KoblingTeamProsjekt.Team_ID
+LEFT JOIN Prosjekt ON KoblingTeamProsjekt.Prosjekt_ID = Prosjekt.ID
+LEFT JOIN Timer ON b.ID = Timer.BrukerID
+GROUP BY b.ID</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ID" DataSetColumn="ID" />
+              <Mapping SourceColumn="Brukernavn" DataSetColumn="Brukernavn" />
+              <Mapping SourceColumn="Fornavn" DataSetColumn="Fornavn" />
+              <Mapping SourceColumn="Mellomnavn" DataSetColumn="Mellomnavn" />
+              <Mapping SourceColumn="Etternavn" DataSetColumn="Etternavn" />
+              <Mapping SourceColumn="Team" DataSetColumn="Team" />
+              <Mapping SourceColumn="Prosjekt" DataSetColumn="Prosjekt" />
+              <Mapping SourceColumn="Prosjekter" DataSetColumn="Prosjekter" />
+              <Mapping SourceColumn="Rettigheter" DataSetColumn="Rettigheter" />
+              <Mapping SourceColumn="Timer" DataSetColumn="Timer" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ProsjektTableAdapter" GeneratorDataComponentClassName="ProsjektTableAdapter" Name="Prosjekt" UserDataComponentName="ProsjektTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="HLVDKN_DB1ConnectionString (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT p.ID, p.Navn, p.Oppsummering, Team.Beskrivelse `Team`, CONCAT(Bruker.Fornavn, SPACE(1), Bruker.Mellomnavn, SPACE(1), Bruker.Etternavn) `Leder`, COUNT(DISTINCT Oppgave.ID) `Oppgaver`, COUNT(DISTINCT Milepæl.ID) `Milepaler`, COUNT(DISTINCT Fase.ID) `Faser`
+FROM Prosjekt p
+LEFT JOIN KoblingTeamProsjekt ON p.ID = KoblingTeamProsjekt.Prosjekt_ID
+LEFT JOIN Team ON KoblingTeamProsjekt.Team_ID = Team.ID
+LEFT JOIN Bruker ON Team.Teamleder = Bruker.ID
+LEFT JOIN Oppgave ON p.ID = Oppgave.Prosjekt_ID
+LEFT JOIN Milepæl ON Oppgave.ID = Milepæl.Oppgave_ID
+LEFT JOIN Fase ON p.ID = Fase.Prosjekt_ID
+GROUP BY p.ID</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ID" DataSetColumn="ID" />
+              <Mapping SourceColumn="Navn" DataSetColumn="Navn" />
+              <Mapping SourceColumn="Oppsummering" DataSetColumn="Oppsummering" />
+              <Mapping SourceColumn="Team" DataSetColumn="Team" />
+              <Mapping SourceColumn="Leder" DataSetColumn="Leder" />
+              <Mapping SourceColumn="Oppgaver" DataSetColumn="Oppgaver" />
+              <Mapping SourceColumn="Faser" DataSetColumn="Faser" />
+              <Mapping SourceColumn="Milepaler" DataSetColumn="Milepaler" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="TeamTableAdapter" GeneratorDataComponentClassName="TeamTableAdapter" Name="Team" UserDataComponentName="TeamTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="HLVDKN_DB1ConnectionString (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT Team.ID, Team.Beskrivelse, CONCAT( Bruker.Fornavn, SPACE(1), Bruker.Mellomnavn, SPACE(1), Bruker.Etternavn ) `Teamleder`, COUNT( Prosjekt_ID ) `Prosjekter`, Prosjekt.Navn `Prosjekt`
+FROM Team
+LEFT JOIN KoblingTeamProsjekt ON ID = KoblingTeamProsjekt.Team_ID
+LEFT JOIN Prosjekt ON KoblingTeamProsjekt.Prosjekt_ID = Prosjekt.ID
+LEFT JOIN Bruker ON Team.Teamleder = Bruker.ID
+GROUP BY Team.ID</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ID" DataSetColumn="ID" />
+              <Mapping SourceColumn="Beskrivelse" DataSetColumn="Beskrivelse" />
+              <Mapping SourceColumn="Teamleder" DataSetColumn="Teamleder" />
+              <Mapping SourceColumn="Prosjekter" DataSetColumn="Prosjekter" />
+              <Mapping SourceColumn="Prosjekt" DataSetColumn="Prosjekt" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SubBrukerTableAdapter" GeneratorDataComponentClassName="SubBrukerTableAdapter" Name="SubBruker" UserDataComponentName="SubBrukerTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="HLVDKN_DB1ConnectionString (Web.config)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT b.ID, b.Brukernavn, b.Fornavn, b.Mellomnavn, b.Etternavn, b.Epost, b.Telefonnr, b.Adresse, Team.ID `Team_ID`
+FROM Bruker b
+LEFT JOIN KoblingBrukerTeam ON b.ID = KoblingBrukerTeam.Bruker_ID
+JOIN Team ON KoblingBrukerTeam.Team_ID = Team.ID
+Group by b.ID</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ID" DataSetColumn="ID" />
+              <Mapping SourceColumn="Brukernavn" DataSetColumn="Brukernavn" />
+              <Mapping SourceColumn="Fornavn" DataSetColumn="Fornavn" />
+              <Mapping SourceColumn="Mellomnavn" DataSetColumn="Mellomnavn" />
+              <Mapping SourceColumn="Etternavn" DataSetColumn="Etternavn" />
+              <Mapping SourceColumn="Epost" DataSetColumn="Epost" />
+              <Mapping SourceColumn="Telefonnr" DataSetColumn="Telefonnr" />
+              <Mapping SourceColumn="Adresse" DataSetColumn="Adresse" />
+              <Mapping SourceColumn="Team_ID" DataSetColumn="Team_ID" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSetRapportGenerering" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSetRapportGenerering" msprop:Generator_UserDSName="DataSetRapportGenerering">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Bruker" msprop:Generator_TableClassName="BrukerDataTable" msprop:Generator_TableVarName="tableBruker" msprop:Generator_RowChangedName="BrukerRowChanged" msprop:Generator_TablePropName="Bruker" msprop:Generator_RowDeletingName="BrukerRowDeleting" msprop:Generator_RowChangingName="BrukerRowChanging" msprop:Generator_RowEvHandlerName="BrukerRowChangeEventHandler" msprop:Generator_RowDeletedName="BrukerRowDeleted" msprop:Generator_RowClassName="BrukerRow" msprop:Generator_UserTableName="Bruker" msprop:Generator_RowEvArgName="BrukerRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
+              <xs:element name="Brukernavn" msprop:Generator_ColumnVarNameInTable="columnBrukernavn" msprop:Generator_ColumnPropNameInRow="Brukernavn" msprop:Generator_ColumnPropNameInTable="BrukernavnColumn" msprop:Generator_UserColumnName="Brukernavn">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Fornavn" msprop:Generator_ColumnVarNameInTable="columnFornavn" msprop:Generator_ColumnPropNameInRow="Fornavn" msprop:Generator_ColumnPropNameInTable="FornavnColumn" msprop:Generator_UserColumnName="Fornavn">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Mellomnavn" msprop:Generator_ColumnVarNameInTable="columnMellomnavn" msprop:Generator_ColumnPropNameInRow="Mellomnavn" msprop:Generator_ColumnPropNameInTable="MellomnavnColumn" msprop:Generator_UserColumnName="Mellomnavn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Etternavn" msprop:Generator_ColumnVarNameInTable="columnEtternavn" msprop:Generator_ColumnPropNameInRow="Etternavn" msprop:Generator_ColumnPropNameInTable="EtternavnColumn" msprop:Generator_UserColumnName="Etternavn">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Team" msprop:Generator_ColumnVarNameInTable="columnTeam" msprop:Generator_ColumnPropNameInRow="Team" msprop:Generator_ColumnPropNameInTable="TeamColumn" msprop:Generator_UserColumnName="Team" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="21845" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Prosjekt" msprop:Generator_ColumnVarNameInTable="columnProsjekt" msprop:Generator_ColumnPropNameInRow="Prosjekt" msprop:Generator_ColumnPropNameInTable="ProsjektColumn" msprop:Generator_UserColumnName="Prosjekt" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Prosjekter" msprop:Generator_ColumnVarNameInTable="columnProsjekter" msprop:Generator_ColumnPropNameInRow="Prosjekter" msprop:Generator_ColumnPropNameInTable="ProsjekterColumn" msprop:Generator_UserColumnName="Prosjekter" type="xs:long" />
+              <xs:element name="Rettigheter" msprop:Generator_ColumnVarNameInTable="columnRettigheter" msprop:Generator_ColumnPropNameInRow="Rettigheter" msprop:Generator_ColumnPropNameInTable="RettigheterColumn" msprop:Generator_UserColumnName="Rettigheter" type="xs:int" />
+              <xs:element name="Timer" msprop:Generator_ColumnVarNameInTable="columnTimer" msprop:Generator_ColumnPropNameInRow="Timer" msprop:Generator_ColumnPropNameInTable="TimerColumn" msprop:Generator_UserColumnName="Timer" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Prosjekt" msprop:Generator_TableClassName="ProsjektDataTable" msprop:Generator_TableVarName="tableProsjekt" msprop:Generator_RowChangedName="ProsjektRowChanged" msprop:Generator_TablePropName="Prosjekt" msprop:Generator_RowDeletingName="ProsjektRowDeleting" msprop:Generator_RowChangingName="ProsjektRowChanging" msprop:Generator_RowEvHandlerName="ProsjektRowChangeEventHandler" msprop:Generator_RowDeletedName="ProsjektRowDeleted" msprop:Generator_RowClassName="ProsjektRow" msprop:Generator_UserTableName="Prosjekt" msprop:Generator_RowEvArgName="ProsjektRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
+              <xs:element name="Navn" msprop:Generator_ColumnVarNameInTable="columnNavn" msprop:Generator_ColumnPropNameInRow="Navn" msprop:Generator_ColumnPropNameInTable="NavnColumn" msprop:Generator_UserColumnName="Navn">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Oppsummering" msprop:Generator_ColumnVarNameInTable="columnOppsummering" msprop:Generator_ColumnPropNameInRow="Oppsummering" msprop:Generator_ColumnPropNameInTable="OppsummeringColumn" msprop:Generator_UserColumnName="Oppsummering">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="21845" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Team" msprop:Generator_ColumnVarNameInTable="columnTeam" msprop:Generator_ColumnPropNameInRow="Team" msprop:Generator_ColumnPropNameInTable="TeamColumn" msprop:Generator_UserColumnName="Team" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="21845" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Leder" msprop:Generator_ColumnVarNameInTable="columnLeder" msprop:Generator_ColumnPropNameInRow="Leder" msprop:Generator_ColumnPropNameInTable="LederColumn" msprop:Generator_UserColumnName="Leder" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="62" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Oppgaver" msprop:Generator_ColumnVarNameInTable="columnOppgaver" msprop:Generator_ColumnPropNameInRow="Oppgaver" msprop:Generator_ColumnPropNameInTable="OppgaverColumn" msprop:Generator_UserColumnName="Oppgaver" type="xs:long" />
+              <xs:element name="Faser" msprop:Generator_ColumnVarNameInTable="columnFaser" msprop:Generator_ColumnPropNameInRow="Faser" msprop:Generator_ColumnPropNameInTable="FaserColumn" msprop:Generator_UserColumnName="Faser" type="xs:long" />
+              <xs:element name="Milepaler" msprop:Generator_ColumnVarNameInTable="columnMilepaler" msprop:Generator_ColumnPropNameInRow="Milepaler" msprop:Generator_ColumnPropNameInTable="MilepalerColumn" msprop:Generator_UserColumnName="Milepaler" type="xs:long" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Team" msprop:Generator_TableClassName="TeamDataTable" msprop:Generator_TableVarName="tableTeam" msprop:Generator_RowChangedName="TeamRowChanged" msprop:Generator_TablePropName="Team" msprop:Generator_RowDeletingName="TeamRowDeleting" msprop:Generator_RowChangingName="TeamRowChanging" msprop:Generator_RowEvHandlerName="TeamRowChangeEventHandler" msprop:Generator_RowDeletedName="TeamRowDeleted" msprop:Generator_RowClassName="TeamRow" msprop:Generator_UserTableName="Team" msprop:Generator_RowEvArgName="TeamRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
+              <xs:element name="Beskrivelse" msprop:Generator_ColumnVarNameInTable="columnBeskrivelse" msprop:Generator_ColumnPropNameInRow="Beskrivelse" msprop:Generator_ColumnPropNameInTable="BeskrivelseColumn" msprop:Generator_UserColumnName="Beskrivelse">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="21845" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Teamleder" msprop:Generator_ColumnVarNameInTable="columnTeamleder" msprop:Generator_ColumnPropNameInRow="Teamleder" msprop:Generator_ColumnPropNameInTable="TeamlederColumn" msprop:Generator_UserColumnName="Teamleder" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="60" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Prosjekter" msprop:Generator_ColumnVarNameInTable="columnProsjekter" msprop:Generator_ColumnPropNameInRow="Prosjekter" msprop:Generator_ColumnPropNameInTable="ProsjekterColumn" msprop:Generator_UserColumnName="Prosjekter" type="xs:long" />
+              <xs:element name="Prosjekt" msprop:Generator_ColumnVarNameInTable="columnProsjekt" msprop:Generator_ColumnPropNameInRow="Prosjekt" msprop:Generator_ColumnPropNameInTable="ProsjektColumn" msprop:Generator_UserColumnName="Prosjekt" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SubBruker" msprop:Generator_TableClassName="SubBrukerDataTable" msprop:Generator_TableVarName="tableSubBruker" msprop:Generator_TablePropName="SubBruker" msprop:Generator_RowDeletingName="SubBrukerRowDeleting" msprop:Generator_RowChangingName="SubBrukerRowChanging" msprop:Generator_RowEvHandlerName="SubBrukerRowChangeEventHandler" msprop:Generator_RowDeletedName="SubBrukerRowDeleted" msprop:Generator_UserTableName="SubBruker" msprop:Generator_RowChangedName="SubBrukerRowChanged" msprop:Generator_RowEvArgName="SubBrukerRowChangeEvent" msprop:Generator_RowClassName="SubBrukerRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
+              <xs:element name="Brukernavn" msprop:Generator_ColumnVarNameInTable="columnBrukernavn" msprop:Generator_ColumnPropNameInRow="Brukernavn" msprop:Generator_ColumnPropNameInTable="BrukernavnColumn" msprop:Generator_UserColumnName="Brukernavn">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Fornavn" msprop:Generator_ColumnVarNameInTable="columnFornavn" msprop:Generator_ColumnPropNameInRow="Fornavn" msprop:Generator_ColumnPropNameInTable="FornavnColumn" msprop:Generator_UserColumnName="Fornavn">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Mellomnavn" msprop:Generator_ColumnVarNameInTable="columnMellomnavn" msprop:Generator_ColumnPropNameInRow="Mellomnavn" msprop:Generator_ColumnPropNameInTable="MellomnavnColumn" msprop:Generator_UserColumnName="Mellomnavn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Etternavn" msprop:Generator_ColumnVarNameInTable="columnEtternavn" msprop:Generator_ColumnPropNameInRow="Etternavn" msprop:Generator_ColumnPropNameInTable="EtternavnColumn" msprop:Generator_UserColumnName="Etternavn">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Epost" msprop:Generator_ColumnVarNameInTable="columnEpost" msprop:Generator_ColumnPropNameInRow="Epost" msprop:Generator_ColumnPropNameInTable="EpostColumn" msprop:Generator_UserColumnName="Epost">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Telefonnr" msprop:Generator_ColumnVarNameInTable="columnTelefonnr" msprop:Generator_ColumnPropNameInRow="Telefonnr" msprop:Generator_ColumnPropNameInTable="TelefonnrColumn" msprop:Generator_UserColumnName="Telefonnr" type="xs:int" />
+              <xs:element name="Adresse" msprop:Generator_ColumnVarNameInTable="columnAdresse" msprop:Generator_ColumnPropNameInRow="Adresse" msprop:Generator_ColumnPropNameInTable="AdresseColumn" msprop:Generator_UserColumnName="Adresse">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Team_ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnTeam_ID" msprop:Generator_ColumnPropNameInRow="Team_ID" msprop:Generator_ColumnPropNameInTable="Team_IDColumn" msprop:Generator_UserColumnName="Team_ID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Bruker" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+    <xs:unique name="Prosjekt_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Prosjekt" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+    <xs:unique name="Team_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Team" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+    <xs:unique name="SubBruker_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:SubBruker" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
