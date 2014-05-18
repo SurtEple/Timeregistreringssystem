@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
-using System.Globalization;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Diagnostics;
-using System.Windows.Forms;
+
 /*
  * @Author Thomas
  * 2014 April
@@ -16,36 +10,43 @@ using System.Windows.Forms;
 
 namespace Timeregistreringssystem.BrukerAdministrasjon
 {
-    public partial class TimeRegistrering : System.Web.UI.Page
+    public partial class TimeRegistrering : Page
     {
-     //   private double timeElapsed = 0.0;
+        //   private double timeElapsed = 0.0;
 
-        private DateTime dateStart = new DateTime();
-        private DateTime dateStop = new DateTime();
-        private DateTime dateTotal = new DateTime();
-        private DateTime datePauseStart = new DateTime();
-        private DateTime datePauseStop = new DateTime();
-        TimeSpan pauseTSFraDB = new TimeSpan();
-        private DateTime pauseSum = new DateTime();
-
-        private TimeSpan TotalTid = new TimeSpan();
+        private DateTime dateStart;
+        private DateTime dateStop;
+        private DateTime datePauseStart;
+        private DateTime datePauseStop;
         //private bool isPaused;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Admin"] != null)
             {
-                var userID = (int) Session["Admin"];
-                if (userID == Rettigheter.VANLIG_BRUKER || userID == Rettigheter.PROSJEKT_ANSVARLIG 
-                        || userID==Rettigheter.ADMINISTRATOR || userID==Rettigheter.TEAMLEDER)
+                if (Session["OppgaveID"] != null)
                 {
-                   Parameter p = SqlDataSourceRegistreringer.SelectParameters["BrukerID"];
-                    SqlDataSourceRegistreringer.SelectParameters.Remove(p);
-                 SqlDataSourceRegistreringer.SelectParameters.Add("BrukerID", Session["BrukerID"].ToString());
+
+                    var userID = (int) Session["Admin"];
+                    if ((userID == Rettigheter.VANLIG_BRUKER || userID == Rettigheter.PROSJEKT_ANSVARLIG
+                         || userID == Rettigheter.ADMINISTRATOR || userID == Rettigheter.TEAMLEDER) && Global.CheckIP())
+                    {
+                        Parameter p = SqlDataSourceRegistreringer.SelectParameters["BrukerID"];
+                        SqlDataSourceRegistreringer.SelectParameters.Remove(p);
+                        SqlDataSourceRegistreringer.SelectParameters.Add("BrukerID", Session["BrukerID"].ToString());
+
+                        p = SqlDataSource4.SelectParameters["BrukerID"];
+                        SqlDataSource4.SelectParameters.Remove(p);
+                        SqlDataSource4.SelectParameters.Add("BrukerID", Session["BrukerID"].ToString());
+                    }
+                    else
+                    {
+                        Response.Redirect("~/Default.aspx");
+                    }
                 }
                 else
                 {
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect("~/Startside/BrukerForside.aspx");
                 }
             }
             else
@@ -57,93 +58,106 @@ namespace Timeregistreringssystem.BrukerAdministrasjon
         protected void Button1_Click(object sender, EventArgs e)
         {
             ButtonStart.Enabled = false;
+
+
             ButtonPause.Enabled = true;
             ButtonStop.Enabled = true;
 
+            int OppgaveId = 0;
             dateStart = DateTime.Now;
+            LabelStart.Text = "Du startet kl " + dateStart.TimeOfDay;
+
             Session["StartDato"] = dateStart;
-            int BrukerID = (int)Session["BrukerID"];
-            SqlDataSourceTimer.InsertParameters.Add("Start",dateStart.ToString("u"));
-            SqlDataSourceTimer.InsertParameters.Add("BrukerID", BrukerID.ToString() );
-       //     SqlDataSourcePause.InsertParameters.Add("Totaltid","0");  
+
+            if (Session["OppgaveID"] != null)
+            {
+                OppgaveId = (int) Session["OppgaveID"];
+            }
+
+            var BrukerID = (int) Session["BrukerID"];
+            SqlDataSourceTimer.InsertParameters.Add("Start", dateStart.ToString("u"));
+            SqlDataSourceTimer.InsertParameters.Add("OppgaveID", OppgaveId.ToString());
+            SqlDataSourceTimer.InsertParameters.Add("BrukerID", BrukerID.ToString());
             SqlDataSourceTimer.Insert();
 
-           TimerGridView.DataBind();
+
+            TimerGridView.DataBind();
+
+            TimerGridView0.DataBind();
             GridView1.DataBind();
-            Label1.Text = dateStart.ToString();            
+            GridView2.Dispose();
+            GridView2.DataBind();
         }
 
         protected void ButtonPause_Click(object sender, EventArgs e)
         {
-            ButtonStart.Enabled = false;
             ButtonStop.Enabled = false;
             ButtonPause.Text = "Unpause";
 
-          
-            var timerID = GridView1.DataKeys[0].Value.ToString();
-           
-            bool isPaused = ((System.Web.UI.WebControls.CheckBox) GridView1.Rows[0].Cells[1].Controls[0]).Checked;
-          
-            
+
+            string timerID = GridView1.DataKeys[0].Value.ToString();
+
+            bool isPaused = ((CheckBox) GridView1.Rows[0].Cells[1].Controls[0]).Checked;
+
+
             if (!isPaused) //Brukeren tar en pause
             {
                 datePauseStart = DateTime.Now;
+                LabelPause.Text = "Du tok en pause kl: " + datePauseStart.TimeOfDay;
                 Session["PauseStartDato"] = datePauseStart;
 
-            
 
                 SqlDataSourcePause.InsertParameters.Add("PauseStart", datePauseStart.ToString("u"));
                 SqlDataSourcePause.InsertParameters.Add("ID", timerID);
-       
+
                 SqlDataSourcePause.Insert();
 
-               SqlDataSourceTimer.UpdateParameters.Add("IsPaused", "1");   
-              SqlDataSourceTimer.UpdateParameters.Add("ID", timerID);
-   
-               SqlDataSourceTimer.Update();
+                SqlDataSourceTimer.UpdateParameters.Add("IsPaused", "1");
+                SqlDataSourceTimer.UpdateParameters.Add("ID", timerID);
 
-               Parameter p3 = SqlDataSourcePause.SelectParameters["ID"];
-               SqlDataSourcePause.SelectParameters.Remove(p3);
+                SqlDataSourceTimer.Update();
 
-               try
-               {
-                   SqlDataSourcePause.SelectParameters.Add("ID", timerID);
-               }
-               catch { }
+                Parameter p3 = SqlDataSourcePause.SelectParameters["ID"];
+                SqlDataSourcePause.SelectParameters.Remove(p3);
 
-                    GridView1.DataBind();
-                   TimerGridView.DataBind();
-              
+                try
+                {
+                    SqlDataSourcePause.SelectParameters.Add("ID", timerID);
+                }
+                catch
+                {
+                }
+
+                GridView1.DataBind();
+                
+                GridView2.DataBind();
+                TimerGridView.DataBind();
             }
             else //Brukeren er ferdig med pausen
             {
-               
                 ButtonStop.Enabled = true;
                 ButtonPause.Text = "Pause";
+                LabelPause.Text = "";
 
-                DateTime dtStart;
-               
+
                 datePauseStop = DateTime.Now;
                 datePauseStart = Convert.ToDateTime(Session["PauseStartDato"]);
-                var pauseTS = datePauseStop.Subtract(datePauseStart);
-                Label2.Text = pauseTS.ToString();
+                TimeSpan pauseTS = datePauseStop.Subtract(datePauseStart);
+
                 Session["PauseTS"] = pauseTS;
                 string pauseID = "";
-                bool timeSpanIsValid=false;
+                // bool timeSpanIsValid=false;
 
-         if (!String.IsNullOrEmpty(TimerGridView.Rows[0].Cells[1].Text))
+                if (!String.IsNullOrEmpty(TimerGridView.Rows[0].Cells[1].Text))
                 {
-                    var pauseIDFromGV= TimerGridView.Rows[0].Cells[1].Text;
+                    string pauseIDFromGV = TimerGridView.Rows[0].Cells[1].Text;
                     int pauseIDint;
                     //Sjekker etter injection samtidig som stringen blir parset og lagret i dt-referansen
                     if (int.TryParse(pauseIDFromGV, out pauseIDint))
                         pauseID = pauseIDFromGV;
                 }
-          
 
-
-              // pauseSum += pauseTS;
-               // UPDATE Pause SET PauseStop = @PauseStop, PauseSum = @PauseSum WHERE (Timer_ID = @ID) and (Pause.ID = @PauseID)
+                // UPDATE Pause SET PauseStop = @PauseStop, PauseSum = @PauseSum WHERE (Timer_ID = @ID) and (Pause.ID = @PauseID)
                 SqlDataSourcePause.UpdateParameters.Add("PauseStop", datePauseStop.ToString("u"));
                 SqlDataSourcePause.UpdateParameters.Add("PauseSum", pauseTS.ToString());
 
@@ -162,21 +176,11 @@ namespace Timeregistreringssystem.BrukerAdministrasjon
                 SqlDataSourceTotalTidPause.SelectParameters.Add("TimerID", timerID);
 
                 GridView1.DataBind();
-             
-              
-                      
+                GridView1.Visible = false;
 
-
-
-
-               // GridView1.DataBind();
-               // TimerGridView.DataBind();
-
-          
-               
+                GridView2.DataBind();
+                TimerGridView.DataBind();
             }
-            
-
         }
 
         //@author Thea
@@ -184,14 +188,17 @@ namespace Timeregistreringssystem.BrukerAdministrasjon
         {
             ButtonStart.Enabled = true;
             dateStop = DateTime.Now;
+            ButtonStop.Enabled = false;
+            ButtonPause.Enabled = false;
+            LabelStart.Text = "";
+            LabelPause.Text = "";
 
-           TimeSpan stopStartDelta = dateStop.Subtract(dateStart);
+            string pauseSumFromSelect = "";
 
-           TimeSpan TotalArbeidsTid =  stopStartDelta.Subtract(pauseTSFraDB);
-              var dataKey = GridView1.DataKeys[0];
+            DataKey dataKey = GridView1.DataKeys[0];
             if (dataKey != null)
             {
-                var timerID = dataKey.Value.ToString();
+                string timerID = dataKey.Value.ToString();
                 Parameter p = SqlDataSourceStop.SelectParameters["ID"];
                 SqlDataSourceStop.SelectParameters.Remove(p);
                 Parameter p2 = SqlDataSourceStop.SelectParameters["Slutt"];
@@ -205,107 +212,38 @@ namespace Timeregistreringssystem.BrukerAdministrasjon
 
                 if (stopDV.Count != 0)
                 {
-                    string pauseSumFromSelect = stopDV[0][0].ToString();
-
-                    
-
+                    pauseSumFromSelect = stopDV[0][0].ToString();
                     SqlDataSourceStop.UpdateParameters.Add("Slutt", dateStop.ToString("u"));
                     SqlDataSourceStop.UpdateParameters.Add("Totaltid", pauseSumFromSelect);
                     SqlDataSourceStop.UpdateParameters.Add("ID", timerID);
                     SqlDataSourceStop.Update();
+                }
 
+                Parameter pderp = SqlDataSourceHenteArbeidstid.SelectParameters["ID"];
+                SqlDataSourceHenteArbeidstid.SelectParameters.Remove(pderp);
+                SqlDataSourceHenteArbeidstid.SelectParameters.Add("ID", timerID);
+                var timerSelectArgs = new DataSourceSelectArguments();
+                var timerDV = (DataView) SqlDataSourceHenteArbeidstid.Select(timerSelectArgs);
 
+                if (timerDV.Count != 0)
+                {
+                    string totalArbeidsTidFromSelect = timerDV[0][0].ToString();
+
+                    if (totalArbeidsTidFromSelect.Equals("00:00:00") || String.IsNullOrEmpty(totalArbeidsTidFromSelect))
+                        totalArbeidsTidFromSelect = pauseSumFromSelect;
+
+                    SqlDataSourceHenteArbeidstid.UpdateParameters.Add("TotalArbeidsTid", totalArbeidsTidFromSelect);
+                    SqlDataSourceHenteArbeidstid.UpdateParameters.Add("ID", timerID);
+                    SqlDataSourceHenteArbeidstid.Update();
                 }
             }
 
 
-            // UPDATE Timer SET Slutt = @Slutt WHERE ID = @ID
-
-           // SqlDataSourceStop.UpdateParameters.Add("Slutt", dateStop.ToString("u"));
-           // SqlDataSourceStop.UpdateParameters.Add("Totaltid", TotalArbeidsTid.ToString("g"));
-           // SqlDataSourceStop.UpdateParameters.Add("ID", timerID);
-            //SqlDataSourceStop.Update();
-          
+            GridView2.DataBind();
+            TimerGridView.DataBind();
+            TimerGridView0.DataBind();
             GridView1.DataBind();
-            
-        
+            GridView1.Visible = false;
         }
-
-        /**
-
-
-       protected void TimerGridView0_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-           DateTime dtStart = new DateTime();
-            DateTime dtStop = new DateTime(); 
-           DateTime totalDT;
-          
-            TimeSpan totalTid=new TimeSpan();
-           bool timeSpanIsValid=false;
-           bool startDateIsValid=false;
-           bool finishDateIsValid=false;
-            //UPDATE Timer SET Start = @Start, Slutt = @Slutt, Totaltid = @Totaltid WHERE (ID = @ID)
-
-      
-               //Sjekker etter injection samtidig som stringen blir parset og lagret i dt-referansen
-               startDateIsValid = DateTime.TryParseExact(
-                        e.NewValues["Start"].ToString(), //Henter string fra tekstboks
-                        "YYYY-MM-dd HH:mm:ss", //Formatet det skal ha
-                        CultureInfo.InvariantCulture, //Ha'kke peiling
-                        DateTimeStyles.None, //Null aning
-                        out dtStart); //Lagrer det nye DateTime-objektet i dt
-
-
-      
-
-
-               finishDateIsValid = DateTime.TryParseExact(
-              e.NewValues["Slutt"].ToString(), //Henter string fra tekstboks
-              "YYYY-MM-dd HH:mm:ss", //Formatet det skal ha
-              CultureInfo.InvariantCulture, //Ha'kke peiling
-              DateTimeStyles.None, //Null aning
-              out dtStop); //Lagrer det nye DateTime-objektet i dt
-           
-        
-
-                timeSpanIsValid = TimeSpan.TryParseExact(
-                      e.NewValues["Totaltid"].ToString(), //Henter string fra tekstboks
-                      "c", CultureInfo.InvariantCulture, out totalTid);
-
- 
-          
-
-           Label4.Text = "" + totalTid.ToString();
-
-           if (startDateIsValid && finishDateIsValid && timeSpanIsValid)
-           {
-
-               GridViewRow row = (GridViewRow) GridView1.Rows[e.RowIndex];
-               var id = GridView1.DataKeys[e.RowIndex].Value.ToString();
-              
-               DateTime derp = new DateTime();
-               
-               var totalTidDTString = dtStart.ToString("YYYY-MM-dd") + totalTid.ToString("g");
-
-
-               Label4.Text = " Totaltidstring: " + Convert.ToDateTime(totalTidDTString);
-
-               //    UPDATE Timer SET Start = @Start, Slutt = @Slutt, Totaltid = @Totaltid WHERE (ID = @ID)
-              // SqlDataSourceRegistreringer.UpdateParameters.Add("ID", id);
-             //  SqlDataSourceRegistreringer.UpdateParameters.Add("Start", dtStart.ToString("YYYY-MM-dd HH:mm:ss"));
-               //SqlDataSourceRegistreringer.UpdateParameters.Add("Slutt", dtStop.ToString("YYYY-MM-dd HH:mm:ss"));
-               //SqlDataSourceRegistreringer.UpdateParameters.Add("Totaltid", totalTidDTString);
-               //SqlDataSourceRegistreringer.Update();
-               //Label4.Text = "Updated with: IN: " + e.NewValues["Totaltid"].ToString() + "\n OUT:" +
-                 //            totalTid.ToString();
-
-           }
-           else Label4.Text = "Valid timespan: " + timeSpanIsValid + "\n Valid finishDate: " + finishDateIsValid 
-               + "\n Valid startDate: " + startDateIsValid;
-        }
-
-  
-   
-        */
     }
 }

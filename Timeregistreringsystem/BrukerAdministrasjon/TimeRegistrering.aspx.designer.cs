@@ -13,15 +13,6 @@ namespace Timeregistreringssystem.BrukerAdministrasjon {
     public partial class TimeRegistrering {
         
         /// <summary>
-        /// Label1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-        
-        /// <summary>
         /// ButtonStart control.
         /// </summary>
         /// <remarks>
@@ -29,15 +20,6 @@ namespace Timeregistreringssystem.BrukerAdministrasjon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonStart;
-        
-        /// <summary>
-        /// Label2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
         /// ButtonPause control.
@@ -49,15 +31,6 @@ namespace Timeregistreringssystem.BrukerAdministrasjon {
         protected global::System.Web.UI.WebControls.Button ButtonPause;
         
         /// <summary>
-        /// LabelPause control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelPause;
-        
-        /// <summary>
         /// ButtonStop control.
         /// </summary>
         /// <remarks>
@@ -67,13 +40,31 @@ namespace Timeregistreringssystem.BrukerAdministrasjon {
         protected global::System.Web.UI.WebControls.Button ButtonStop;
         
         /// <summary>
-        /// Label3 control.
+        /// LabelStart control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label LabelStart;
+        
+        /// <summary>
+        /// LabelPause control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelPause;
+        
+        /// <summary>
+        /// LabelStop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelStop;
         
         /// <summary>
         /// SqlDataSourceTimer control.
@@ -121,6 +112,24 @@ namespace Timeregistreringssystem.BrukerAdministrasjon {
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceTotalTidPause;
         
         /// <summary>
+        /// SqlDataSourceHenteArbeidstid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceHenteArbeidstid;
+        
+        /// <summary>
+        /// SqlDataSource4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource4;
+        
+        /// <summary>
         /// GridView1 control.
         /// </summary>
         /// <remarks>
@@ -128,6 +137,15 @@ namespace Timeregistreringssystem.BrukerAdministrasjon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridView1;
+        
+        /// <summary>
+        /// GridView2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView2;
         
         /// <summary>
         /// TimerGridView control.

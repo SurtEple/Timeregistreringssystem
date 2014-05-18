@@ -161,7 +161,8 @@ namespace Timeregistreringssystem
 
                 int Foreldreoppgave_ID = Convert.ToInt32(ddlVelgHovedoppgave.SelectedValue);
                 SqlDataSourceVelgOppgave.SelectParameters.Add("Foreldreoppgave_ID", Foreldreoppgave_ID.ToString());
-
+                Session["OppgaveID"] = Foreldreoppgave_ID;
+                Session["OppgaveTittel"] = ddlVelgHovedoppgave.SelectedItem.ToString();
                 GridViewVelgOppgave.Visible = true;
             }
             
