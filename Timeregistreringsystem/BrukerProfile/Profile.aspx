@@ -48,24 +48,29 @@ GROUP BY p.id">
     
     <br />
     <!--Datasource som henter ut oppgaver som er knyttet til prosjektet-->
-    <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT o.* FROM Oppgave o, Prosjekt p WHERE o.Prosjekt_ID = p.ID and p.ID IN (SELECT Prosjekt_ID FROM KoblingTeamProsjekt tp Where tp.Team_ID IN (SELECT bt.Team_ID FROM KoblingBrukerTeam bt WHERE Bruker_ID = @brukerID))">
-    <SelectParameters>
-        <asp:Parameter Name="@brukerID" Type="Int32" DefaultValue="0" />
-    </SelectParameters>
+    <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT p.Navn, co.Tittel, o.EstimertTid, o.Tittel, o.Beskrivelse,o.Ferdig, o.Brukt_tid, o.Dato_begynt, o.Dato_ferdig
+FROM Oppgave o, Prosjekt p, Oppgave co 
+WHERE o.Prosjekt_ID = p.ID and co.ID = o.Foreldreoppgave_ID and p.ID 
+IN (SELECT Prosjekt_ID FROM KoblingTeamProsjekt tp Where tp.Team_ID
+IN (SELECT bt.Team_ID FROM KoblingBrukerTeam bt WHERE Bruker_ID = @brukerID))">
+        <SelectParameters>
+            <asp:Parameter Name ="@brukerID" Type="Int32" DefaultValue="0" />
+        </SelectParameters>
     </asp:SqlDataSource>
     <p>&nbsp;</p>
     <h2>Oppgaver</h2>
     <!--Gridview som viser prosjektene-->
-    <asp:GridView ID="GridView3" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSource3" Height="129px" Width="1037px">
+    <asp:GridView ID="GridView3" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource3" Height="129px" Width="1037px">
         <Columns>
-            <asp:BoundField DataField="Foreldreoppgave_ID" HeaderText="Foreldre Oppgave" SortExpression="Foreldreoppgave_ID" />
+            <asp:BoundField DataField="Navn" HeaderText="Prosjekt" SortExpression="Navn" />
+            <asp:BoundField DataField="Tittel" HeaderText="Foreldre Oppgave" SortExpression="Tittel" />
             <asp:BoundField DataField="EstimertTid" HeaderText="EstimertTid" SortExpression="EstimertTid" />
-            <asp:BoundField DataField="Tittel" HeaderText="Tittel" SortExpression="Tittel" />
+            <asp:BoundField DataField="Tittel1" HeaderText="Oppgave Tittel" SortExpression="Tittel1" />
             <asp:BoundField DataField="Beskrivelse" HeaderText="Beskrivelse" SortExpression="Beskrivelse" />
             <asp:CheckBoxField DataField="Ferdig" HeaderText="Ferdig" SortExpression="Ferdig" />
-            <asp:BoundField DataField="Brukt_tid" HeaderText="Tid Brukt" SortExpression="Brukt_tid" />
-            <asp:BoundField DataField="Dato_begynt" HeaderText="Dato begynt" SortExpression="Dato_begynt" />
-            <asp:BoundField DataField="Dato_ferdig" HeaderText="Dato ferdig" SortExpression="Dato_ferdig" />
+            <asp:BoundField DataField="Brukt_tid" HeaderText="Brukt_tid" SortExpression="Brukt_tid" />
+            <asp:BoundField DataField="Dato_begynt" HeaderText="Dato_begynt" SortExpression="Dato_begynt" />
+            <asp:BoundField DataField="Dato_ferdig" HeaderText="Dato_ferdig" SortExpression="Dato_ferdig" />
         </Columns>
     </asp:GridView>
     
