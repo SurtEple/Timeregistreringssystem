@@ -13,7 +13,7 @@ namespace Timeregistreringssystem.BrukerProfile
         {
             //sjekker rettighetene til bruker
             int rettighet = Convert.ToInt32(Session["Admin"]);
-            if (rettighet == Rettigheter.VANLIG_BRUKER && Global.CheckIP())
+            if ((rettighet == Rettigheter.VANLIG_BRUKER || rettighet == Rettigheter.TEAMLEDER) && Global.CheckIP())
             {
                 //legger til parametre til datasourcen
                 string id = Convert.ToString(Session["BrukerID"]);

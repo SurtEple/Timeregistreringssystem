@@ -13,7 +13,7 @@ namespace Timeregistreringssystem.BrukerProfile
         {
             //sjekker om bruker har rettigheter til å se siden.
             int rettighet = Convert.ToInt32(Session["Admin"]);
-            if (rettighet == Rettigheter.VANLIG_BRUKER && Global.CheckIP())
+            if ((rettighet == Rettigheter.VANLIG_BRUKER || rettighet == Rettigheter.TEAMLEDER) && Global.CheckIP())
             {
                 
             }
