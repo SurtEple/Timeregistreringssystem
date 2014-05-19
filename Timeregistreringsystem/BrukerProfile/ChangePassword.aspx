@@ -11,6 +11,7 @@
                             <asp:Literal runat="server" ID="FailureText" />
                         </p>
                     </asp:PlaceHolder>
+                    <!--Tekstbokser for nytt passord -->
                     <div class="form-group">
                         <asp:Label runat="server" CssClass="col-md-2 control-label">Nytt passord</asp:Label>
                         <div class="col-md-10">
@@ -25,7 +26,7 @@
 
                         </div>
                     </div>
-
+                    <!--Knapp til å legge til nytt passord-->
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <asp:Button runat="server" OnClick="ChangePw" Text="Endre Passord" CssClass="btn btn-default" />

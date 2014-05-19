@@ -1084,7 +1084,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="BrukerAdministrasjon\App_Data\" />
     <Folder Include="RapportGenerering\" />
   </ItemGroup>
   <ItemGroup>
