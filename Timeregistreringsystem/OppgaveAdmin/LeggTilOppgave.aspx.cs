@@ -48,6 +48,7 @@ namespace Timeregistreringssystem.OppgaveAdmin
                 int foreldreProsjekt = Convert.ToInt32(ddlForeldreProsjekt.SelectedValue);
                 int estimertTid = Convert.ToInt16(tbxOppgaveEstimertTid.Text);
 
+              
 
                 connection.InsertOppgave(foreldreProsjekt, foreldreOppgave, estimertTid, tittel, beskrivelse, startDato, sluttDato);
 

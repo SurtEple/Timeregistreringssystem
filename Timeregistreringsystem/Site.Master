@@ -80,7 +80,7 @@
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="~/BrukerAdministrasjon/LeggTilBruker.aspx">Legg til bruker</a></li>
                                 <li><a runat="server" href="~/BrukerAdministrasjon/EndreBruker.aspx">Endre/Slett bruker</a></li>
-                                <li><a runat="server" href="~/BrukerAdministrasjon/TimeRegistrering.aspx">Timeregistrering</a></li>
+                                <li><a runat="server" href="~/BrukerAdministrasjon/OversiktTimeEndringer.aspx">Oversikt endringer i timer</a></li>
                             </ul>
                          </li>
                         <% } %>
@@ -168,6 +168,7 @@
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="~/Startside/BrukerForside.aspx">Velg oppgave</a></li>
                                 <li><a runat="server" href="~/BrukerAdministrasjon/TimeRegistrering.aspx">Registrer timer</a></li>
+                                <li><a runat="server" href="~/BrukerAdministrasjon/OversiktTimeEndringer.aspx">Oversikt endringer</a></li>
                             </ul>
                          </li>
                         
