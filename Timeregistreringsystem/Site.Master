@@ -108,7 +108,6 @@
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="~/TeamAdministrasjon/OpprettTeam">Legge til nytt team</a></li>
                                 <li><a runat="server" href="~/TeamAdministrasjon/TeamAdministrasjon">Endre/Slette team</a></li>
-                                <li><a runat="server" href="~/TeamLeder">Sett team leder</a></li>
                             </ul>
                          </li>
                          <li class="dropdown">
@@ -151,7 +150,6 @@
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="~/TeamAdministrasjon/OpprettTeam">Legge til nytt team</a></li>    
                                 <li><a runat="server" href="~/TeamAdministrasjon/TeamAdministrasjon">Endre/Slette team</a></li>
-                                <li><a runat="server" href="~/TeamLeder">Sett team leder</a></li>
                             </ul>
                          </li>
                         <% } %>
