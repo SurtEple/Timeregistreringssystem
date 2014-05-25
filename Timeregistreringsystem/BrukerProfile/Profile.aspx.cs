@@ -11,9 +11,11 @@ namespace Timeregistreringssystem.BrukerProfile
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //sjekker rettighetene til bruker
             int rettighet = Convert.ToInt32(Session["Admin"]);
-            if (rettighet == Rettigheter.VANLIG_BRUKER && Global.CheckIP())
+            if ((rettighet == Rettigheter.VANLIG_BRUKER || rettighet == Rettigheter.TEAMLEDER) && Global.CheckIP())
             {
+                //legger til parametre til datasourcen
                 string id = Convert.ToString(Session["BrukerID"]);
                 SqlDataSource1.SelectParameters["@brukerID"].DefaultValue = id;
                 SqlDataSource2.SelectParameters["@brukerID"].DefaultValue = id;

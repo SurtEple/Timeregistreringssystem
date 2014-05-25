@@ -50,10 +50,26 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
+                        
                         <%if (Session["Admin"] == null)
                           {
                               Session["Admin"] = -1;
                           } %>
+                        <%if ((int)Session["Admin"] == 0)
+                          {
+                              Session["RettighetNavn"] = "Bruker";
+                          }
+                          else if ((int)Session["Admin"] == 1)
+                          {
+                              Session["RettighetNavn"] = "Teamleder";
+                          }
+                          else if ((int)Session["Admin"] == 2 )
+                          {
+                              Session["RettighetNavn"] = "Prosjektleder";
+                          }
+                          else
+                              Session["RettighetNavn"] = "Admin";
+                               %>
                         <!-- Brukeradministrasjon -->
                         <!-- Foreløpig hardkodet, bare administrator og prosjektleder får se, 2: prosjektansvarlig, 3: administrator -->
                         <% if (Convert.ToInt32(Session["admin"]) == 2 || Convert.ToInt32(Session["admin"]) == 3)
@@ -165,7 +181,8 @@
                                 
                                 <li><a runat="server" href="~/Account/Login">Logg inn</a></li>
                                 <%} else {%>
-                                <li><p class="navbar-text">Du er logget inn som <%= (string)Session["Brukernavn"] %></p></li>
+                                 
+                                <li><p class="navbar-text">Du er logget inn som: <%= (string)Session["Brukernavn"]  %> med rettighetene til: <%= (string)Session["RettighetNavn"] %></p></li>
                                 <li><a runat="server" href="~/Account/Logout">Logg ut</a></li>
                                 
 
