@@ -16,13 +16,14 @@ namespace Timeregistreringssystem.Prosjektadmin
 {
     public partial class Milestones : Page
     {
-
+        private Parameter selectParameterFase, prosjektIdSelectParameterOppgave, faseIdSelectParamtererOppgave;
         private void Page_Init(object sender, EventArgs e)
         {
             if (Session["Admin"] != null)
             {
-                if ((int)Session["Admin"] == Rettigheter.PROSJEKT_ANSVARLIG && Global.CheckIP())
+                if ( (int)Session["Admin"] == Rettigheter.PROSJEKT_ANSVARLIG && Global.CheckIP() )
                 {
+                   
 
                 }
                 else
@@ -35,14 +36,27 @@ namespace Timeregistreringssystem.Prosjektadmin
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            selectParameterFase = SqlDataSourceFase.SelectParameters["Prosjekt_ID"];
+            SqlDataSourceFase.SelectParameters.Remove(selectParameterFase);
+            SqlDataSourceFase.SelectParameters.Add("Prosjekt_ID", "0");
+
+            faseIdSelectParamtererOppgave = oppgaveDropDown.SelectParameters["FaseID"];
+            oppgaveDropDown.SelectParameters.Remove(faseIdSelectParamtererOppgave);
+            oppgaveDropDown.SelectParameters.Add("FaseID", "0");
+
+
+            prosjektIdSelectParameterOppgave = oppgaveDropDown.SelectParameters["Prosjekt_ID"];
+            oppgaveDropDown.SelectParameters.Remove(prosjektIdSelectParameterOppgave);
+            oppgaveDropDown.SelectParameters.Add("Prosjekt_ID", "0");
         }
 
         protected void btnLagre_Click(object sender, EventArgs e)
         {
-            //DialogResult dr;
+           
             DateTime dt;
             //Sjekke etter tom/null input
-            if (!String.IsNullOrEmpty(dateFerdigTextBox.Text) && DropDownListOppgave.SelectedValue != null) {
+            if (!String.IsNullOrEmpty(dateFerdigTextBox.Text) && DropDownListOppgave.SelectedItem.Value != null && DropDownListProsjekt.SelectedItem.Value != null && DropDownListFase.SelectedItem.Value != null)
+            {
                 try {
                     //Sjekker etter injection samtidig som stringen blir parset og lagret i dt-referansen
                     bool isValid = DateTime.TryParseExact(
@@ -60,8 +74,8 @@ namespace Timeregistreringssystem.Prosjektadmin
                         if (confirmValue == "Yes")
                         {
                             SqlDataSource1.InsertParameters.Add("Dato", datoFerdig); //INSERT INTO .. VALUES (@OppgID, @Dato)
-                            SqlDataSource1.InsertParameters.Add("OppgID", DropDownListOppgave.SelectedValue.ToString()); //INSERT INTO .. VALUES (@OppgID, @Dato)
-
+                            SqlDataSource1.InsertParameters.Add("OppgID", DropDownListOppgave.SelectedItem.Value); //INSERT INTO .. VALUES (@OppgID, @Dato)
+                            SqlDataSource1.InsertParameters.Add("FaseID", DropDownListFase.SelectedItem.Value);
                             SqlDataSource1.Insert(); //Utfører insert
                             resultLabel.Text = "Milepælen ble lagret!";
                             GridView1.DataBind(); //Oppdaterer gridviewet
@@ -70,15 +84,7 @@ namespace Timeregistreringssystem.Prosjektadmin
                         else
                             this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Avbrutt')", true);
 
-                        /*dr = MessageBox.Show("Er du sikker på at du vil legge til en milepæl? Dato Ferdig = " + datoFerdig, "Legg Til milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
-                        if (dr == System.Windows.Forms.DialogResult.Yes) {
-                            SqlDataSource1.InsertParameters.Add("Dato", datoFerdig); //INSERT INTO .. VALUES (@OppgID, @Dato)
-                            SqlDataSource1.InsertParameters.Add("OppgID", DropDownListOppgave.SelectedValue.ToString()); //INSERT INTO .. VALUES (@OppgID, @Dato)
 
-                            SqlDataSource1.Insert(); //Utfører insert
-                            resultLabel.Text = "Milepælen ble lagret!";
-                            GridView1.DataBind(); //Oppdaterer gridviewet
-                        }*/
                     }
                     else resultLabel.Text = "Invalid format!";
                 }
@@ -88,17 +94,7 @@ namespace Timeregistreringssystem.Prosjektadmin
             }
         }
 
-        protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            string milestoneNavn = (string)e.Values["Beskrivelse"].ToString();
-            /*
-            System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
-            dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil slette milepælen " + milestoneNavn + " ?", "slette milepæl", System.Windows.Forms.MessageBoxButtons.YesNo);
-            //bekreftelse på sletting
-            if (dr == System.Windows.Forms.DialogResult.No){
-                e.Cancel = true;
-            }*/
-        }
+
 
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
@@ -121,18 +117,11 @@ namespace Timeregistreringssystem.Prosjektadmin
                     //DateTime dt = Convert.ToDateTime(dato); //konverter datostringen til DateTime
                     string datoFerdig = dt.ToString("u"); //Konverter DateTime til universelt format og tilbake til en string
 
-                    //Spør brukeren om bekreftelse
-                    //System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
-                    //dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil endre milepælen?", "Endre milepæl", MessageBoxButtons.YesNo);
-                    //bekreftelse på Oppdatering
-                    //if (dr == DialogResult.No)
-                    //    e.Cancel = true;
-
-                    //else{
+                  
                         SqlDataSourceMilepael.UpdateParameters.Add("ID", id.ToString()); //UPDATE..WHERE ID=@ID
                         SqlDataSourceMilepael.UpdateParameters.Add("DatoFerdig", datoFerdig); //UPDATE..WHERE ID=@ID
                         SqlDataSourceMilepael.UpdateParameters.Add("Beskrivelse", beskrivelseNew); //UPDATE..SET Beskrivelse=@Beskrivelse
-                    //}
+                   
                 }
                 else resultLabel.Text = "Invalid Date Format!";
             }
@@ -142,8 +131,7 @@ namespace Timeregistreringssystem.Prosjektadmin
 
         protected void GridView1_RowUpdated(object sender, GridViewUpdatedEventArgs e)
         {
-            if (e.Exception != null)
-                System.Windows.Forms.MessageBox.Show(e.Exception.Message);
+            
 
             Page.Response.Redirect(Page.Request.Url.ToString(), true); //Refresh siden
         }
@@ -152,6 +140,31 @@ namespace Timeregistreringssystem.Prosjektadmin
         {
             
         }
+
+        protected void DropDownListProsjekt_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           string prosjektID =  DropDownListProsjekt.SelectedItem.Value;
+
+
+            selectParameterFase = SqlDataSourceFase.SelectParameters["Prosjekt_ID"];
+            SqlDataSourceFase.SelectParameters.Remove(selectParameterFase);
+            SqlDataSourceFase.SelectParameters.Add("Prosjekt_ID", prosjektID);
+
+
+            prosjektIdSelectParameterOppgave = oppgaveDropDown.SelectParameters["Prosjekt_ID"];
+            oppgaveDropDown.SelectParameters.Remove(prosjektIdSelectParameterOppgave);
+            oppgaveDropDown.SelectParameters.Add("Prosjekt_ID", prosjektID);
+        }
+
+        protected void DropDownListOppgave_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string faseID = DropDownListFase.SelectedItem.Value;
+
+            faseIdSelectParamtererOppgave = oppgaveDropDown.SelectParameters["FaseID"];
+            oppgaveDropDown.SelectParameters.Remove(faseIdSelectParamtererOppgave);
+            oppgaveDropDown.SelectParameters.Add("FaseID", faseID);
+        }
+
 
     }
 }

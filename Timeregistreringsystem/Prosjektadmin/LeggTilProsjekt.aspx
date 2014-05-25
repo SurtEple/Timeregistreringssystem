@@ -2,32 +2,19 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <h1>Prosjekt</h1>
-      <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSource1" AutoGenerateColumns="False" DataKeyNames="ID" CssClass="table" AllowPaging="True" AllowSorting="True">
+      <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSource1" AutoGenerateColumns="False" CssClass="table" AllowPaging="True" AllowSorting="True">
             <Columns>
-                <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" Visible="False" />
-                <asp:BoundField DataField="Navn" HeaderText="Navn" SortExpression="Navn" />
-                <asp:BoundField DataField="Ansvarlig" HeaderText="Ansvarlig" SortExpression="Ansvarlig" />
+                <asp:BoundField DataField="ProsjektNavn" HeaderText="ProsjektNavn" SortExpression="ProsjektNavn" />
+                <asp:BoundField DataField="Prosjektansvarlig" HeaderText="Prosjektansvarlig" SortExpression="Prosjektansvarlig" />
                 <asp:BoundField DataField="Oppsummering" HeaderText="Oppsummering" SortExpression="Oppsummering" />
-                <asp:BoundField DataField="Beskrivelse Aktiv Fase" HeaderText="Beskrivelse Aktiv Fase" SortExpression="Beskrivelse Aktiv Fase" />
-                <asp:BoundField DataField="Beskrivelse neste milepæl" HeaderText="Beskrivelse neste milepæl" SortExpression="Beskrivelse neste milepæl" />
-                <asp:BoundField DataField="Beskrivelse Neste Fase" HeaderText="Beskrivelse Neste Fase" SortExpression="Beskrivelse Neste Fase" />
+                <asp:BoundField DataField="Aktiv Fase" HeaderText="Aktiv Fase" SortExpression="Aktiv Fase" />
+                <asp:BoundField DataField="Neste milepæl" HeaderText="Neste milepæl" SortExpression="Neste milepæl" />
+                <asp:BoundField DataField="Neste Fase " HeaderText="Neste Fase " SortExpression="Neste Fase " />
             </Columns>
         </asp:GridView>
        
 
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Prosjekt.ID, Prosjekt.Navn, Bruker.Brukernavn AS Ansvarlig, Prosjekt.Oppsummering, 
-
-(SELECT Beskrivelse FROM Fase WHERE aktiv=true AND Prosjekt_ID = Prosjekt.ID) AS &quot;Beskrivelse Aktiv Fase&quot;, 
-
-Milepael.Beskrivelse AS &quot;Beskrivelse neste milepæl&quot;,
-Fase.Beskrivelse AS &quot;Beskrivelse Neste Fase&quot;
-
-FROM Prosjekt, Fase, Bruker, Milepael 
-WHERE Prosjekt.Neste_Fase = Fase.ID 
-AND Prosjekt.ID &gt; 0 
-AND Bruker.ID=Prosjekt.ansvarligID 
-AND Milepael.ID=Prosjekt.Neste_Milepæl
-ORDER BY Prosjekt.ID"></asp:SqlDataSource>
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Prosjekt.Navn AS ProsjektNavn, Bruker.Brukernavn AS Prosjektansvarlig, Prosjekt.Oppsummering, (SELECT Beskrivelse FROM Fase WHERE aktiv=1 AND Prosjekt_ID = Prosjekt.ID) AS &quot;Aktiv Fase&quot;, Oppgave.Tittel AS &quot;Neste milepæl&quot;, Fase.Beskrivelse AS &quot; Neste Fase &quot; FROM Prosjekt LEFT OUTER JOIN Milepæl ON Prosjekt.`Neste_Milepæl` = Milepæl.ID LEFT OUTER JOIN Oppgave ON Milepæl.Oppgave_ID = Oppgave.ID LEFT OUTER JOIN Fase ON Prosjekt.Neste_Fase = Fase.ID LEFT OUTER JOIN Bruker ON Bruker.ID=Prosjekt.ansvarligID WHERE Prosjekt.ID&gt;0 ORDER BY Prosjekt.ID DESC"></asp:SqlDataSource>
 <h1>&nbsp;</h1>
 <h1>Nytt Prosjekt</h1>
 

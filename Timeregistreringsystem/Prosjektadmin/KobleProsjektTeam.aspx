@@ -34,12 +34,14 @@
         Team og Prosjekter</h2>
         <asp:GridView ID="GridView4" runat="server" AutoGenerateColumns="False" CssClass="table" DataSourceID="SqlDataSourceOverview">
             <Columns>
+                <asp:CommandField DeleteText="Slett Kobling" ShowDeleteButton="True" />
+                <asp:BoundField DataField="Kobling" HeaderText="Kobling" SortExpression="Kobling" InsertVisible="False" />
                 <asp:BoundField DataField="Team" HeaderText="Team" SortExpression="Team" />
                 <asp:BoundField DataField="Prosjekt" HeaderText="Prosjekt" SortExpression="Prosjekt" />
                 <asp:BoundField DataField="ProsjektAnsvarlig" HeaderText="ProsjektAnsvarlig" SortExpression="ProsjektAnsvarlig" />
             </Columns>
 </asp:GridView>
-<asp:SqlDataSource ID="SqlDataSourceOverview" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Team.Beskrivelse AS Team,  Prosjekt.Navn AS Prosjekt, Bruker.Brukernavn AS ProsjektAnsvarlig FROM Prosjekt INNER JOIN KoblingTeamProsjekt ON Prosjekt.ID = KoblingTeamProsjekt.Prosjekt_ID INNER JOIN Bruker ON Prosjekt.ansvarligID = Bruker.ID RIGHT OUTER JOIN Team ON KoblingTeamProsjekt.Team_ID = Team.ID"></asp:SqlDataSource>
+<asp:SqlDataSource ID="SqlDataSourceOverview" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT KoblingTeamProsjekt.ID AS Kobling, Team.Beskrivelse AS Team, Prosjekt.Navn AS Prosjekt, Bruker.Brukernavn AS ProsjektAnsvarlig FROM Prosjekt INNER JOIN KoblingTeamProsjekt ON Prosjekt.ID = KoblingTeamProsjekt.Prosjekt_ID INNER JOIN Bruker ON Prosjekt.ansvarligID = Bruker.ID RIGHT OUTER JOIN Team ON KoblingTeamProsjekt.Team_ID = Team.ID" DeleteCommand="DELETE FROM KoblingTeamProsjekt WHERE ID=@Kobling"></asp:SqlDataSource>
     <br />
 &nbsp;<p>
         &nbsp;</p>

@@ -56,9 +56,37 @@ WHERE ID &gt; 0"></asp:SqlDataSource>
     
     <asp:Label ID="resultLabel" runat="server"></asp:Label>
     
+    <br />
+
+        <tr>
+
+   
+
+
+    <br />
+
+
+
+   
+     <!-- Confirm dialogbox, Husk å legge til OnClientClick="Confirm()" på hvilken knapp denne skal benyttes-->
+    <script type = "text/javascript">
+        function Confirm() {
+            var confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "confirm_value";
+            if (confirm("Er du sikker på at du vil legge til denne milepælen?")) {
+                confirm_value.value = "Yes";
+            } else {
+                confirm_value.value = "No";
+            }
+            document.forms[0].appendChild(confirm_value);
+        }
+    </script>
+    
+    
     <h2> Faser</h2>
       <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSourceFaser" AutoGenerateColumns="False" 
-          DataKeyNames="ID" CssClass="table" AllowPaging="True" AllowSorting="True" OnRowUpdating="GridView1_RowUpdating" Width="80%" OnRowDeleting="GridView1_RowDeleting">
+          DataKeyNames="ID" CssClass="table" AllowPaging="True" AllowSorting="True" Width="80%">
             <Columns>
                 <asp:CommandField CancelText="Avbryt" DeleteText="Slett" EditText="Endre" ShowDeleteButton="True" ShowEditButton="True" UpdateText="Lagre" />
                 <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" Visible="False" />

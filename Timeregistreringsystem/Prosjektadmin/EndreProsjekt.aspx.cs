@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 /**
  * Endre Prosjekt
- * @author Thomas og Thea, Gruppe 2
+ * author Thomas og Thea, Gruppe 2
  */ 
 namespace Timeregistreringssystem.Prosjektadmin
 {
@@ -16,21 +12,15 @@ namespace Timeregistreringssystem.Prosjektadmin
        
         private DBConnect connection;
         private string nyttNavn, nyOppsummering, navn, oppsummering, ansvarlig;
-        private int nyNesteFase, prosjektAnsvarlig, nyMilestone, id;
-        private Parameter faseParam, milestoneParam;
+        private int nyNesteFase, prosjektAnsvarlig, nyNesteMilestone, id, nyMilestone;
+        private Parameter faseParam, milestoneParam, nyMilestoneParam;
 
         private void Page_Init(object sender, EventArgs e)
         {
             if (Session["Admin"] != null)
             {
-                if ((int)Session["Admin"] == Rettigheter.PROSJEKT_ANSVARLIG && Global.CheckIP())
-                {
-
-                }
-                else
-                {
+                if (!((int)Session["Admin"] == Rettigheter.PROSJEKT_ANSVARLIG && Global.CheckIP()))
                     Response.Redirect("~/Default.aspx");
-                }
             }
             else
                 Response.Redirect("~/Default.aspx");
@@ -52,7 +42,8 @@ namespace Timeregistreringssystem.Prosjektadmin
             if (milestoneParam == null)
                 SqlDataSourceNyMilestone.SelectParameters.Add("Prosjekt_ID", "0"); //SELECT... FROM Milepael WHERE ProsjektID=0
 
-            connection = new DBConnect();
+          
+
 
         }
         
@@ -75,9 +66,9 @@ namespace Timeregistreringssystem.Prosjektadmin
 
                     //Bruker dummy items i tilfelle prosjektet ikke har noen faser eller milepæler      
                     if (String.IsNullOrEmpty(DropDownListMilestone.SelectedValue.Trim()))
-                        nyMilestone = 0; //Dummy-milepæl
+                        nyNesteMilestone = 0; //Dummy-milepæl
                     else
-                        nyMilestone = Convert.ToInt32(DropDownListMilestone.SelectedValue);
+                        nyNesteMilestone = Convert.ToInt32(DropDownListMilestone.SelectedValue);
 
                     if (String.IsNullOrEmpty(DropDownListNyNesteFase.SelectedValue.Trim()))
                         nyNesteFase = 0; //Dummy-fase
@@ -89,24 +80,27 @@ namespace Timeregistreringssystem.Prosjektadmin
                     string confirmValue = Request.Form["confirm_value"];
                     if (confirmValue == "Yes")
                     {
-                        connection.EditProject(id, nyttNavn, nyOppsummering, nyNesteFase, prosjektAnsvarlig, nyMilestone); //Metode i DBConnect
+                       // connection.EditProject(id, nyttNavn, nyOppsummering, nyNesteFase, prosjektAnsvarlig, nyNesteMilestone); //Metode i DBConnect
+
+                        //UPDATE Prosjekt SET Navn = @ProsjektNavn, Oppsummering =@ProsjektOppsummering, 
+                        //ansvarligID =@AnsvarligID, Neste_Fase =@NesteFase, `Neste_Milepæl` = @NesteMil
+                        //WHERE ID=@ID
+
+                        SqlDataSource1.UpdateParameters.Add("ProsjektNavn", nyttNavn);
+                        SqlDataSource1.UpdateParameters.Add("ProsjektOppsummering", nyOppsummering);
+                        SqlDataSource1.UpdateParameters.Add("AnsvarligID", prosjektAnsvarlig.ToString());
+                        SqlDataSource1.UpdateParameters.Add("NesteFase", nyNesteFase.ToString());
+                        SqlDataSource1.UpdateParameters.Add("NesteMil", nyNesteMilestone.ToString());
+                        SqlDataSource1.UpdateParameters.Add("ID", id.ToString());
+
+                        SqlDataSource1.Update();
+
+
                         Page.Response.Redirect(Page.Request.Url.ToString(), true); //Refresh siden 
                     }
                     else
                         this.Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Avbrutt')", true);
-                    /*
-                    string dialogString = String.Format("Er du sikker på at du vil redigere prosjektet {0} med Ansvarlig={1}, Milepæl={2}, Fase={3}, id={4}", 
-                        nyttNavn, prosjektAnsvarlig, nyMilestone, nyNesteFase,id);
-                    System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
-
-                    dr = System.Windows.Forms.MessageBox.Show(dialogString, "Endre Prosjekt", System.Windows.Forms.MessageBoxButtons.YesNo);
-                    //bekreftelse på redigering
-                    if (dr == System.Windows.Forms.DialogResult.Yes)
-                   {
-                        connection.EditProject(id, nyttNavn, nyOppsummering, nyNesteFase, prosjektAnsvarlig, nyMilestone); //Metode i DBConnect
-                        Page.Response.Redirect(Page.Request.Url.ToString(), true); //Refresh siden 
-                    }
-                     */
+        
                 }
                 else resultLabel.Text = "Alle feltene må fylles ut!";
             }
@@ -125,6 +119,7 @@ namespace Timeregistreringssystem.Prosjektadmin
             try
             {
                 GridViewRow row = GridViewEditProject.SelectedRow;
+               
                 
                 //hente verdier fra den valgte raden
                 id = Convert.ToInt32(row.Cells[1].Text); 
@@ -135,13 +130,16 @@ namespace Timeregistreringssystem.Prosjektadmin
                 textBoxNewNavn.Text = navn;
                 textBoxNewOppsummering.Text = oppsummering;
                 idLabel.Text = id.ToString();
+
+
                 DropDownListAnsvarlig.SelectedValue = DropDownListAnsvarlig.Items.FindByText(ansvarlig).Value;
 
                 SqlDataSourceNyNesteFase.SelectParameters.Remove(faseParam);
                 SqlDataSourceNyMilestone.SelectParameters.Remove(milestoneParam);
-
+            
                 SqlDataSourceNyNesteFase.SelectParameters.Add("Prosjekt_ID", id.ToString());
                 SqlDataSourceNyMilestone.SelectParameters.Add("Prosjekt_ID", id.ToString());
+               
 
             }
             catch(Exception ex)
@@ -151,19 +149,5 @@ namespace Timeregistreringssystem.Prosjektadmin
      
         }
 
-        protected void GridViewEditProject_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            /*
-            String tname = (string)e.Values["Navn"].ToString();
-           
-            System.Windows.Forms.DialogResult dr = new System.Windows.Forms.DialogResult();
-            dr = System.Windows.Forms.MessageBox.Show("Er du sikker på at du vil slette prosjektet " +  tname + " ?", "Slette Prosjekt", System.Windows.Forms.MessageBoxButtons.YesNo);
-            //bekreftelse på sletting
-            if (dr == System.Windows.Forms.DialogResult.No)
-            {
-                e.Cancel=true;
-                    
-            }*/
-        }
     }
 }
