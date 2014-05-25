@@ -108,7 +108,6 @@
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="~/TeamAdministrasjon/OpprettTeam">Legge til nytt team</a></li>
                                 <li><a runat="server" href="~/TeamAdministrasjon/TeamAdministrasjon">Endre/Slette team</a></li>
-                                <li><a runat="server" href="~/TeamLeder">Sett team leder</a></li>
                             </ul>
                          </li>
                          <li class="dropdown">
@@ -151,7 +150,6 @@
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="~/TeamAdministrasjon/OpprettTeam">Legge til nytt team</a></li>    
                                 <li><a runat="server" href="~/TeamAdministrasjon/TeamAdministrasjon">Endre/Slette team</a></li>
-                                <li><a runat="server" href="~/TeamLeder">Sett team leder</a></li>
                             </ul>
                          </li>
                         <% } %>
@@ -183,7 +181,7 @@
                                 <li><a runat="server" href="~/Account/Login">Logg inn</a></li>
                                 <%} else {%>
                                  
-                                <li><p class="navbar-text">Du er logget inn som: <%= (string)Session["Brukernavn"]  %> med rettighetene til: <%= (string)Session["RettighetNavn"] %></p></li>
+                                <li><p class="navbar-text">Logget inn som <%= (string)Session["Brukernavn"]  %> med <%= (string)Session["RettighetNavn"] %> rettigheter</p></li>
                                 <li><a runat="server" href="~/Account/Logout">Logg ut</a></li>
                                 
 

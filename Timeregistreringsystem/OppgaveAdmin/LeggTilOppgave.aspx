@@ -66,7 +66,7 @@
         <tr>
             <td class="auto-style7" style="width: 161px; height: 53px">Dato Start</td>
                 <td class="modal-sm" style="width: 290px; height: 53px">
-                    <asp:TextBox ID="dateStartTextBox" runat="server" Height="28px" CssClass="input-sm" Width="125px">Klikk her</asp:TextBox>
+                    <asp:TextBox ID="dateStartTextBox" runat="server" Height="28px" CssClass="bootstrap.css" Width="125px">Klikk her</asp:TextBox>
                  
                     <asp:Image ID="startCal" runat="server" ImageUrl="~/Content/glyphicons/png/glyphicons_045_calendar.png" />
                  
@@ -75,7 +75,7 @@
         <tr>
                 <td class="auto-style7" style="width: 161px; height: 57px"> Estimert Slutt dato</td>
                 <td class="modal-sm" style="width: 290px; height: 57px">
-                    <asp:TextBox ID="dateStopTextBox" runat="server" Height="28px" CssClass="input-sm" Width="125px">Klikk her</asp:TextBox>
+                    <asp:TextBox ID="dateStopTextBox" runat="server" Height="28px" CssClass="bootstrap.css" Width="125px">Klikk her</asp:TextBox>
                     <asp:Image ID="Image3" runat="server" ImageUrl="~/Content/glyphicons/png/glyphicons_045_calendar.png" />
                 </td>
 
@@ -94,7 +94,7 @@
     </table>
 
     <br />
-    <asp:Button ID="btnLagre" runat="server" CssClass="btn"  Text="Lagre" Width="119px" OnClick="btnLagre_Click" />
+    <asp:Button ID="btnLagre" runat="server" CssClass="bootstrap.css"  Text="Lagre" Width="119px" OnClick="btnLagre_Click" />
     <br />
     <asp:Label ID="lblTilbakemelding" Text="" runat="server"></asp:Label>
 
