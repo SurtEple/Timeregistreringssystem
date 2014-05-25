@@ -177,6 +177,7 @@
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="BrukerAdministrasjon\EndreBruker.aspx" />
     <Content Include="BrukerAdministrasjon\LeggTilBruker.aspx" />
+    <Content Include="BrukerAdministrasjon\OversiktTimeEndringer.aspx" />
     <Content Include="BrukerAdministrasjon\TimeRegistrering.aspx" />
     <Content Include="BrukerProfile\ChangePassword.aspx" />
     <Content Include="BrukerProfile\Profile.aspx" />
@@ -925,6 +926,13 @@
     </Compile>
     <Compile Include="BrukerAdministrasjon\LeggTilBruker.aspx.designer.cs">
       <DependentUpon>LeggTilBruker.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BrukerAdministrasjon\OversiktTimeEndringer.aspx.cs">
+      <DependentUpon>OversiktTimeEndringer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BrukerAdministrasjon\OversiktTimeEndringer.aspx.designer.cs">
+      <DependentUpon>OversiktTimeEndringer.aspx</DependentUpon>
     </Compile>
     <Compile Include="BrukerAdministrasjon\TimeRegistrering.aspx.cs">
       <DependentUpon>TimeRegistrering.aspx</DependentUpon>

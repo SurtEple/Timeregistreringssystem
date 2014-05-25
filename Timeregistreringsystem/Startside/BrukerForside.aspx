@@ -82,7 +82,8 @@
             <asp:GridView ID="GridViewVelgOppgave" runat="server" AutoGenerateColumns="False"
         CssClass="table" AllowPaging="True" AllowSorting="True" Width="80%" OnSelectedIndexChanged="GridViewVelgHovedppgave_SelectedIndexChanged" DataSourceID="SqlDataSourceVelgOppgave">
                 <Columns>
-                    <asp:BoundField DataField="Tittel" HeaderText="Tittel" SortExpression="Tittel" />
+                    <asp:CommandField ShowSelectButton="True" />
+                    <asp:BoundField DataField="Tittel" HeaderText="Oppgave" SortExpression="Tittel" />
                     <asp:BoundField DataField="Beskrivelse" HeaderText="Beskrivelse" SortExpression="Beskrivelse" />
                     <asp:CheckBoxField DataField="Ferdig" HeaderText="Ferdig" SortExpression="Ferdig" />
                     <asp:BoundField DataField="Brukt tid" HeaderText="Brukt tid" SortExpression="Brukt tid" />
@@ -91,7 +92,7 @@
                 </Columns>
         </asp:GridView>
 
-        <asp:SqlDataSource ID="SqlDataSourceVelgOppgave" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT Tittel, Beskrivelse, Ferdig, Brukt_tid AS  &quot;Brukt tid&quot;, DATE_FORMAT( Dato_begynt,  '%Y-%m-%d' ) AS  &quot;Startdato&quot;, DATE_FORMAT( Dato_ferdig,  '%Y-%m-%d' ) AS  &quot;Sluttdato&quot; FROM  `Oppgave` WHERE `Foreldreoppgave_ID` = @Foreldreoppgave_ID"></asp:SqlDataSource>
+        <asp:SqlDataSource ID="SqlDataSourceVelgOppgave" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Tittel AS Oppgave, Beskrivelse, Brukt_tid, Ferdig, DATE_FORMAT(Dato_begynt, '%Y-%m-%d') AS Startdato, DATE_FORMAT(Dato_ferdig, '%Y-%m-%d') AS Sluttdato FROM Oppgave WHERE (Foreldreoppgave_ID = @Foreldreoppgave_ID)"></asp:SqlDataSource>
 
     <br />
 

@@ -125,7 +125,7 @@ namespace Timeregistreringssystem.Prosjektadmin
             try
             {
                 GridViewRow row = GridViewEditProject.SelectedRow;
-
+                
                 //hente verdier fra den valgte raden
                 id = Convert.ToInt32(row.Cells[1].Text); 
                 navn = row.Cells[2].Text;

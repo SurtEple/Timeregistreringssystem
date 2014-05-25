@@ -171,7 +171,12 @@ namespace Timeregistreringssystem
         // Metode for å velge "Deloppgave" i GridView
         protected void GridViewVelgHovedppgave_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            GridViewRow row = GridViewVelgOppgave.SelectedRow;
+          
+            // string timerID = GridViewVelgOppgave.DataKeys[row.RowIndex].Value.ToString();
+            //Session["OppgaveID"] = timerID;
+            //hente verdier fra GridViewVelgOppgave.DataKeysden valgte raden
+           
         }
 
 
