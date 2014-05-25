@@ -5,7 +5,7 @@
 
     <asp:SqlDataSource ID="SqlDataSourceOppgave" runat="server" ConnectionString="server=kark.hin.no;user id=halvardk;password=halvardk123;database=HLVDKN_DB1" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Prosjekt_ID, Foreldreoppgave_ID, EstimertTid, Tittel, Beskrivelse, Ferdig, Brukt_tid, Dato_begynt, Dato_ferdig FROM Oppgave"></asp:SqlDataSource>
 
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSourceOppgave">
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSourceOppgave" CssClass="table">
         <Columns>
             <asp:BoundField DataField="Tittel" HeaderText="Tittel" SortExpression="Tittel" />
             <asp:BoundField DataField="Beskrivelse" HeaderText="Beskrivelse" SortExpression="Beskrivelse" />
@@ -28,7 +28,7 @@
     <br />
          <asp:Label ID="lblProsjekt" Text="* Velg prosjektet denne oppgaven tilhører" runat="server"></asp:Label>
     <br />
-    <asp:DropDownList ID="ddlForeldreProsjekt" runat="server" DataSourceID="SqlDataSourceForeldreProsjekt" DataTextField="Navn" DataValueField="ID" Height="26px" Width="323px">
+    <asp:DropDownList ID="ddlForeldreProsjekt" runat="server" DataSourceID="SqlDataSourceForeldreProsjekt" DataTextField="Navn" DataValueField="ID" Height="26px" Width="323px" CssClass="dropdown">
                     </asp:DropDownList>
 
      <br />
@@ -37,7 +37,7 @@
 
         <asp:Label ID="lblForeldreOppgave" Text="Velg Hovedoppgaven denne oppgaven skal tilhøre" runat="server"></asp:Label>
         <br />
-        <asp:DropDownList ID="ddlForeldreOppgave" runat="server" DataSourceID="SqlDataSourceHovedOppgaveDropDown" DataTextField="Tittel" DataValueField="ID" AppendDataBoundItems="True" Height="26px" Width="323px">
+        <asp:DropDownList ID="ddlForeldreOppgave" runat="server" DataSourceID="SqlDataSourceHovedOppgaveDropDown" DataTextField="Tittel" DataValueField="ID" AppendDataBoundItems="True" Height="26px" Width="323px" CssClass="dropdown">
                     </asp:DropDownList>
         <br />
 
@@ -53,15 +53,15 @@
     <table>
         <tr>
             <td>Tittel: </td>
-            <td> <asp:TextBox ID="tbxOppgaveTittel" runat="server" Width="190px"></asp:TextBox></td>
+            <td> <asp:TextBox ID="tbxOppgaveTittel" runat="server" Width="190px" CssClass="input-sm"></asp:TextBox></td>
         </tr>
         <tr>
             <td>Beskrivelse: </td>
-            <td><asp:TextBox ID="tbxOppgaveBeskrivelse" runat="server" TextMode="MultiLine" Width="190px"></asp:TextBox></td>
+            <td><asp:TextBox ID="tbxOppgaveBeskrivelse" runat="server" TextMode="MultiLine" Width="190px" CssClass="input-lg"></asp:TextBox></td>
         </tr>
         <tr>
             <td>Estimert tid: </td>
-            <td><asp:TextBox ID="tbxOppgaveEstimertTid" runat="server" TextMode="Number" Width="190px"></asp:TextBox> Timer</td>
+            <td><asp:TextBox ID="tbxOppgaveEstimertTid" runat="server" TextMode="Number" Width="190px" CssClass="input-sm"></asp:TextBox> Timer</td>
         </tr>
         <tr>
             <td class="auto-style7" style="width: 161px; height: 53px">Dato Start</td>
@@ -94,7 +94,7 @@
     </table>
 
     <br />
-    <asp:Button ID="btnLagre" runat="server" CssClass="bootstrap.css"  Text="Lagre" Width="119px" OnClick="btnLagre_Click" />
+    <asp:Button ID="btnLagre" runat="server" CssClass="btn"  Text="Lagre" Width="119px" OnClick="btnLagre_Click" />
     <br />
     <asp:Label ID="lblTilbakemelding" Text="" runat="server"></asp:Label>
 

@@ -15,7 +15,7 @@ GROUP BY t.id, t.Beskrivelse">
     <!--Gridview som viser team brukeren er i-->
     <p>&nbsp;</p>
     <h2>Team</h2>
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" Height="129px" Width="1037px">
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" Height="129px" Width="1037px" CssClass="table">
         <Columns>
             <asp:BoundField DataField="Teamleder" HeaderText="Teamleder" SortExpression="Teamleder" />
             <asp:BoundField DataField="TeamNavn" HeaderText="Team Navn" SortExpression="TeamNavn" />
@@ -38,7 +38,7 @@ GROUP BY p.id">
     <p>&nbsp;</p>
     <h2>Prosjekter</h2>
     <!--GridView somviser prosjekter brukeren har tilknyttning til-->
-    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource2" Height="129px" Width="1037px">
+    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource2" Height="129px" Width="1037px" CssClass="table">
         <Columns>
             <asp:BoundField DataField="Navn" HeaderText="Navn" SortExpression="Navn" />
             <asp:BoundField DataField="Oppsummering" HeaderText="Oppsummering" SortExpression="Oppsummering" />
@@ -60,7 +60,7 @@ IN (SELECT bt.Team_ID FROM KoblingBrukerTeam bt WHERE Bruker_ID = @brukerID))">
     <p>&nbsp;</p>
     <h2>Oppgaver</h2>
     <!--Gridview som viser prosjektene-->
-    <asp:GridView ID="GridView3" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource3" Height="129px" Width="1037px">
+    <asp:GridView ID="GridView3" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource3" Height="129px" Width="1037px" CssClass="table">
         <Columns>
             <asp:BoundField DataField="Navn" HeaderText="Prosjekt" SortExpression="Navn" />
             <asp:BoundField DataField="Tittel" HeaderText="Foreldre Oppgave" SortExpression="Tittel" />

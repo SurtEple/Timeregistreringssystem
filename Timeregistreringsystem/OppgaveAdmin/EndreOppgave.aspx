@@ -4,7 +4,7 @@
     <h1>Oppgaver</h1>
 
 
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSourceEndreOppgaver">
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSourceEndreOppgaver" CssClass="table">
         <Columns>
             <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" Visible="False" />
             <asp:BoundField DataField="Tittel" HeaderText="Oppgavenavn" SortExpression="Tittel" />
@@ -24,7 +24,7 @@
 
     <asp:Label ID="lblVelgFerdigOppgave" runat="server" Text="Velg oppgave"></asp:Label>
     <br />
-    <asp:DropDownList ID="ddlFerdigeOppgaver" runat="server" DataSourceID="SqlDataSourceFerdigeOppgaver" DataTextField="Tittel" DataValueField="ID" Width="230px" AutoPostBack="True" OnSelectedIndexChanged="ddlFerdigeOppgaver_SelectedIndexChanged"></asp:DropDownList>
+    <asp:DropDownList ID="ddlFerdigeOppgaver" runat="server" DataSourceID="SqlDataSourceFerdigeOppgaver" DataTextField="Tittel" DataValueField="ID" Width="230px" AutoPostBack="True" OnSelectedIndexChanged="ddlFerdigeOppgaver_SelectedIndexChanged" CssClass="dropdown"></asp:DropDownList>
     <asp:SqlDataSource ID="SqlDataSourceFerdigeOppgaver" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Tittel FROM Oppgave"></asp:SqlDataSource>
 
     <br />
@@ -32,7 +32,7 @@
     <table>
         <tr>
             <td>* Brukt tid: </td>
-            <td><asp:TextBox ID="tbxBruktTid" runat="server" TextMode="Number"></asp:TextBox></td>
+            <td><asp:TextBox ID="tbxBruktTid" runat="server" TextMode="Number" CssClass="input-sm"></asp:TextBox></td>
         </tr>
         <tr>
                 <td class="auto-style7" style="width: 161px; height: 57px">* Slutt dato: </td>
@@ -44,7 +44,7 @@
     </table>
 
     <br />
-    <asp:Button ID="btnFerdigOppgave" runat="server" Text="Ferdig" OnClick="btnFerdigOppgave_Click" />
+    <asp:Button ID="btnFerdigOppgave" runat="server" Text="Ferdig" OnClick="btnFerdigOppgave_Click" CssClass="btn" />
     <br />
     <asp:Label ID="lblFerdigTilbakemelding" runat="server" Text=""></asp:Label>
 
@@ -53,10 +53,10 @@
 
     <asp:Label ID="lblSlettOppgave" runat="server" Text="Velg oppgave"></asp:Label>
     <br />
-    <asp:DropDownList ID="ddlSlettOppgave" runat="server" DataSourceID="SqlDataSourceSlettOppgave" DataTextField="Tittel" DataValueField="ID" Width="230px" AutoPostBack="True" OnSelectedIndexChanged="ddlSlettOppgave_SelectedIndexChanged"></asp:DropDownList>
+    <asp:DropDownList ID="ddlSlettOppgave" runat="server" DataSourceID="SqlDataSourceSlettOppgave" DataTextField="Tittel" DataValueField="ID" Width="230px" AutoPostBack="True" OnSelectedIndexChanged="ddlSlettOppgave_SelectedIndexChanged" CssClass="dropdown"></asp:DropDownList>
     <asp:SqlDataSource ID="SqlDataSourceSlettOppgave" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Tittel FROM Oppgave"></asp:SqlDataSource>
 
-    <asp:Button ID="btnSlettOppgave" runat="server" Text="Slett" OnClick="btnSlettOppgave_Click" OnClientClick="ConfirmDelete()"/>
+    <asp:Button ID="btnSlettOppgave" runat="server" Text="Slett" OnClick="btnSlettOppgave_Click" OnClientClick="ConfirmDelete()" CssClass="btn"/>
     <br />
     <asp:Label ID="lblSlettOppgaveTilbakemelding" runat="server" Text=""></asp:Label>
 
@@ -65,25 +65,25 @@
     <table>
         <tr>
             <td>* Velg oppgave: </td>
-            <td><asp:DropDownList ID="ddlRedigereOppgave" runat="server" DataSourceID="SqlDataSourceRedigereOppgave" DataTextField="Tittel" DataValueField="ID" AutoPostBack="True" OnSelectedIndexChanged="ddlRedigereOppgave_SelectedIndexChanged" Width="245px"></asp:DropDownList>
+            <td><asp:DropDownList ID="ddlRedigereOppgave" runat="server" DataSourceID="SqlDataSourceRedigereOppgave" DataTextField="Tittel" DataValueField="ID" AutoPostBack="True" OnSelectedIndexChanged="ddlRedigereOppgave_SelectedIndexChanged" Width="245px" CssClass="dropdown"></asp:DropDownList>
                 <asp:SqlDataSource ID="SqlDataSourceRedigereOppgave" runat="server" ConnectionString="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString %>" ProviderName="<%$ ConnectionStrings:HLVDKN_DB1ConnectionString.ProviderName %>" SelectCommand="SELECT ID, Tittel FROM Oppgave"></asp:SqlDataSource>
             </td>
         </tr>
         <tr>
             <td>* Velg ny tittel: </td>
-            <td><asp:TextBox ID="tbxNyTittel" runat="server" Width="245px"></asp:TextBox></td>
+            <td><asp:TextBox ID="tbxNyTittel" runat="server" Width="245px" CssClass="input-sm"></asp:TextBox></td>
         </tr>
         <tr>
             <td>* Velg ny beskrivelse: </td>
-            <td><asp:TextBox ID="tbxNyBeskrivelse" runat="server" TextMode="MultiLine" Width="245px" ></asp:TextBox></td>
+            <td><asp:TextBox ID="tbxNyBeskrivelse" runat="server" TextMode="MultiLine" Width="245px" CssClass="input-group-lg" ></asp:TextBox></td>
         </tr>
         <tr>
             <td>* Nytt tidsestimat: </td>
-            <td><asp:TextBox ID="tbxNyEstimertTid" runat="server" TextMode="Number" Width="100px"></asp:TextBox></td>
+            <td><asp:TextBox ID="tbxNyEstimertTid" runat="server" TextMode="Number" Width="100px" CssClass="input-sm"></asp:TextBox></td>
         </tr>
         <tr>
             <td>* Brukt tid: </td>
-            <td><asp:TextBox ID="tbxNyBruktTid" runat="server" TextMode="Number" Width="100px"></asp:TextBox></td>
+            <td><asp:TextBox ID="tbxNyBruktTid" runat="server" TextMode="Number" Width="100px" CssClass="input-group-sm"></asp:TextBox></td>
         </tr>
         <tr>
                 <td class="auto-style7" style="width: 161px; height: 57px">* Ny slutt dato: </td>
@@ -94,7 +94,7 @@
         </tr>
     </table>
 
-    <asp:Button ID="btnEndreOppgave" runat="server" Text="Endre" OnClick="btnEndreOppgave_Click" OnClientClick="ConfirmEdit()"/>
+    <asp:Button ID="btnEndreOppgave" runat="server" Text="Endre" OnClick="btnEndreOppgave_Click" OnClientClick="ConfirmEdit()" CssClass="btn"/>
     <br />
     <asp:Label ID="lblEndreOppgave" runat="server" Text=""></asp:Label>
 

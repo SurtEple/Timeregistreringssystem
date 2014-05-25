@@ -161,8 +161,8 @@ namespace Timeregistreringssystem
 
                 int Foreldreoppgave_ID = Convert.ToInt32(ddlVelgHovedoppgave.SelectedValue);
                 SqlDataSourceVelgOppgave.SelectParameters.Add("Foreldreoppgave_ID", Foreldreoppgave_ID.ToString());
-                Session["OppgaveID"] = Foreldreoppgave_ID;
-                Session["OppgaveTittel"] = ddlVelgHovedoppgave.SelectedItem.ToString();
+                //Session["OppgaveID"] = Foreldreoppgave_ID;
+               // Session["OppgaveTittel"] = ddlVelgHovedoppgave.SelectedItem.ToString();
                 GridViewVelgOppgave.Visible = true;
             }
             
@@ -172,9 +172,12 @@ namespace Timeregistreringssystem
         protected void GridViewVelgHovedppgave_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewRow row = GridViewVelgOppgave.SelectedRow;
-          
-            // string timerID = GridViewVelgOppgave.DataKeys[row.RowIndex].Value.ToString();
-            //Session["OppgaveID"] = timerID;
+
+            int oppgaveID = Convert.ToInt32(row.Cells[1].Text);
+            string tittel = row.Cells[2].Text;
+            Session["OppgaveID"] = oppgaveID;
+            Session["OppgaveTittel"] = tittel;
+            Response.Redirect("~/BrukerAdministrasjon/TimeRegistrering.aspx");
             //hente verdier fra GridViewVelgOppgave.DataKeysden valgte raden
            
         }

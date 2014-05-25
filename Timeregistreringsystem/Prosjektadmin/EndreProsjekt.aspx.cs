@@ -62,30 +62,25 @@ namespace Timeregistreringssystem.Prosjektadmin
                     nyttNavn = textBoxNewNavn.Text; 
                     nyOppsummering = textBoxNewOppsummering.Text;
                     id = Convert.ToInt32(idLabel.Text);
-                    prosjektAnsvarlig = Convert.ToInt32(DropDownListAnsvarlig.SelectedValue); //Er aldri null
+                    prosjektAnsvarlig = Convert.ToInt32(DropDownListAnsvarlig.SelectedItem.Value); //Er aldri null
 
                     //Bruker dummy items i tilfelle prosjektet ikke har noen faser eller milepæler      
                     if (String.IsNullOrEmpty(DropDownListMilestone.SelectedValue.Trim()))
                         nyNesteMilestone = 0; //Dummy-milepæl
                     else
-                        nyNesteMilestone = Convert.ToInt32(DropDownListMilestone.SelectedValue);
+                        nyNesteMilestone = Convert.ToInt32(DropDownListMilestone.SelectedItem.Value);
 
                     if (String.IsNullOrEmpty(DropDownListNyNesteFase.SelectedValue.Trim()))
                         nyNesteFase = 0; //Dummy-fase
                     else
-                        nyNesteFase = Convert.ToInt32(DropDownListNyNesteFase.SelectedValue);
+                        nyNesteFase = Convert.ToInt32(DropDownListNyNesteFase.SelectedItem.Value);
                     
 
                     //Få bekreftelse fra brukeren vha javascript
                     string confirmValue = Request.Form["confirm_value"];
                     if (confirmValue == "Yes")
                     {
-                       // connection.EditProject(id, nyttNavn, nyOppsummering, nyNesteFase, prosjektAnsvarlig, nyNesteMilestone); //Metode i DBConnect
-
-                        //UPDATE Prosjekt SET Navn = @ProsjektNavn, Oppsummering =@ProsjektOppsummering, 
-                        //ansvarligID =@AnsvarligID, Neste_Fase =@NesteFase, `Neste_Milepæl` = @NesteMil
-                        //WHERE ID=@ID
-
+                       
                         SqlDataSource1.UpdateParameters.Add("ProsjektNavn", nyttNavn);
                         SqlDataSource1.UpdateParameters.Add("ProsjektOppsummering", nyOppsummering);
                         SqlDataSource1.UpdateParameters.Add("AnsvarligID", prosjektAnsvarlig.ToString());
