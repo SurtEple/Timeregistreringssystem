@@ -28,7 +28,7 @@ namespace Timeregistreringssystem.BrukerAdministrasjon
                 {
 
                     var userID = (int) Session["Admin"];
-                    if ((userID == Rettigheter.VANLIG_BRUKER || userID == Rettigheter.PROSJEKT_ANSVARLIG
+                    if ( (userID == Rettigheter.VANLIG_BRUKER || userID == Rettigheter.PROSJEKT_ANSVARLIG
                          || userID == Rettigheter.ADMINISTRATOR || userID == Rettigheter.TEAMLEDER) && Global.CheckIP())
                     {
                         Parameter p = SqlDataSourceRegistreringer.SelectParameters["BrukerID"];
