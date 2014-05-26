@@ -133,7 +133,7 @@
                                 <li><a runat="server" href="~/ProsjektAdmin/LeggTilFase">Administrer Faser </a></li>
                                 <li><a runat="server" href="~/OppgaveAdmin/LeggTilOppgave">Legg til oppgave</a></li>
                                 <li><a runat="server" href="~/ProsjektAdmin/Milestones">Administrer Milepæler</a></li>
-                                <li><a runat="server" href="~/OppgaveAdmin/EndreOppgave">Rediger oppgave</a></li
+                                <li><a runat="server" href="~/OppgaveAdmin/EndreOppgave">Rediger oppgave</a></li>
                                      <li><a runat="server" href="~/ProsjektAdmin/EndreProsjekt">Endre/Slette prosjekt </a></li>
                             </ul>
                          </li>
